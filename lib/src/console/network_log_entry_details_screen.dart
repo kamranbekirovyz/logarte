@@ -18,11 +18,9 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
     // TODO: repeat request
     return Scaffold(
       appBar: AppBar(
-        title: Text(entry.dateFormatted),
         actions: [
           IconButton(
             icon: const Icon(Icons.share),
-            // TODO: implement share
             onPressed: () {
               final text = entry.toString();
               instance.onShare?.call(text);
@@ -58,17 +56,17 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
                           title: 'METHOD',
                           subtitle: entry.request.method,
                         ),
-                        const Divider(),
+                        const Divider(height: 0.0),
                         SelectableCopiableTile(
                           title: 'URL',
                           subtitle: entry.request.url,
                         ),
-                        const Divider(),
+                        const Divider(height: 0.0),
                         SelectableCopiableTile(
                           title: 'HEADERS',
                           subtitle: entry.request.headers.prettyJson,
                         ),
-                        const Divider(),
+                        const Divider(height: 0.0),
                         SelectableCopiableTile(
                           title: 'BODY',
                           subtitle: entry.request.body.prettyJson,
@@ -83,12 +81,12 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
                           title: 'STATUS CODE',
                           subtitle: entry.response.statusCode.toString(),
                         ),
-                        const Divider(),
+                        const Divider(height: 0.0),
                         SelectableCopiableTile(
                           title: 'HEADERS',
                           subtitle: entry.response.headers.prettyJson,
                         ),
-                        const Divider(),
+                        const Divider(height: 0.0),
                         SelectableCopiableTile(
                           title: 'BODY',
                           subtitle: entry.response.body.prettyJson,

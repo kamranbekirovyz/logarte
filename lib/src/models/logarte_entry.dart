@@ -1,5 +1,5 @@
 import 'package:logarte/src/extensions/object_extensions.dart';
-import 'package:logarte/src/logarte_type.dart';
+import 'package:logarte/src/models/logarte_type.dart';
 
 abstract class LogarteEntry {
   final LogarteType type;
@@ -8,7 +8,7 @@ abstract class LogarteEntry {
   LogarteEntry(this.type) : _date = DateTime.now();
 
   DateTime get date => _date;
-  String get dateFormatted => '${date.hour.toString().padLeft(2, '0')}:${date.minute}:${date.second}';
+  String get dateTimeFormatted => '${date.day}.${date.month}.${date.year} ${date.hour.toString().padLeft(2, '0')}:${date.minute}:${date.second}';
 }
 
 class NetworkLogarteEntry extends LogarteEntry {

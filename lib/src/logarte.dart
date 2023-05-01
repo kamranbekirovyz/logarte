@@ -5,6 +5,10 @@ import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:logarte/src/console/logarte_auth_screen.dart';
 import 'package:logarte/src/models/logarte_entry.dart';
 
+// TODO: add navigation observer
+// TODO: add plain logs to history
+// TODO: add internal theme with inherited widget
+
 class Logarte {
   final String consolePassword;
   final Function(String data)? onShare;

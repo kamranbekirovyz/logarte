@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/network_log_entry_details_screen.dart';
+import 'package:logarte/src/extensions/string_extensions.dart';
 
 class LogarteDashboardScreen extends StatelessWidget {
   final Logarte instance;
@@ -31,16 +32,25 @@ class LogarteDashboardScreen extends StatelessWidget {
                     ),
                   );
                 },
-                leading: Text(log.response.statusCode.toString()),
+                leading: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(log.response.statusCode.toString()),
+                    Icon(
+                      log.response.statusCode >= 200 && log.response.statusCode < 300 ? Icons.check_circle : Icons.error,
+                      color: log.response.statusCode >= 200 && log.response.statusCode < 300 ? Colors.green : Colors.red,
+                    ),
+                  ],
+                ),
                 title: Text(log.request.method),
-                subtitle: Text(log.request.url),
+                subtitle: Text(log.request.url.removeHost),
                 trailing: const Icon(Icons.chevron_right),
               );
             } else {
               return const FlutterLogo();
             }
           },
-          separatorBuilder: (context, index) => const Divider(),
+          separatorBuilder: (context, index) => const Divider(height: 0.0),
         ),
       ),
     );

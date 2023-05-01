@@ -7,7 +7,6 @@ extension LogarteStringExtensions on String {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         const SnackBar(
-          behavior: SnackBarBehavior.floating,
           content: Text(
             'Copied 🖨️',
             textAlign: TextAlign.center,
@@ -16,5 +15,11 @@ extension LogarteStringExtensions on String {
       );
 
     return Clipboard.setData(ClipboardData(text: this));
+  }
+
+  String get removeHost {
+    final uri = Uri.parse(this);
+
+    return uri.path;
   }
 }
