@@ -7,8 +7,9 @@ extension LogarteStringExtensions on String {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         const SnackBar(
+          behavior: SnackBarBehavior.floating,
           content: Text(
-            'copied',
+            'Copied 🖨️',
             textAlign: TextAlign.center,
           ),
         ),

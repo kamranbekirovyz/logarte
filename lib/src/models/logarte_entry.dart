@@ -8,6 +8,7 @@ abstract class LogarteEntry {
   LogarteEntry(this.type) : _date = DateTime.now();
 
   DateTime get date => _date;
+  String get dateFormatted => '${date.hour.toString().padLeft(2, '0')}:${date.minute}:${date.second}';
 }
 
 class NetworkLogarteEntry extends LogarteEntry {

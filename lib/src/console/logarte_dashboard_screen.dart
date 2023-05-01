@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
-import 'package:logarte/src/views/network_log_entry_details_screen.dart';
+import 'package:logarte/src/console/network_log_entry_details_screen.dart';
 
 class LogarteDashboardScreen extends StatelessWidget {
-  const LogarteDashboardScreen({super.key});
+  final Logarte instance;
+
+  const LogarteDashboardScreen(this.instance, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,16 +15,19 @@ class LogarteDashboardScreen extends StatelessWidget {
       ),
       body: Scrollbar(
         child: ListView.separated(
-          itemCount: Logarte.logs.length,
+          itemCount: instance.logs.length,
           itemBuilder: (context, index) {
-            final log = Logarte.logs[index];
+            final log = instance.logs.reversed.toList()[index];
 
             if (log is NetworkLogarteEntry) {
               return ListTile(
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => NetworkLogEntryDetailsScreen(log),
+                      builder: (context) => NetworkLogEntryDetailsScreen(
+                        log,
+                        instance: instance,
+                      ),
                     ),
                   );
                 },

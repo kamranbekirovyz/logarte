@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
-import 'package:logarte/src/views/logarte_dashboard_screen.dart';
+import 'package:logarte/src/console/logarte_dashboard_screen.dart';
 
 class LogarteAuthScreen extends StatefulWidget {
-  const LogarteAuthScreen({super.key});
+  final Logarte instance;
+
+  const LogarteAuthScreen(
+    this.instance, {
+    super.key,
+  });
 
   @override
   State<LogarteAuthScreen> createState() => _LogarteAuthScreenState();
@@ -11,6 +16,8 @@ class LogarteAuthScreen extends StatefulWidget {
 
 class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
   static bool _isLoggedIn = false;
+
+  bool get isLoggedIn => _isLoggedIn;
 
   late final TextEditingController _controller;
 
@@ -39,14 +46,23 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
       appBar: AppBar(
         title: const Text('Logarte Magical Entry'),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
         child: TextField(
+          autofocus: true,
           controller: _controller,
+          decoration: const InputDecoration(
+            filled: true,
+            labelText: 'Password',
+            contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+            border: UnderlineInputBorder(),
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton.large(
         onPressed: () {
-          if (Logarte.password == _controller.text) {
+          if (widget.instance.consolePassword == _controller.text) {
             _goToDashboard();
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -64,7 +80,7 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
   void _goToDashboard() {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (_) => const LogarteDashboardScreen(),
+        builder: (_) => LogarteDashboardScreen(widget.instance),
       ),
     );
 

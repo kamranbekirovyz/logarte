@@ -1,22 +1,31 @@
 import 'dart:developer' as developer;
 
+import 'package:flutter/material.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
-import 'package:logarte/src/logarte_entry.dart';
+import 'package:logarte/src/console/logarte_auth_screen.dart';
+import 'package:logarte/src/models/logarte_entry.dart';
 
 class Logarte {
-  static final logs = <LogarteEntry>[];
-  static String password = '123456';
+  final String consolePassword;
+  final Function(String data)? onShare;
 
-  static void log(String message) {
+  Logarte({
+    required this.consolePassword,
+    this.onShare,
+  });
+
+  final logs = <LogarteEntry>[];
+
+  void log(String message) {
     developer.log(message);
   }
 
-  static void logNetwork({
+  void logNetwork({
     required NetworkRequestLogarteEntry request,
     required NetworkResponseLogarteEntry response,
   }) {
-    // TODO: try catch
-    log('''
+    try {
+      log('''
 ------------------ NETWORK REQUEST -----------------
 URL: [${request.method}] ${request.url}
 REQUEST HEADERS: ${request.headers.prettyJson}
@@ -27,6 +36,19 @@ RESPONSE BODY: ${response.body.prettyJson}
 ----------------------------------------------------
 ''');
 
-    logs.add(NetworkLogarteEntry(request: request, response: response));
+      logs.add(NetworkLogarteEntry(request: request, response: response));
+    } catch (_) {}
+  }
+
+  // TODO: add mono font
+
+  Future<void> openConsole(BuildContext context) {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) {
+          return LogarteAuthScreen(this);
+        },
+      ),
+    );
   }
 }
