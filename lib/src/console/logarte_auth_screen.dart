@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/logarte_dashboard_screen.dart';
 
+T? ambiguate<T>(T? value) => value;
+
 class LogarteAuthScreen extends StatefulWidget {
   final Logarte instance;
 
   const LogarteAuthScreen(
     this.instance, {
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<LogarteAuthScreen> createState() => _LogarteAuthScreenState();
@@ -28,7 +30,7 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
     _controller = TextEditingController();
 
     if (_isLoggedIn) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      ambiguate(WidgetsBinding.instance)?.addPostFrameCallback((_) {
         _goToDashboard();
       });
     }

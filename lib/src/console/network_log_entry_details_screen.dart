@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
@@ -9,9 +11,9 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
 
   const NetworkLogEntryDetailsScreen(
     this.entry, {
+    Key? key,
     required this.instance,
-    super.key,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,44 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
             onPressed: () {
               final text = entry.toString();
               text.copyToClipboard(context);
+            },
+          ),
+          // TODO: if all null, hide
+          IconButton(
+            icon: const Icon(Icons.info),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        title: const Text(
+                          'Duration:',
+                        ),
+                        trailing: Text(
+                          '${entry.response.receivedAt!.difference(entry.request.sentAt!).inMilliseconds.toString()} ms',
+                        ),
+                      ),
+                      const Divider(height: 0.0),
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        title: const Text(
+                          'Size:',
+                        ),
+                        trailing: Text(() {
+                          final bodyBytes = utf8.encode(entry.response.body.toString());
+                          final responseSizeInKB = bodyBytes.length / 1024;
+
+                          return '${responseSizeInKB.toStringAsFixed(2)} kb';
+                        }()),
+                      ),
+                    ],
+                  ),
+                ),
+              );
             },
           ),
           const SizedBox(width: 12.0),

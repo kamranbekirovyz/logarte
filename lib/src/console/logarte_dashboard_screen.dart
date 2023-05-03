@@ -6,7 +6,10 @@ import 'package:logarte/src/extensions/string_extensions.dart';
 class LogarteDashboardScreen extends StatelessWidget {
   final Logarte instance;
 
-  const LogarteDashboardScreen(this.instance, {super.key});
+  const LogarteDashboardScreen(
+    this.instance, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

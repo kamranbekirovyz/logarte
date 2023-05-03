@@ -39,29 +39,32 @@ BODY: ${response.body.prettyJson}
   }
 }
 
-// TODO: no need for extending?
-class NetworkRequestLogarteEntry extends LogarteEntry {
+class NetworkRequestLogarteEntry {
   final String url;
   final String method;
   final Map<String, String>? headers;
   final Object? body;
+  final DateTime? sentAt;
 
-  NetworkRequestLogarteEntry({
+  const NetworkRequestLogarteEntry({
     required this.url,
     required this.method,
     required this.headers,
     this.body,
-  }) : super(LogarteType.network);
+    this.sentAt,
+  });
 }
 
-class NetworkResponseLogarteEntry extends LogarteEntry {
+class NetworkResponseLogarteEntry {
   final int statusCode;
   final Map<String, String>? headers;
   final Object? body;
+  final DateTime? receivedAt;
 
   NetworkResponseLogarteEntry({
     required this.statusCode,
     required this.headers,
     required this.body,
-  }) : super(LogarteType.network);
+    this.receivedAt,
+  });
 }
