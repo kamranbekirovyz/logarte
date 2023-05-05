@@ -47,9 +47,7 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
     return WillPopScope(
       onWillPop: () => Future.value(false),
       child: _isLoggedIn
-          ? LogarteDashboardScreen(
-              widget.instance,
-            )
+          ? LogarteDashboardScreen(widget.instance)
           : Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,
@@ -59,6 +57,7 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
                 child: TextField(
                   autofocus: true,
                   controller: _controller,
+                  onSubmitted: (_) => _onSubmit(),
                   decoration: const InputDecoration(
                     filled: true,
                     labelText: 'Password',
@@ -74,21 +73,23 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
               floatingActionButton: FloatingActionButton.large(
-                onPressed: () {
-                  if (widget.instance.consolePassword == _controller.text) {
-                    _goToDashboard();
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Wrong password'),
-                      ),
-                    );
-                  }
-                },
+                onPressed: _onSubmit,
                 child: const Icon(Icons.login),
               ),
             ),
     );
+  }
+
+  void _onSubmit() {
+    if (widget.instance.consolePassword == _controller.text) {
+      _goToDashboard();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Wrong password'),
+        ),
+      );
+    }
   }
 
   void _goToDashboard() {

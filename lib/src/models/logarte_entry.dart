@@ -8,7 +8,26 @@ abstract class LogarteEntry {
   LogarteEntry(this.type) : _date = DateTime.now();
 
   DateTime get date => _date;
-  String get dateTimeFormatted => '${date.day}.${date.month}.${date.year} ${date.hour.toString().padLeft(2, '0')}:${date.minute}:${date.second}';
+  String get timeFormatted =>
+      '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}:${date.second}';
+}
+
+class PlainLogarteEntry extends LogarteEntry {
+  final String message;
+
+  PlainLogarteEntry(this.message) : super(LogarteType.plain);
+}
+
+class DatabaseLogarteEntry extends LogarteEntry {
+  final String key;
+  final String? value;
+  final String source;
+
+  DatabaseLogarteEntry({
+    required this.key,
+    required this.value,
+    required this.source,
+  }) : super(LogarteType.database);
 }
 
 class NetworkLogarteEntry extends LogarteEntry {

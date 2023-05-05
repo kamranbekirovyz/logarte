@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/network_log_entry_details_screen.dart';
-import 'package:logarte/src/extensions/string_extensions.dart';
 
 class LogarteDashboardScreen extends StatefulWidget {
   final Logarte instance;
@@ -80,7 +79,8 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
             final log = widget.instance.logs.reversed.toList()[index];
 
             if (log is NetworkLogarteEntry) {
-              return ListTile(
+              return GestureDetector(
+                behavior: HitTestBehavior.translucent,
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -91,32 +91,174 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                     ),
                   );
                 },
-                leading: Column(
-                  mainAxisSize: MainAxisSize.min,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 8.0,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const _Indicator(
+                                  label: '🚀',
+                                ),
+                                const SizedBox(width: 8.0),
+                                _Indicator(
+                                  label: log.request.method,
+                                ),
+                                const SizedBox(width: 8.0),
+                                _Indicator(
+                                  label: log.response.statusCode.toString(),
+                                  color: log.response.statusCode >= 200 &&
+                                          log.response.statusCode < 300
+                                      ? Colors.green.shade100
+                                      : Colors.red.shade100,
+                                ),
+                                if ([
+                                  log.response.receivedAt,
+                                  log.request.sentAt
+                                ].every((e) => e != null)) ...[
+                                  const SizedBox(width: 8.0),
+                                  _Indicator(
+                                    label:
+                                        '${log.response.receivedAt!.difference(log.request.sentAt!).inMilliseconds} ms',
+                                    uppercase: false,
+                                  ),
+                                ],
+                              ],
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(log.request.url),
+                            const SizedBox(height: 4.0),
+                            Text(
+                              log.timeFormatted,
+                              style: const TextStyle(
+                                fontSize: 12.0,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 16.0),
+                      const Icon(
+                        Icons.chevron_right,
+                        color: Colors.grey,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            } else if (log is PlainLogarteEntry) {
+              return Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(log.response.statusCode.toString()),
-                    Icon(
-                      log.response.statusCode >= 200 &&
-                              log.response.statusCode < 300
-                          ? Icons.check_circle
-                          : Icons.error,
-                      color: log.response.statusCode >= 200 &&
-                              log.response.statusCode < 300
-                          ? Colors.green
-                          : Colors.red,
+                    Row(
+                      children: const [
+                        _Indicator(
+                          label: '🐛',
+                        ),
+                        SizedBox(width: 8.0),
+                        _Indicator(
+                          label: 'LoginScreen',
+                          uppercase: false,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8.0),
+                    Text(log.message),
+                    const SizedBox(height: 4.0),
+                    Text(
+                      log.timeFormatted,
+                      style: const TextStyle(
+                        fontSize: 12.0,
+                        color: Colors.grey,
+                      ),
                     ),
                   ],
                 ),
-                title: Text(log.request.method),
-                subtitle: Text(log.request.url.removeHost),
-                trailing: const Icon(Icons.chevron_right),
+              );
+            } else if (log is DatabaseLogarteEntry) {
+              return Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const _Indicator(
+                          label: '🗄️',
+                        ),
+                        const SizedBox(width: 8.0),
+                        _Indicator(
+                          label: log.source,
+                          uppercase: false,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8.0),
+                    Text('${log.key} => ${log.value.toString()}'),
+                    const SizedBox(height: 4.0),
+                    Text(
+                      log.timeFormatted,
+                      style: const TextStyle(
+                        fontSize: 12.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
               );
             } else {
               return const FlutterLogo();
             }
           },
-          separatorBuilder: (context, index) => const Divider(height: 0.0),
+          separatorBuilder: (context, index) => const Divider(),
         ),
+      ),
+    );
+  }
+}
+
+class _Indicator extends StatelessWidget {
+  final String label;
+  final Color? color;
+  final bool uppercase;
+
+  const _Indicator({
+    Key? key,
+    required this.label,
+    this.color,
+    this.uppercase = true,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8.0,
+        vertical: 4.0,
+      ),
+      decoration: BoxDecoration(
+        color: color ?? Colors.blueGrey.shade100,
+        borderRadius: BorderRadius.circular(4.0),
+      ),
+      child: Text(
+        uppercase ? label.toUpperCase() : label,
+        style: const TextStyle(fontSize: 12.0),
       ),
     );
   }

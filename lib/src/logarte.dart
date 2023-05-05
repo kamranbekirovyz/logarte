@@ -21,8 +21,16 @@ class Logarte {
 
   final logs = <LogarteEntry>[];
 
-  void log(String message) {
-    developer.log(message);
+  void log(
+    Object? message, {
+    bool write = true,
+  }) {
+    // TODO: try and catch
+    developer.log(message.toString());
+
+    if (write) {
+      logs.add(PlainLogarteEntry(message.toString()));
+    }
   }
 
   void logNetwork({
@@ -30,7 +38,8 @@ class Logarte {
     required NetworkResponseLogarteEntry response,
   }) {
     try {
-      log('''
+      log(
+        '''
 ------------------ NETWORK REQUEST -----------------
 URL: [${request.method}] ${request.url}
 REQUEST HEADERS: ${request.headers.prettyJson}
@@ -39,9 +48,37 @@ STATUS CODE: ${response.statusCode}
 RESPONSE HEADERS: ${response.headers.prettyJson}
 RESPONSE BODY: ${response.body.prettyJson}
 ----------------------------------------------------
-''');
+''',
+        write: false,
+      );
 
-      logs.add(NetworkLogarteEntry(request: request, response: response));
+      logs.add(
+        NetworkLogarteEntry(
+          request: request,
+          response: response,
+        ),
+      );
+    } catch (_) {}
+  }
+
+  void logDatabaseWrite({
+    required String key,
+    required String? value,
+    required String source,
+  }) {
+    try {
+      log(
+        '$key was written to database from $source with value: $value',
+        write: false,
+      );
+
+      logs.add(
+        DatabaseLogarteEntry(
+          key: key,
+          value: value,
+          source: source,
+        ),
+      );
     } catch (_) {}
   }
 
