@@ -29,11 +29,11 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
 
     _controller = TextEditingController();
 
-    if (_isLoggedIn) {
-      ambiguate(WidgetsBinding.instance)?.addPostFrameCallback((_) {
-        _goToDashboard();
-      });
-    }
+    // if (_isLoggedIn) {
+    //   ambiguate(WidgetsBinding.instance)?.addPostFrameCallback((_) {
+    //     _goToDashboard();
+    //   });
+    // }
   }
 
   @override
@@ -44,38 +44,50 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Logarte Magical Entry'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: TextField(
-          autofocus: true,
-          controller: _controller,
-          decoration: const InputDecoration(
-            filled: true,
-            labelText: 'Password',
-            contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-            border: UnderlineInputBorder(),
-            floatingLabelBehavior: FloatingLabelBehavior.auto,
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.large(
-        onPressed: () {
-          if (widget.instance.consolePassword == _controller.text) {
-            _goToDashboard();
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Wrong password'),
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child: _isLoggedIn
+          ? LogarteDashboardScreen(
+              widget.instance,
+            )
+          : Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
               ),
-            );
-          }
-        },
-        child: const Icon(Icons.login),
-      ),
+              body: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: TextField(
+                  autofocus: true,
+                  controller: _controller,
+                  decoration: const InputDecoration(
+                    filled: true,
+                    labelText: 'Password',
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 12.0,
+                      vertical: 8.0,
+                    ),
+                    border: UnderlineInputBorder(),
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  ),
+                ),
+              ),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerFloat,
+              floatingActionButton: FloatingActionButton.large(
+                onPressed: () {
+                  if (widget.instance.consolePassword == _controller.text) {
+                    _goToDashboard();
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Wrong password'),
+                      ),
+                    );
+                  }
+                },
+                child: const Icon(Icons.login),
+              ),
+            ),
     );
   }
 

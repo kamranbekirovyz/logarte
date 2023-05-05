@@ -61,7 +61,8 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
                           'Size:',
                         ),
                         trailing: Text(() {
-                          final bodyBytes = utf8.encode(entry.response.body.toString());
+                          final bodyBytes =
+                              utf8.encode(entry.response.body.toString());
                           final responseSizeInKB = bodyBytes.length / 1024;
 
                           return '${responseSizeInKB.toStringAsFixed(2)} kb';

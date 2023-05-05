@@ -1,8 +1,9 @@
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
-import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:logarte/src/console/logarte_auth_screen.dart';
+import 'package:logarte/src/console/logarte_overlay.dart';
+import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:logarte/src/models/logarte_entry.dart';
 
 // TODO: add navigation observer
@@ -46,12 +47,22 @@ RESPONSE BODY: ${response.body.prettyJson}
 
   // TODO: add mono font
 
-  Future<void> openConsole(BuildContext context) {
-    return Navigator.of(context).push(
+  void attachBackDoorButtonOverlay({
+    required BuildContext context,
+    required bool visible,
+  }) async {
+    if (visible) {
+      return LogarteOverlay.attach(
+        context: context,
+        instance: this,
+      );
+    }
+  }
+
+  Future<void> openConsole(BuildContext context) async {
+    return Navigator.of(context).push<void>(
       MaterialPageRoute(
-        builder: (context) {
-          return LogarteAuthScreen(this);
-        },
+        builder: (_) => LogarteAuthScreen(this),
       ),
     );
   }
