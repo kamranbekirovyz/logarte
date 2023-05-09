@@ -1,5 +1,7 @@
 import 'package:logarte/src/extensions/object_extensions.dart';
+import 'package:logarte/src/extensions/trace_extensions.dart';
 import 'package:logarte/src/models/logarte_type.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 abstract class LogarteEntry {
   final LogarteType type;
@@ -14,8 +16,15 @@ abstract class LogarteEntry {
 
 class PlainLogarteEntry extends LogarteEntry {
   final String message;
+  final String? _source;
 
-  PlainLogarteEntry(this.message) : super(LogarteType.plain);
+  PlainLogarteEntry(
+    this.message, {
+    required Trace trace,
+  })  : _source = trace.source,
+        super(LogarteType.plain);
+
+  String? get source => _source;
 }
 
 class DatabaseLogarteEntry extends LogarteEntry {

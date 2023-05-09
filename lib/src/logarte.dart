@@ -5,6 +5,7 @@ import 'package:logarte/src/console/logarte_auth_screen.dart';
 import 'package:logarte/src/console/logarte_overlay.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:logarte/src/models/logarte_entry.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 // TODO: add navigation observer
 // TODO: add plain logs to history
@@ -24,13 +25,31 @@ class Logarte {
   void log(
     Object? message, {
     bool write = true,
+    Trace? trace,
   }) {
     // TODO: try and catch
     developer.log(message.toString());
 
     if (write) {
-      logs.add(PlainLogarteEntry(message.toString()));
+      logs.add(
+        PlainLogarteEntry(
+          message.toString(),
+          trace: trace ?? Trace.current(),
+        ),
+      );
     }
+  }
+
+  void logError(
+    Object? message, {
+    StackTrace? stackTrace,
+    bool write = true,
+  }) {
+    log(
+      'ERROR: $message\n\nTRACE: $stackTrace',
+      write: write,
+      trace: Trace.current(),
+    );
   }
 
   void logNetwork({
