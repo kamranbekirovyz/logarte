@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -17,9 +19,8 @@ extension LogarteStringExtensions on String {
     return Clipboard.setData(ClipboardData(text: this));
   }
 
-  String get removeHost {
-    final uri = Uri.parse(this);
-
-    return uri.path;
+  String get asReadableSize {
+    final encoded = utf8.encode(this);
+    return '${(encoded.length / 1024).toStringAsFixed(2)} KB';
   }
 }
