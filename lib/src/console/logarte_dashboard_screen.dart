@@ -27,6 +27,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
   @override
   void dispose() {
     _searchController.dispose();
+
     super.dispose();
   }
 
@@ -35,47 +36,9 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        // appBar: PreferredSize(
-        //   preferredSize: const Size.fromHeight(72.0),
-        //   child: SafeArea(
-        //     child: Container(
-        //       height: 48.0,
-        //       margin: const EdgeInsets.only(
-        //         left: 16.0,
-        //         right: 16.0,
-        //         bottom: 24.0,
-        //       ),
-        //       child: Row(
-        //         children: [
-        //           // TODO: implement dashboard search
-        //           Flexible(
-        //             child: TextField(
-        //               controller: _searchController,
-        //               decoration: InputDecoration(
-        //                 prefixIcon: const Icon(Icons.search),
-        //                 suffixIcon: GestureDetector(
-        //                   onTap: () {},
-        //                   child: const Icon(Icons.clear),
-        //                 ),
-        //                 filled: true,
-        //                 hintText: 'Search..',
-        //               ),
-        //             ),
-        //           ),
-        //           // TODO: implement dashboard filter
-        //           // const SizedBox(width: 8.0),
-        //           // IconButton(
-        //           //   onPressed: () {},
-        //           //   icon: Icon(Icons.filter_list),
-        //           // ),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // ),
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Text('Dashboard'),
+          title: const Text('logarte console'),
           bottom: const TabBar(
             tabs: [
               Tab(text: 'All'),
@@ -121,7 +84,7 @@ class _List<T extends LogarteEntry> extends StatelessWidget {
 
           return LogarteEntryItem(log, instance: instance);
         },
-        separatorBuilder: (context, index) => const Divider(),
+        separatorBuilder: (context, index) => const Divider(height: 8.0),
       ),
     );
   }
