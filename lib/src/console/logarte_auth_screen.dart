@@ -28,12 +28,6 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
     super.initState();
 
     _controller = TextEditingController();
-
-    // if (_isLoggedIn) {
-    //   ambiguate(WidgetsBinding.instance)?.addPostFrameCallback((_) {
-    //     _goToDashboard();
-    //   });
-    // }
   }
 
   @override

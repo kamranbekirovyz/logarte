@@ -10,6 +10,7 @@ import 'package:stack_trace/stack_trace.dart';
 // TODO: add navigation observer
 // TODO: add plain logs to history
 // TODO: add internal theme with inherited widget
+// TODO: add db inspector
 
 class Logarte {
   final String consolePassword;
