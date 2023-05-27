@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
@@ -60,13 +58,9 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
                         title: const Text(
                           'Size:',
                         ),
-                        trailing: Text(() {
-                          final bodyBytes =
-                              utf8.encode(entry.response.body.toString());
-                          final responseSizeInKB = bodyBytes.length / 1024;
-
-                          return '${responseSizeInKB.toStringAsFixed(2)} kb';
-                        }()),
+                        trailing: Text(
+                          entry.response.body.toString().asReadableSize,
+                        ),
                       ),
                     ],
                   ),
