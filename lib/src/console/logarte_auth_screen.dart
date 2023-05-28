@@ -90,6 +90,7 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (_) => LogarteDashboardScreen(widget.instance),
+        settings: const RouteSettings(name: '/logarte_dashboard'),
       ),
     );
 

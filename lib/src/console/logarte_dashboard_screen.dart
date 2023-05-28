@@ -34,7 +34,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(48.0),
@@ -44,11 +44,13 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                 height: MediaQuery.of(context).padding.top,
               ),
               const TabBar(
+                isScrollable: true,
                 tabs: [
                   Tab(text: 'All'),
-                  Tab(text: 'Logs'),
+                  Tab(text: 'Plain'),
                   Tab(text: 'Network'),
                   Tab(text: 'Database'),
+                  Tab(text: 'Navigator'),
                 ],
               ),
             ],
@@ -60,6 +62,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
             _List<PlainLogarteEntry>(instance: widget.instance),
             _List<NetworkLogarteEntry>(instance: widget.instance),
             _List<DatabaseLogarteEntry>(instance: widget.instance),
+            _List<NavigatorLogarteEntry>(instance: widget.instance),
           ],
         ),
       ),

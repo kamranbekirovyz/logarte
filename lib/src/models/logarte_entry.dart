@@ -1,6 +1,8 @@
+import 'package:flutter/widgets.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:logarte/src/extensions/trace_extensions.dart';
 import 'package:logarte/src/models/logarte_type.dart';
+import 'package:logarte/src/models/navigation_action.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 abstract class LogarteEntry {
@@ -25,6 +27,18 @@ class PlainLogarteEntry extends LogarteEntry {
         super(LogarteType.plain);
 
   String? get source => _source;
+}
+
+class NavigatorLogarteEntry extends LogarteEntry {
+  final Route<dynamic>? route;
+  final Route<dynamic>? previousRoute;
+  final NavigationAction action;
+
+  NavigatorLogarteEntry({
+    required this.route,
+    required this.previousRoute,
+    required this.action,
+  }) : super(LogarteType.navigation);
 }
 
 class DatabaseLogarteEntry extends LogarteEntry {

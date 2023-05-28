@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/network_log_entry_details_screen.dart';
 import 'package:logarte/src/extensions/entry_extensions.dart';
+import 'package:logarte/src/extensions/route_extensions.dart';
 import 'package:logarte/src/extensions/string_extensions.dart';
+import 'package:logarte/src/models/navigation_action.dart';
 
 class LogarteEntryItem extends StatelessWidget {
   final LogarteEntry entry;
@@ -28,6 +30,10 @@ class LogarteEntryItem extends StatelessWidget {
     } else if (entry is DatabaseLogarteEntry) {
       return _DatabaseItem(
         entry: entry as DatabaseLogarteEntry,
+      );
+    } else if (entry is NavigatorLogarteEntry) {
+      return _NavigationItem(
+        entry: entry as NavigatorLogarteEntry,
       );
     } else {
       return const FlutterLogo();
@@ -82,6 +88,67 @@ class _PlainItem extends StatelessWidget {
   }
 }
 
+class _NavigationItem extends StatelessWidget {
+  final NavigatorLogarteEntry entry;
+
+  const _NavigationItem({
+    Key? key,
+    required this.entry,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final from = entry.previousRoute != null
+        ? 'From: ${entry.previousRoute.routeInfo}\n'
+        : '';
+    final to = entry.route != null ? 'To: ${entry.route.routeInfo}' : '';
+
+    return ListTile(
+      leading: Icon(
+        entry.action == NavigationAction.push
+            ? Icons.arrow_forward
+            : entry.action == NavigationAction.pop
+                ? Icons.arrow_back
+                : entry.action == NavigationAction.replace
+                    ? Icons.swap_horiz
+                    : Icons.remove,
+        color: entry.action == NavigationAction.push
+            ? Colors.green
+            : entry.action == NavigationAction.pop
+                ? Colors.red
+                : Colors.grey,
+      ),
+      title: Text(
+        entry.action.name.toUpperCase(),
+        style: const TextStyle(
+          fontSize: 14.0,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      subtitle: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '$from$to',
+            style: const TextStyle(fontSize: 14.0),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Text(
+              entry.timeFormatted,
+              style: const TextStyle(
+                fontSize: 14.0,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _NetworkItem extends StatelessWidget {
   final NetworkLogarteEntry entry;
   final Logarte instance;
@@ -102,6 +169,7 @@ class _NetworkItem extends StatelessWidget {
               entry,
               instance: instance,
             ),
+            settings: const RouteSettings(name: '/logarte_entry_details'),
           ),
         );
       },

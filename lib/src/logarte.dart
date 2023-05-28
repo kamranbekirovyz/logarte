@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:logarte/src/console/logarte_auth_screen.dart';
 import 'package:logarte/src/console/logarte_overlay.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
+import 'package:logarte/src/extensions/route_extensions.dart';
 import 'package:logarte/src/models/logarte_entry.dart';
+import 'package:logarte/src/models/navigation_action.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 // TODO: add navigation observer
@@ -81,6 +83,33 @@ RESPONSE BODY: ${response.body.prettyJson}
     } catch (_) {}
   }
 
+  void logNavigation({
+    required Route<dynamic>? route,
+    required Route<dynamic>? previousRoute,
+    required NavigationAction action,
+  }) {
+    try {
+      log(
+        '''
+------------------ NAVIGATION -----------------
+ROUTE: ${route.routeInfo}
+PREVIOUS ROUTE: ${previousRoute.routeInfo}
+------------------------------------------------
+
+''',
+        write: false,
+      );
+
+      logs.add(
+        NavigatorLogarteEntry(
+          route: route,
+          previousRoute: previousRoute,
+          action: action,
+        ),
+      );
+    } catch (_) {}
+  }
+
   void logDatabaseWrite({
     required String key,
     required String? value,
@@ -118,6 +147,7 @@ RESPONSE BODY: ${response.body.prettyJson}
     return Navigator.of(context).push<void>(
       MaterialPageRoute(
         builder: (_) => LogarteAuthScreen(this),
+        settings: const RouteSettings(name: '/logarte_auth'),
       ),
     );
   }

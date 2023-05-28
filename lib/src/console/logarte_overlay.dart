@@ -67,9 +67,8 @@ class _LogarteFABState extends State<_LogarteFAB> {
     } else {
       Navigator.of(context).push<void>(
         MaterialPageRoute(
-          builder: (context) {
-            return LogarteAuthScreen(widget.instance);
-          },
+          builder: (_) => LogarteAuthScreen(widget.instance),
+          settings: const RouteSettings(name: '/logarte_auth'),
         ),
       );
     }
