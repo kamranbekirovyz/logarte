@@ -37,7 +37,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
       length: 5,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(48.0),
+          preferredSize: const Size.fromHeight(48.0 + 26.0),
           child: Column(
             children: [
               SizedBox(
@@ -46,11 +46,26 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
               const TabBar(
                 isScrollable: true,
                 tabs: [
-                  Tab(text: 'All'),
-                  Tab(text: 'Plain'),
-                  Tab(text: 'Network'),
-                  Tab(text: 'Database'),
-                  Tab(text: 'Navigator'),
+                  Tab(
+                    icon: Icon(Icons.receipt_long_rounded),
+                    text: 'All',
+                  ),
+                  Tab(
+                    icon: Icon(Icons.bug_report_rounded),
+                    text: 'Log',
+                  ),
+                  Tab(
+                    icon: Icon(Icons.public),
+                    text: 'Network',
+                  ),
+                  Tab(
+                    icon: Icon(Icons.save_as_rounded),
+                    text: 'Database',
+                  ),
+                  Tab(
+                    icon: Icon(Icons.navigation),
+                    text: 'Navigator',
+                  ),
                 ],
               ),
             ],
