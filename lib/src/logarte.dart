@@ -86,6 +86,11 @@ RESPONSE BODY: ${response.body.prettyJson}
     required NavigationAction action,
   }) {
     try {
+      if ([route.routeName, previousRoute.routeName]
+          .any((e) => e?.contains('/logarte') == true)) {
+        return;
+      }
+
       log(
         '''
 ------------------ NAVIGATION -----------------

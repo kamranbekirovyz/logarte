@@ -98,10 +98,7 @@ class _NavigationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final from = entry.previousRoute != null
-        ? 'From: ${entry.previousRoute.routeInfo}\n'
-        : '';
-    final to = entry.route != null ? 'To: ${entry.route.routeInfo}' : '';
+    final action = entry.action.name.toUpperCase();
 
     return ListTile(
       leading: Icon(
@@ -118,32 +115,22 @@ class _NavigationItem extends StatelessWidget {
                 ? Colors.red
                 : Colors.grey,
       ),
-      title: Text(
-        entry.action.name.toUpperCase(),
-        style: const TextStyle(
-          fontSize: 14.0,
-          fontWeight: FontWeight.w600,
-        ),
+      title: _LuxuryText(
+        text: entry.previousRoute != null
+            ? entry.action == NavigationAction.pop
+                ? '*$action* from *"${entry.route.routeName}"* to *"${entry.previousRoute.routeName}"*'
+                : '*$action* to *"${entry.route.routeName}"*'
+            : '*$action* to *"${entry.route.routeName}"*',
       ),
-      subtitle: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '$from$to',
-            style: const TextStyle(fontSize: 14.0),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 4.0),
+        child: Text(
+          entry.timeFormatted,
+          style: const TextStyle(
+            fontSize: 14.0,
+            color: Colors.grey,
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: Text(
-              entry.timeFormatted,
-              style: const TextStyle(
-                fontSize: 14.0,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -263,6 +250,58 @@ class _DatabaseItem extends StatelessWidget {
             fontSize: 14.0,
             color: Colors.grey,
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LuxuryText extends StatelessWidget {
+  final String text;
+
+  const _LuxuryText({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    final List<InlineSpan> children = [];
+
+    final regex = RegExp(r'\*(.*?)\*');
+    final matches = regex.allMatches(text);
+
+    int currentIndex = 0;
+    for (final match in matches) {
+      if (match.start > currentIndex) {
+        children.add(
+          TextSpan(
+            text: text.substring(currentIndex, match.start),
+          ),
+        );
+      }
+
+      children.add(
+        TextSpan(
+          text: match.group(1),
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
+
+      currentIndex = match.end;
+    }
+
+    if (currentIndex < text.length) {
+      children.add(TextSpan(
+        text: text.substring(currentIndex),
+      ));
+    }
+
+    return RichText(
+      text: TextSpan(
+        children: children,
+        style: const TextStyle(
+          fontSize: 14.0,
+          color: Colors.black,
         ),
       ),
     );

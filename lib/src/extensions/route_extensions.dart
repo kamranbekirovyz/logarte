@@ -1,6 +1,10 @@
 import 'package:flutter/widgets.dart';
 
 extension LogarteRouteXs on Route? {
+  String? get routeName {
+    return this?.settings.name;
+  }
+
   String get routeInfo {
     if (this == null) {
       return 'Route is null';
