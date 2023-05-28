@@ -52,7 +52,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                   ),
                   Tab(
                     icon: Icon(Icons.bug_report_rounded),
-                    text: 'Log',
+                    text: 'Print',
                   ),
                   Tab(
                     icon: Icon(Icons.public),
@@ -63,7 +63,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                     text: 'Database',
                   ),
                   Tab(
-                    icon: Icon(Icons.navigation),
+                    icon: Icon(Icons.radar_rounded),
                     text: 'Navigator',
                   ),
                 ],
