@@ -13,13 +13,12 @@ import 'package:stack_trace/stack_trace.dart';
 // TODO: add listener and refresher
 
 class Logarte {
-  final String consolePassword;
-
+  final String? consolePassword;
   final Function(String data)? onShare;
   final List<LogarteEntry> logs = [];
 
   Logarte({
-    required this.consolePassword,
+    this.consolePassword,
     this.onShare,
   });
 

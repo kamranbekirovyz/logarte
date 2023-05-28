@@ -20,6 +20,7 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
   static bool _isLoggedIn = false;
 
   bool get isLoggedIn => _isLoggedIn;
+  bool get _noPassword => widget.instance.consolePassword == null;
 
   late final TextEditingController _controller;
 
@@ -40,7 +41,7 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => Future.value(false),
-      child: _isLoggedIn
+      child: _isLoggedIn || _noPassword
           ? LogarteDashboardScreen(widget.instance)
           : Scaffold(
               appBar: AppBar(
