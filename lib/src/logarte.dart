@@ -8,9 +8,9 @@ import 'package:logarte/src/models/logarte_entry.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 // TODO: add navigation observer
-// TODO: add plain logs to history
 // TODO: add internal theme with inherited widget
 // TODO: add db inspector
+// TODO: add listener and refresher
 
 class Logarte {
   final String consolePassword;
@@ -101,8 +101,6 @@ RESPONSE BODY: ${response.body.prettyJson}
       );
     } catch (_) {}
   }
-
-  // TODO: add mono font
 
   void attachBackDoorButtonOverlay({
     required BuildContext context,

@@ -36,15 +36,21 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: const Text('logarte console'),
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: 'All'),
-              Tab(text: 'Logs'),
-              Tab(text: 'Network'),
-              Tab(text: 'Database'),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(48.0),
+          child: Column(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).padding.top,
+              ),
+              const TabBar(
+                tabs: [
+                  Tab(text: 'All'),
+                  Tab(text: 'Logs'),
+                  Tab(text: 'Network'),
+                  Tab(text: 'Database'),
+                ],
+              ),
             ],
           ),
         ),

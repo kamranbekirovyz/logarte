@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/network_log_entry_details_screen.dart';
+import 'package:logarte/src/extensions/entry_extensions.dart';
 import 'package:logarte/src/extensions/string_extensions.dart';
 
 class LogarteEntryItem extends StatelessWidget {
@@ -137,7 +138,7 @@ class _NetworkItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 4.0),
             child: Text(
-              '${entry.timeFormatted} • ${'${entry.response.receivedAt!.difference(entry.request.sentAt!).inMilliseconds} ms • ${entry.response.body.toString().asReadableSize}'}',
+              '${entry.timeFormatted} • ${'${entry.asReadableDuration} • ${entry.response.body.toString().asReadableSize}'}',
               style: const TextStyle(
                 fontSize: 14.0,
                 color: Colors.grey,
@@ -179,7 +180,7 @@ class _DatabaseItem extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: 4.0),
+          // const SizedBox(height: 4.0),
           Text(
             entry.value.toString(),
             style: const TextStyle(fontSize: 14.0),
