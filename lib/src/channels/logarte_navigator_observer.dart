@@ -9,7 +9,7 @@ class LogarteNavigatorObserver extends NavigatorObserver {
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    _logarte.logNavigation(
+    _logarte.navigation(
       route: route,
       previousRoute: previousRoute,
       action: NavigationAction.push,
@@ -18,7 +18,7 @@ class LogarteNavigatorObserver extends NavigatorObserver {
 
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    _logarte.logNavigation(
+    _logarte.navigation(
       route: route,
       previousRoute: previousRoute,
       action: NavigationAction.pop,
@@ -27,7 +27,7 @@ class LogarteNavigatorObserver extends NavigatorObserver {
 
   @override
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    _logarte.logNavigation(
+    _logarte.navigation(
       route: route,
       previousRoute: previousRoute,
       action: NavigationAction.remove,
@@ -36,7 +36,7 @@ class LogarteNavigatorObserver extends NavigatorObserver {
 
   @override
   void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
-    _logarte.logNavigation(
+    _logarte.navigation(
       route: newRoute,
       previousRoute: oldRoute,
       action: NavigationAction.replace,

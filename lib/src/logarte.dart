@@ -9,21 +9,19 @@ import 'package:logarte/src/models/logarte_entry.dart';
 import 'package:logarte/src/models/navigation_action.dart';
 import 'package:stack_trace/stack_trace.dart';
 
-// TODO: add navigation observer
 // TODO: add internal theme with inherited widget
-// TODO: add db inspector
 // TODO: add listener and refresher
 
 class Logarte {
   final String consolePassword;
+
   final Function(String data)? onShare;
+  final List<LogarteEntry> logs = [];
 
   Logarte({
     required this.consolePassword,
     this.onShare,
   });
-
-  final logs = <LogarteEntry>[];
 
   void log(
     Object? message, {
@@ -43,7 +41,7 @@ class Logarte {
     }
   }
 
-  void logError(
+  void error(
     Object? message, {
     StackTrace? stackTrace,
     bool write = true,
@@ -55,7 +53,7 @@ class Logarte {
     );
   }
 
-  void logNetwork({
+  void network({
     required NetworkRequestLogarteEntry request,
     required NetworkResponseLogarteEntry response,
   }) {
@@ -83,7 +81,7 @@ RESPONSE BODY: ${response.body.prettyJson}
     } catch (_) {}
   }
 
-  void logNavigation({
+  void navigation({
     required Route<dynamic>? route,
     required Route<dynamic>? previousRoute,
     required NavigationAction action,
@@ -110,7 +108,7 @@ PREVIOUS ROUTE: ${previousRoute.routeInfo}
     } catch (_) {}
   }
 
-  void logDatabaseWrite({
+  void database({
     required String key,
     required String? value,
     required String source,
