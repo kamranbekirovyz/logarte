@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/logarte_dashboard_screen.dart';
+import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 
 T? ambiguate<T>(T? value) => value;
 
@@ -39,39 +40,41 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => Future.value(false),
-      child: _isLoggedIn || _noPassword
-          ? LogarteDashboardScreen(widget.instance)
-          : Scaffold(
-              appBar: AppBar(
-                automaticallyImplyLeading: false,
-              ),
-              body: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: TextField(
-                  autofocus: true,
-                  controller: _controller,
-                  onSubmitted: (_) => _onSubmit(),
-                  decoration: const InputDecoration(
-                    filled: true,
-                    labelText: 'Password',
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: 12.0,
-                      vertical: 8.0,
+    return LogarteThemeWrapper(
+      child: WillPopScope(
+        onWillPop: () => Future.value(false),
+        child: _isLoggedIn || _noPassword
+            ? LogarteDashboardScreen(widget.instance)
+            : Scaffold(
+                appBar: AppBar(
+                  automaticallyImplyLeading: false,
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: TextField(
+                    autofocus: true,
+                    controller: _controller,
+                    onSubmitted: (_) => _onSubmit(),
+                    decoration: const InputDecoration(
+                      filled: true,
+                      labelText: 'Password',
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 12.0,
+                        vertical: 8.0,
+                      ),
+                      border: UnderlineInputBorder(),
+                      floatingLabelBehavior: FloatingLabelBehavior.auto,
                     ),
-                    border: UnderlineInputBorder(),
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
                   ),
                 ),
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerFloat,
+                floatingActionButton: FloatingActionButton.large(
+                  onPressed: _onSubmit,
+                  child: const Icon(Icons.login),
+                ),
               ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerFloat,
-              floatingActionButton: FloatingActionButton.large(
-                onPressed: _onSubmit,
-                child: const Icon(Icons.login),
-              ),
-            ),
+      ),
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/logarte_entry_item.dart';
+import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 
 class LogarteDashboardScreen extends StatefulWidget {
   final Logarte instance;
@@ -33,52 +34,54 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 5,
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(48.0 + 26.0),
-          child: Column(
+    return LogarteThemeWrapper(
+      child: DefaultTabController(
+        length: 5,
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(48.0 + 26.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).padding.top,
+                ),
+                const TabBar(
+                  isScrollable: true,
+                  tabs: [
+                    Tab(
+                      icon: Icon(Icons.receipt_long_rounded),
+                      text: 'All',
+                    ),
+                    Tab(
+                      icon: Icon(Icons.bug_report_rounded),
+                      text: 'Print',
+                    ),
+                    Tab(
+                      icon: Icon(Icons.public),
+                      text: 'Network',
+                    ),
+                    Tab(
+                      icon: Icon(Icons.save_as_rounded),
+                      text: 'Database',
+                    ),
+                    Tab(
+                      icon: Icon(Icons.radar_rounded),
+                      text: 'Navigator',
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          body: TabBarView(
             children: [
-              SizedBox(
-                height: MediaQuery.of(context).padding.top,
-              ),
-              const TabBar(
-                isScrollable: true,
-                tabs: [
-                  Tab(
-                    icon: Icon(Icons.receipt_long_rounded),
-                    text: 'All',
-                  ),
-                  Tab(
-                    icon: Icon(Icons.bug_report_rounded),
-                    text: 'Print',
-                  ),
-                  Tab(
-                    icon: Icon(Icons.public),
-                    text: 'Network',
-                  ),
-                  Tab(
-                    icon: Icon(Icons.save_as_rounded),
-                    text: 'Database',
-                  ),
-                  Tab(
-                    icon: Icon(Icons.radar_rounded),
-                    text: 'Navigator',
-                  ),
-                ],
-              ),
+              _List<LogarteEntry>(instance: widget.instance),
+              _List<PlainLogarteEntry>(instance: widget.instance),
+              _List<NetworkLogarteEntry>(instance: widget.instance),
+              _List<DatabaseLogarteEntry>(instance: widget.instance),
+              _List<NavigatorLogarteEntry>(instance: widget.instance),
             ],
           ),
-        ),
-        body: TabBarView(
-          children: [
-            _List<LogarteEntry>(instance: widget.instance),
-            _List<PlainLogarteEntry>(instance: widget.instance),
-            _List<NetworkLogarteEntry>(instance: widget.instance),
-            _List<DatabaseLogarteEntry>(instance: widget.instance),
-            _List<NavigatorLogarteEntry>(instance: widget.instance),
-          ],
         ),
       ),
     );

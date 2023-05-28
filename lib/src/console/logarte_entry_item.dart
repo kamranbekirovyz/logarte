@@ -161,11 +161,16 @@ class _NetworkItem extends StatelessWidget {
         );
       },
       leading: Icon(
-        entry.response.statusCode >= 200 && entry.response.statusCode < 300
-            ? Icons.public
-            : Icons.public_off,
-        color:
-            entry.response.statusCode >= 200 && entry.response.statusCode < 300
+        entry.response.statusCode == null
+            ? Icons.public_off
+            : entry.response.statusCode! >= 200 &&
+                    entry.response.statusCode! < 300
+                ? Icons.public
+                : Icons.public_off,
+        color: entry.response.statusCode == null
+            ? Colors.grey
+            : entry.response.statusCode! >= 200 &&
+                    entry.response.statusCode! < 300
                 ? Colors.green
                 : Colors.red,
       ),
