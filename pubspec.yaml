@@ -8,6 +8,7 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  dio: ^5.1.2
   flutter:
     sdk: flutter
   stack_trace: ^1.11.0

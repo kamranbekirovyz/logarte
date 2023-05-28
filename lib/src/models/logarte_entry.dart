@@ -84,7 +84,7 @@ BODY: ${response.body.prettyJson}
 class NetworkRequestLogarteEntry {
   final String url;
   final String method;
-  final Map<String, String>? headers;
+  final Map<String, dynamic>? headers;
   final Object? body;
   final DateTime? sentAt;
 
@@ -98,7 +98,7 @@ class NetworkRequestLogarteEntry {
 }
 
 class NetworkResponseLogarteEntry {
-  final int statusCode;
+  final int? statusCode;
   final Map<String, String>? headers;
   final Object? body;
   final DateTime? receivedAt;
