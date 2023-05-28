@@ -67,12 +67,12 @@ class NetworkLogarteEntry extends LogarteEntry {
     return '''[${request.method}] ${request.url}
 
 -- REQUEST --
-HEADERS: ${response.headers.prettyJson}
+HEADERS: ${request.headers.prettyJson}
 
-BODY: ${response.body.prettyJson}
+BODY: ${request.body.prettyJson}
 
 -- RESPONSE --
-STATUS CODE: [${response.statusCode}]
+STATUS CODE: ${response.statusCode}
 
 HEADERS: ${response.headers.prettyJson}
 

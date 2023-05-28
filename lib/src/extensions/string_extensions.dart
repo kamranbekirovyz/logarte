@@ -8,10 +8,16 @@ extension LogarteStringXs on String {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Copied 🖨️',
-            textAlign: TextAlign.center,
+        SnackBar(
+          duration: const Duration(seconds: 1),
+          content: Center(
+            child: Text(
+              'Copied top clipboard',
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Colors.white,
+                  ),
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       );
