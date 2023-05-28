@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-extension LogarteStringExtensions on String {
+extension LogarteStringXs on String {
   Future<void> copyToClipboard(BuildContext context) {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
@@ -21,6 +21,6 @@ extension LogarteStringExtensions on String {
 
   String get asReadableSize {
     final encoded = utf8.encode(this);
-    return '${(encoded.length / 1024).toStringAsFixed(2)} KB';
+    return '${(encoded.length / 1024).toStringAsFixed(2)} kb';
   }
 }

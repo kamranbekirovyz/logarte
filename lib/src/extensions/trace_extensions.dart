@@ -1,6 +1,6 @@
 import 'package:stack_trace/stack_trace.dart';
 
-extension TraceX on Trace {
+extension LogarteTraceXs on Trace {
   String? get source {
     return canIncludeSource
         ? '$secondarySourceClass.$secondarySourceMethod'

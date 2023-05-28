@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-extension LogarteNullableStringExtensions on Object? {
+extension LogarteNullableStringXs on Object? {
   String get prettyJson {
     try {
       final source = this;
