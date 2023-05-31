@@ -1,3 +1,3 @@
-## 0.0.1
+## 0.1.0
 
-* TODO: Describe initial release.
+* Initial release with `LogarteNavigatorObserver`, `LogarteDioInterceptor` and console as a graphical user interface.

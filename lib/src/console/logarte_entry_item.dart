@@ -98,6 +98,7 @@ class _NavigationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: dart version upgraded due to this
     final action = entry.action.name.toUpperCase();
 
     return ListTile(

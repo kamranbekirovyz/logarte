@@ -1,10 +1,10 @@
 name: logarte
-description: A new Flutter package project.
-version: 0.0.1
-homepage:
+description: Logarte Flutter Package
+version: 0.1.0
+repository: https://github.com/kamranbekirovyz/logarte
 
 environment:
-  sdk: '>=2.12.2 <3.0.0'
+  sdk: '>=2.15.0 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
