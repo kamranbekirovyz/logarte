@@ -113,7 +113,7 @@ class _NavigationItem extends StatelessWidget {
             ? Colors.green
             : entry.action == NavigationAction.pop
                 ? Colors.red
-                : Colors.grey,
+                : Colors.grey.shade900,
       ),
       title: _LuxuryText(
         text: entry.previousRoute != null

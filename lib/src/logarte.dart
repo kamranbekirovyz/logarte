@@ -9,7 +9,6 @@ import 'package:logarte/src/models/logarte_entry.dart';
 import 'package:logarte/src/models/navigation_action.dart';
 import 'package:stack_trace/stack_trace.dart';
 
-// TODO: add internal theme with inherited widget
 // TODO: add listener and refresher
 
 class Logarte {

@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 extension LogarteRouteXs on Route? {
   String? get routeName {
-    return this?.settings.name;
+    return this?.settings.name ?? 'unknown';
   }
 
   String get routeInfo {
