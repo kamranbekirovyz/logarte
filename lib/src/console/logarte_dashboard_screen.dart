@@ -96,7 +96,7 @@ class _List<T extends LogarteEntry> extends StatelessWidget {
 
           return LogarteEntryItem(log, instance: instance);
         },
-        separatorBuilder: (context, index) => const Divider(height: 2.0),
+        separatorBuilder: (context, index) => const Divider(height: 8.0),
       ),
     );
   }

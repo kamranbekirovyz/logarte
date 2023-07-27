@@ -52,6 +52,9 @@ class _PlainItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () {
+        entry.message.copyToClipboard(context);
+      },
       leading: const Icon(
         Icons.bug_report,
       ),
@@ -98,7 +101,6 @@ class _NavigationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: dart version upgraded due to this
     final action = entry.action.name.toUpperCase();
 
     return ListTile(
@@ -227,6 +229,9 @@ class _DatabaseItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () {
+        entry.value?.copyToClipboard(context);
+      },
       leading: const Icon(
         Icons.save_as_rounded,
       ),

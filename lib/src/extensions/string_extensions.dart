@@ -12,7 +12,7 @@ extension LogarteStringXs on String {
           duration: const Duration(seconds: 1),
           content: Center(
             child: Text(
-              'Copied top clipboard',
+              'Copied',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Colors.white,
                   ),
@@ -21,6 +21,8 @@ extension LogarteStringXs on String {
           ),
         ),
       );
+
+    HapticFeedback.lightImpact();
 
     return Clipboard.setData(ClipboardData(text: this));
   }
