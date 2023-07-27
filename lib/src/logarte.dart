@@ -14,12 +14,14 @@ import 'package:stack_trace/stack_trace.dart';
 class Logarte {
   final String? consolePassword;
   final Function(String data)? onShare;
-  final List<LogarteEntry> logs = [];
 
   Logarte({
     this.consolePassword,
     this.onShare,
   });
+
+  final logs = ValueNotifier(<LogarteEntry>[]);
+  void _add(LogarteEntry entry) => logs.value = [...logs.value, entry];
 
   void log(
     Object? message, {
@@ -30,7 +32,7 @@ class Logarte {
     developer.log(message.toString());
 
     if (write) {
-      logs.add(
+      _add(
         PlainLogarteEntry(
           message.toString(),
           trace: trace ?? Trace.current(),
@@ -70,7 +72,7 @@ RESPONSE BODY: ${response.body.prettyJson}
         write: false,
       );
 
-      logs.add(
+      _add(
         NetworkLogarteEntry(
           request: request,
           response: response,
@@ -101,7 +103,7 @@ PREVIOUS ROUTE: ${previousRoute.routeInfo}
         write: false,
       );
 
-      logs.add(
+      _add(
         NavigatorLogarteEntry(
           route: route,
           previousRoute: previousRoute,
@@ -122,7 +124,7 @@ PREVIOUS ROUTE: ${previousRoute.routeInfo}
         write: false,
       );
 
-      logs.add(
+      _add(
         DatabaseLogarteEntry(
           key: key,
           value: value,

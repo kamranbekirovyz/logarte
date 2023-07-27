@@ -3,34 +3,13 @@ import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/logarte_entry_item.dart';
 import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 
-class LogarteDashboardScreen extends StatefulWidget {
+class LogarteDashboardScreen extends StatelessWidget {
   final Logarte instance;
 
   const LogarteDashboardScreen(
     this.instance, {
     Key? key,
   }) : super(key: key);
-
-  @override
-  State<LogarteDashboardScreen> createState() => _LogarteDashboardScreenState();
-}
-
-class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
-  late final TextEditingController _searchController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _searchController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,14 +52,20 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
               ],
             ),
           ),
-          body: TabBarView(
-            children: [
-              _List<LogarteEntry>(instance: widget.instance),
-              _List<PlainLogarteEntry>(instance: widget.instance),
-              _List<NetworkLogarteEntry>(instance: widget.instance),
-              _List<DatabaseLogarteEntry>(instance: widget.instance),
-              _List<NavigatorLogarteEntry>(instance: widget.instance),
-            ],
+          // To rebuild the list when the logs list gets modified
+          body: ValueListenableBuilder(
+            valueListenable: instance.logs,
+            builder: (context, values, child) {
+              return TabBarView(
+                children: [
+                  _List<LogarteEntry>(instance: instance),
+                  _List<PlainLogarteEntry>(instance: instance),
+                  _List<NetworkLogarteEntry>(instance: instance),
+                  _List<DatabaseLogarteEntry>(instance: instance),
+                  _List<NavigatorLogarteEntry>(instance: instance),
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -99,8 +84,8 @@ class _List<T extends LogarteEntry> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final logs = T == LogarteEntry
-        ? instance.logs
-        : instance.logs.where((e) => e.runtimeType == T).toList();
+        ? instance.logs.value
+        : instance.logs.value.where((e) => e.runtimeType == T).toList();
 
     return Scrollbar(
       child: ListView.separated(
@@ -111,7 +96,7 @@ class _List<T extends LogarteEntry> extends StatelessWidget {
 
           return LogarteEntryItem(log, instance: instance);
         },
-        separatorBuilder: (context, index) => const Divider(height: 8.0),
+        separatorBuilder: (context, index) => const Divider(height: 2.0),
       ),
     );
   }
