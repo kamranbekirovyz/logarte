@@ -58,7 +58,7 @@ packages:
     source: hosted
     version: "3.0.3"
   dio:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: dio
       sha256: "3866d67f93523161b643187af65f5ac08bc991a5bcdaf41a2d587fe4ccb49993"
