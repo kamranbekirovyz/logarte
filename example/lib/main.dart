@@ -6,7 +6,7 @@ import 'package:share_plus/share_plus.dart';
 
 final logarte = Logarte(
   onShare: Share.share,
-  consolePassword: 'logarte',
+  password: 'logarte',
 );
 
 enum Environment { dev, staging, prod }
@@ -56,7 +56,7 @@ class HomePageState extends State<HomePage> {
         LogarteDioInterceptor(logarte),
       );
 
-    logarte.attachBackDoorButtonOverlay(
+    logarte.attach(
       context: context,
       visible: environment == Environment.dev ||
           environment == Environment.staging ||
@@ -142,7 +142,7 @@ class HomePageState extends State<HomePage> {
               ),
               FilledButton.tonal(
                 onPressed: () {
-                  logarte.log('Printed to console');
+                  // logarte.log('Printed to console');
                 },
                 child: const Text('Plain log'),
               ),

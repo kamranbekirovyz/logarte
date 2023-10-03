@@ -2,5 +2,10 @@ enum NavigationAction {
   push,
   pop,
   remove,
-  replace,
+  replace;
+
+  @override
+  String toString() {
+    return name.toUpperCase();
+  }
 }

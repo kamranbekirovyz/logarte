@@ -42,12 +42,12 @@ class NavigatorLogarteEntry extends LogarteEntry {
 }
 
 class DatabaseLogarteEntry extends LogarteEntry {
-  final String key;
+  final String target;
   final String? value;
   final String source;
 
   DatabaseLogarteEntry({
-    required this.key,
+    required this.target,
     required this.value,
     required this.source,
   }) : super(LogarteType.database);

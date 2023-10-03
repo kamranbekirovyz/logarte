@@ -101,7 +101,7 @@ class _NavigationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final action = entry.action.name.toUpperCase();
+    final action = entry.action;
 
     return ListTile(
       leading: Icon(
@@ -240,7 +240,7 @@ class _DatabaseItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            entry.key,
+            entry.target,
             style: const TextStyle(
               fontSize: 14.0,
               fontWeight: FontWeight.w600,

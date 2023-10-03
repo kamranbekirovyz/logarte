@@ -21,7 +21,7 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
   static bool _isLoggedIn = false;
 
   bool get isLoggedIn => _isLoggedIn;
-  bool get _noPassword => widget.instance.consolePassword == null;
+  bool get _noPassword => widget.instance.password == null;
 
   late final TextEditingController _controller;
 
@@ -79,7 +79,7 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
   }
 
   void _onSubmit() {
-    if (widget.instance.consolePassword == _controller.text) {
+    if (widget.instance.password == _controller.text) {
       _goToDashboard();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
