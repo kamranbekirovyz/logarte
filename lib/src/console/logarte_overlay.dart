@@ -15,9 +15,11 @@ class LogarteOverlay extends StatelessWidget {
     required Logarte instance,
   }) {
     final entry = OverlayEntry(
-      builder: (context) => LogarteOverlay._internal(
-        instance: instance,
-      ),
+      builder: (context) {
+        return LogarteOverlay._internal(
+          instance: instance,
+        );
+      },
     );
 
     Future.delayed(kThemeAnimationDuration, () {
@@ -67,7 +69,9 @@ class _LogarteFABState extends State<_LogarteFAB> {
     } else {
       Navigator.of(context).push<void>(
         MaterialPageRoute(
-          builder: (_) => LogarteAuthScreen(widget.instance),
+          builder: (_) {
+            return LogarteAuthScreen(widget.instance);
+          },
           settings: const RouteSettings(name: '/logarte_auth'),
         ),
       );
@@ -78,18 +82,32 @@ class _LogarteFABState extends State<_LogarteFAB> {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: Colors.blueGrey.shade900,
-      onPressed: _onPressed,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(8.0),
-          bottomLeft: Radius.circular(8.0),
+    return GestureDetector(
+      onTap: _onPressed,
+      onDoubleTap: () {
+        if (!_isOpened) {
+          widget.instance.onRocketDoubleTapped?.call(context);
+        }
+      },
+      onLongPress: () {
+        if (!_isOpened) {
+          widget.instance.onRocketLongPressed?.call(context);
+        }
+      },
+      child: Container(
+        width: 52.0,
+        height: 52.0,
+        decoration: BoxDecoration(
+          color: Colors.blueGrey.shade900,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(8.0),
+            bottomLeft: Radius.circular(8.0),
+          ),
         ),
-      ),
-      child: Icon(
-        _isOpened ? Icons.close : Icons.rocket_launch,
-        color: Colors.white,
+        child: Icon(
+          _isOpened ? Icons.close : Icons.rocket_launch_rounded,
+          color: Colors.white,
+        ),
       ),
     );
   }

@@ -1,35 +1,66 @@
-import 'dart:developer' as developer;
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logarte/src/console/logarte_auth_screen.dart';
 import 'package:logarte/src/console/logarte_overlay.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:logarte/src/extensions/route_extensions.dart';
+import 'package:logarte/src/logger/logger.dart';
+import 'package:logarte/src/logger/printers/pretty_printer.dart';
 import 'package:logarte/src/models/logarte_entry.dart';
 import 'package:logarte/src/models/navigation_action.dart';
 import 'package:stack_trace/stack_trace.dart';
 
-// TODO: add listener and refresher
-
 class Logarte {
-  final String? consolePassword;
+  final String? password;
+  final bool ignorePassword;
   final Function(String data)? onShare;
+  final Function(BuildContext context)? onRocketLongPressed;
+  final Function(BuildContext context)? onRocketDoubleTapped;
+  late final Logger _logger;
 
   Logarte({
-    this.consolePassword,
+    this.password,
+    this.ignorePassword = !kReleaseMode,
     this.onShare,
-  });
+    this.onRocketLongPressed,
+    this.onRocketDoubleTapped,
+  }) {
+    _logger = Logger(
+      printer: PrettyPrinter(
+        lineLength: 100,
+        methodCount: 0,
+      ),
+    );
+  }
 
   final logs = ValueNotifier(<LogarteEntry>[]);
   void _add(LogarteEntry entry) => logs.value = [...logs.value, entry];
 
-  void log(
+  void info(
+    Object? message, {
+    bool write = true,
+    Trace? trace,
+  }) {
+    _log(
+      Level.info,
+      message,
+      write: write,
+      trace: trace ?? Trace.current(),
+    );
+  }
+
+  void _log(
+    Level level,
     Object? message, {
     bool write = true,
     Trace? trace,
   }) {
     // TODO: try and catch
-    developer.log(message.toString());
+
+    _logger.log(
+      level,
+      message.toString(),
+    );
 
     if (write) {
       _add(
@@ -46,7 +77,8 @@ class Logarte {
     StackTrace? stackTrace,
     bool write = true,
   }) {
-    log(
+    _log(
+      Level.debug,
       'ERROR: $message\n\nTRACE: $stackTrace',
       write: write,
       trace: Trace.current(),
@@ -58,19 +90,12 @@ class Logarte {
     required NetworkResponseLogarteEntry response,
   }) {
     try {
-      log(
-        '''
------------------- NETWORK REQUEST -----------------
-URL: [${request.method}] ${request.url}
-REQUEST HEADERS: ${request.headers.prettyJson}
-REQUEST BODY: ${request.body.prettyJson}
-STATUS CODE: ${response.statusCode}
-RESPONSE HEADERS: ${response.headers.prettyJson}
-RESPONSE BODY: ${response.body.prettyJson}
-----------------------------------------------------
-''',
-        write: false,
-      );
+      _log(Level.network, '[${request.method}] URL: ${request.url}');
+      _log(Level.network, 'HEADERS: ${request.headers.prettyJson}');
+      _log(Level.network, 'BODY: ${request.body.prettyJson}');
+      _log(Level.network, 'STATUS CODE: ${response.statusCode}');
+      _log(Level.network, 'RESPONSE HEADERS: ${response.headers.prettyJson}');
+      _log(Level.network, 'RESPONSE BODY: ${response.body.prettyJson}');
 
       _add(
         NetworkLogarteEntry(
@@ -92,14 +117,16 @@ RESPONSE BODY: ${response.body.prettyJson}
         return;
       }
 
-      log(
-        '''
------------------- NAVIGATION -----------------
-ROUTE: ${route.routeInfo}
-PREVIOUS ROUTE: ${previousRoute.routeInfo}
-------------------------------------------------
+      // TODO: make it common logic
+      final message = previousRoute != null
+          ? action == NavigationAction.pop
+              ? '$action from "${route.routeName}" to "${previousRoute.routeName}"'
+              : '$action to "${route.routeName}"'
+          : '$action to "${route.routeName}"';
 
-''',
+      _log(
+        Level.navigation,
+        message,
         write: false,
       );
 
@@ -114,19 +141,20 @@ PREVIOUS ROUTE: ${previousRoute.routeInfo}
   }
 
   void database({
-    required String key,
+    required String target,
     required String? value,
     required String source,
   }) {
     try {
-      log(
-        '$key was written to database from $source with value: $value',
+      _log(
+        Level.info,
+        '$target was written to database from $source with value: $value',
         write: false,
       );
 
       _add(
         DatabaseLogarteEntry(
-          key: key,
+          target: target,
           value: value,
           source: source,
         ),
@@ -134,7 +162,7 @@ PREVIOUS ROUTE: ${previousRoute.routeInfo}
     } catch (_) {}
   }
 
-  void attachBackDoorButtonOverlay({
+  void attach({
     required BuildContext context,
     required bool visible,
   }) async {
