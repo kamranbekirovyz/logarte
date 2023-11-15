@@ -17,55 +17,72 @@ class LogarteDashboardScreen extends StatelessWidget {
       child: DefaultTabController(
         length: 5,
         child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(48.0 + 26.0),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).padding.top,
+          body: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return [
+                SliverAppBar(
+                  floating: true,
+                  snap: true,
+                  automaticallyImplyLeading: false,
+                  title: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search',
+                      filled: true,
+                      prefixIcon: const Icon(Icons.search),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          // instance.clear();
+                        },
+                      ),
+                    ),
+                    onChanged: (value) {
+                      // instance.filter(value);
+                    },
+                  ),
+                  bottom: const TabBar(
+                    isScrollable: true,
+                    tabs: [
+                      Tab(
+                        icon: Icon(Icons.list_alt_rounded),
+                        text: 'All',
+                      ),
+                      Tab(
+                        icon: Icon(Icons.bug_report_rounded),
+                        text: 'Logs',
+                      ),
+                      Tab(
+                        icon: Icon(Icons.network_check_rounded),
+                        text: 'Network',
+                      ),
+                      Tab(
+                        icon: Icon(Icons.storage_rounded),
+                        text: 'Storage',
+                      ),
+                      Tab(
+                        icon: Icon(Icons.navigation_rounded),
+                        text: 'Router',
+                      ),
+                    ],
+                  ),
                 ),
-                const TabBar(
-                  isScrollable: true,
-                  tabs: [
-                    Tab(
-                      icon: Icon(Icons.receipt_long_rounded),
-                      text: 'All',
-                    ),
-                    Tab(
-                      icon: Icon(Icons.bug_report_rounded),
-                      text: 'Print',
-                    ),
-                    Tab(
-                      icon: Icon(Icons.public),
-                      text: 'Network',
-                    ),
-                    Tab(
-                      icon: Icon(Icons.save_as_rounded),
-                      text: 'Database',
-                    ),
-                    Tab(
-                      icon: Icon(Icons.radar_rounded),
-                      text: 'Navigator',
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          // To rebuild the list when the logs list gets modified
-          body: ValueListenableBuilder(
-            valueListenable: instance.logs,
-            builder: (context, values, child) {
-              return TabBarView(
-                children: [
-                  _List<LogarteEntry>(instance: instance),
-                  _List<PlainLogarteEntry>(instance: instance),
-                  _List<NetworkLogarteEntry>(instance: instance),
-                  _List<DatabaseLogarteEntry>(instance: instance),
-                  _List<NavigatorLogarteEntry>(instance: instance),
-                ],
-              );
+              ];
             },
+            // To rebuild the list when the logs list gets modified
+            body: ValueListenableBuilder(
+              valueListenable: instance.logs,
+              builder: (context, values, child) {
+                return TabBarView(
+                  children: [
+                    _List<LogarteEntry>(instance: instance),
+                    _List<PlainLogarteEntry>(instance: instance),
+                    _List<NetworkLogarteEntry>(instance: instance),
+                    _List<DatabaseLogarteEntry>(instance: instance),
+                    _List<NavigatorLogarteEntry>(instance: instance),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -91,12 +108,13 @@ class _List<T extends LogarteEntry> extends StatelessWidget {
       child: ListView.separated(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         itemCount: logs.length,
+        padding: EdgeInsets.zero,
         itemBuilder: (context, index) {
           final log = logs.reversed.toList()[index];
 
           return LogarteEntryItem(log, instance: instance);
         },
-        separatorBuilder: (context, index) => const Divider(height: 8.0),
+        separatorBuilder: (context, index) => const Divider(height: 0.0),
       ),
     );
   }
