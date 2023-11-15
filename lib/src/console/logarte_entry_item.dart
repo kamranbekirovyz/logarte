@@ -61,7 +61,7 @@ class _PlainItem extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.bug_report,
-                  size: 16.0,
+                  size: 20.0,
                 ),
                 const SizedBox(width: 8.0),
                 Text(
@@ -127,7 +127,7 @@ class _NavigationItem extends StatelessWidget {
                 : entry.action == NavigationAction.pop
                     ? Colors.red
                     : Colors.grey.shade900,
-            size: 16.0,
+            size: 20.0,
           ),
           const SizedBox(width: 8.0),
           _LuxuryText(
@@ -183,18 +183,18 @@ class _NetworkItem extends StatelessWidget {
         children: [
           Icon(
             entry.response.statusCode == null
-                ? Icons.public_off
+                ? Icons.network_check_rounded
                 : entry.response.statusCode! >= 200 &&
                         entry.response.statusCode! < 300
-                    ? Icons.public
-                    : Icons.public_off,
+                    ? Icons.network_check_rounded
+                    : Icons.network_check_rounded,
             color: entry.response.statusCode == null
                 ? Colors.grey
                 : entry.response.statusCode! >= 200 &&
                         entry.response.statusCode! < 300
                     ? Colors.green
                     : Colors.red,
-            size: 16.0,
+            size: 20.0,
           ),
           const SizedBox(width: 8.0),
           Text(
@@ -263,7 +263,7 @@ class _DatabaseItem extends StatelessWidget {
             children: [
               const Icon(
                 Icons.save_as_rounded,
-                size: 16.0,
+                size: 20.0,
               ),
               const SizedBox(width: 8.0),
               Text(
