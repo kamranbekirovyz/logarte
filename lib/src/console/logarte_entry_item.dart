@@ -52,6 +52,7 @@ class _PlainItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
       onTap: () {
         entry.message.copyToClipboard(context);
       },
@@ -80,7 +81,7 @@ class _PlainItem extends StatelessWidget {
             child: Text(
               entry.timeFormatted,
               style: const TextStyle(
-                fontSize: 14.0,
+                fontSize: 12.0,
                 color: Colors.grey,
               ),
             ),
@@ -104,6 +105,7 @@ class _NavigationItem extends StatelessWidget {
     final action = entry.action;
 
     return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
       leading: Icon(
         entry.action == NavigationAction.push
             ? Icons.arrow_forward
@@ -130,7 +132,7 @@ class _NavigationItem extends StatelessWidget {
         child: Text(
           entry.timeFormatted,
           style: const TextStyle(
-            fontSize: 14.0,
+            fontSize: 12.0,
             color: Colors.grey,
           ),
         ),
@@ -152,6 +154,7 @@ class _NetworkItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
@@ -203,7 +206,7 @@ class _NetworkItem extends StatelessWidget {
             child: Text(
               '${entry.timeFormatted} • ${'${entry.asReadableDuration} • ${entry.response.body.toString().asReadableSize}'}',
               style: const TextStyle(
-                fontSize: 14.0,
+                fontSize: 12.0,
                 color: Colors.grey,
               ),
             ),
@@ -229,6 +232,7 @@ class _DatabaseItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
       onTap: () {
         entry.value?.copyToClipboard(context);
       },
@@ -258,7 +262,7 @@ class _DatabaseItem extends StatelessWidget {
         child: Text(
           '${entry.timeFormatted} • ${entry.source.toString()}',
           style: const TextStyle(
-            fontSize: 14.0,
+            fontSize: 12.0,
             color: Colors.grey,
           ),
         ),
