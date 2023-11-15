@@ -68,18 +68,18 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
                             title: 'METHOD',
                             subtitle: entry.request.method,
                           ),
-                          const Divider(height: 8.0),
+                          const Divider(height: 0.0),
                           SelectableCopiableTile(
                             title: 'URL',
                             subtitle: entry.request.url,
                           ),
-                          const Divider(height: 8.0),
+                          const Divider(height: 0.0),
                           SelectableCopiableTile(
                             title: 'HEADERS',
                             subtitle: entry.request.headers.prettyJson,
                           ),
                           if (entry.request.method != 'GET') ...[
-                            const Divider(height: 8.0),
+                            const Divider(height: 0.0),
                             SelectableCopiableTile(
                               title: 'BODY',
                               subtitle: entry.request.body.prettyJson,
@@ -95,12 +95,12 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
                             title: 'STATUS CODE',
                             subtitle: entry.response.statusCode.toString(),
                           ),
-                          const Divider(height: 8.0),
+                          const Divider(height: 0.0),
                           SelectableCopiableTile(
                             title: 'HEADERS',
                             subtitle: entry.response.headers.prettyJson,
                           ),
-                          const Divider(height: 8.0),
+                          const Divider(height: 0.0),
                           SelectableCopiableTile(
                             title: 'BODY',
                             subtitle: entry.response.body.prettyJson,
