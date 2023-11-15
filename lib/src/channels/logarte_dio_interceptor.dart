@@ -37,6 +37,7 @@ class LogarteDioInterceptor extends Interceptor {
         body: response.data,
         receivedAt: receivedAt,
       ),
+      write: false,
     );
 
     return super.onResponse(response, handler);
@@ -60,6 +61,7 @@ class LogarteDioInterceptor extends Interceptor {
         headers: responseHeaders,
         body: err.response?.data,
       ),
+      write: false,
     );
 
     return super.onError(err, handler);

@@ -88,14 +88,39 @@ class Logarte {
   void network({
     required NetworkRequestLogarteEntry request,
     required NetworkResponseLogarteEntry response,
+    bool write = true,
   }) {
     try {
-      _log(Level.network, '[${request.method}] URL: ${request.url}');
-      _log(Level.network, 'HEADERS: ${request.headers.prettyJson}');
-      _log(Level.network, 'BODY: ${request.body.prettyJson}');
-      _log(Level.network, 'STATUS CODE: ${response.statusCode}');
-      _log(Level.network, 'RESPONSE HEADERS: ${response.headers.prettyJson}');
-      _log(Level.network, 'RESPONSE BODY: ${response.body.prettyJson}');
+      _log(
+        Level.network,
+        '[${request.method}] URL: ${request.url}',
+        write: write,
+      );
+      _log(
+        Level.network,
+        'HEADERS: ${request.headers.prettyJson}',
+        write: write,
+      );
+      _log(
+        Level.network,
+        'BODY: ${request.body.prettyJson}',
+        write: write,
+      );
+      _log(
+        Level.network,
+        'STATUS CODE: ${response.statusCode}',
+        write: write,
+      );
+      _log(
+        Level.network,
+        'RESPONSE HEADERS: ${response.headers.prettyJson}',
+        write: write,
+      );
+      _log(
+        Level.network,
+        'RESPONSE BODY: ${response.body.prettyJson}',
+        write: write,
+      );
 
       _add(
         NetworkLogarteEntry(
