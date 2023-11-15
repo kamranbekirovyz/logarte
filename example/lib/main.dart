@@ -113,6 +113,16 @@ class HomePageState extends State<HomePage> {
             children: [
               FilledButton.tonal(
                 onPressed: () {
+                  logarte.database(
+                    target: 'button_clicked',
+                    value: true,
+                    source: 'SharedPreferences',
+                  );
+                },
+                child: const Text('Write to database'),
+              ),
+              FilledButton.tonal(
+                onPressed: () {
                   showDialog(
                     context: context,
                     routeSettings: const RouteSettings(
