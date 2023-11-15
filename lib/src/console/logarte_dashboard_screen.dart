@@ -150,7 +150,7 @@ class _List<T extends LogarteEntry> extends StatelessWidget {
       child: ListView.separated(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         itemCount: filtered.length,
-        padding: const EdgeInsets.only(bottom: 32.0, top: 16.0),
+        padding: const EdgeInsets.only(bottom: 32.0, top: 8.0),
         itemBuilder: (context, index) {
           final log = filtered.reversed.toList()[index];
 
