@@ -253,7 +253,7 @@ class _DatabaseItem extends StatelessWidget {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
       onTap: () {
-        entry.value?.copyToClipboard(context);
+        entry.value?.toString().copyToClipboard(context);
       },
       title: Column(
         mainAxisSize: MainAxisSize.min,

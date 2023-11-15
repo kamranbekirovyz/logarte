@@ -167,7 +167,7 @@ class Logarte {
 
   void database({
     required String target,
-    required String? value,
+    required Object? value,
     required String source,
   }) {
     try {

@@ -63,7 +63,7 @@ class NavigatorLogarteEntry extends LogarteEntry {
 
 class DatabaseLogarteEntry extends LogarteEntry {
   final String target;
-  final String? value;
+  final Object? value;
   final String source;
 
   DatabaseLogarteEntry({
@@ -75,7 +75,7 @@ class DatabaseLogarteEntry extends LogarteEntry {
   @override
   List<String> get contents => [
         target,
-        if (value != null) value!,
+        if (value != null) value.toString(),
         source,
       ];
 }
