@@ -56,16 +56,22 @@ class _PlainItem extends StatelessWidget {
       onTap: () {
         entry.message.copyToClipboard(context);
       },
-      leading: const Icon(
-        Icons.bug_report,
-      ),
       title: entry.source != null
-          ? Text(
-              entry.source!,
-              style: const TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.w600,
-              ),
+          ? Row(
+              children: [
+                const Icon(
+                  Icons.bug_report,
+                  size: 16.0,
+                ),
+                const SizedBox(width: 8.0),
+                Text(
+                  entry.source!,
+                  style: const TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
             )
           : null,
       subtitle: Column(
@@ -106,26 +112,32 @@ class _NavigationItem extends StatelessWidget {
 
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-      leading: Icon(
-        entry.action == NavigationAction.push
-            ? Icons.arrow_forward
-            : entry.action == NavigationAction.pop
-                ? Icons.arrow_back
-                : entry.action == NavigationAction.replace
-                    ? Icons.swap_horiz
-                    : Icons.remove,
-        color: entry.action == NavigationAction.push
-            ? Colors.green
-            : entry.action == NavigationAction.pop
-                ? Colors.red
-                : Colors.grey.shade900,
-      ),
-      title: _LuxuryText(
-        text: entry.previousRoute != null
-            ? entry.action == NavigationAction.pop
-                ? '*$action* from *"${entry.route.routeName}"* to *"${entry.previousRoute.routeName}"*'
-                : '*$action* to *"${entry.route.routeName}"*'
-            : '*$action* to *"${entry.route.routeName}"*',
+      title: Row(
+        children: [
+          Icon(
+            entry.action == NavigationAction.push
+                ? Icons.arrow_forward
+                : entry.action == NavigationAction.pop
+                    ? Icons.arrow_back
+                    : entry.action == NavigationAction.replace
+                        ? Icons.swap_horiz
+                        : Icons.remove,
+            color: entry.action == NavigationAction.push
+                ? Colors.green
+                : entry.action == NavigationAction.pop
+                    ? Colors.red
+                    : Colors.grey.shade900,
+            size: 16.0,
+          ),
+          const SizedBox(width: 8.0),
+          _LuxuryText(
+            text: entry.previousRoute != null
+                ? entry.action == NavigationAction.pop
+                    ? '*$action* from *"${entry.route.routeName}"* to *"${entry.previousRoute.routeName}"*'
+                    : '*$action* to *"${entry.route.routeName}"*'
+                : '*$action* to *"${entry.route.routeName}"*',
+          ),
+        ],
       ),
       subtitle: Padding(
         padding: const EdgeInsets.only(top: 4.0),
@@ -166,28 +178,35 @@ class _NetworkItem extends StatelessWidget {
           ),
         );
       },
-      leading: Icon(
-        entry.response.statusCode == null
-            ? Icons.public_off
-            : entry.response.statusCode! >= 200 &&
-                    entry.response.statusCode! < 300
-                ? Icons.public
-                : Icons.public_off,
-        color: entry.response.statusCode == null
-            ? Colors.grey
-            : entry.response.statusCode! >= 200 &&
-                    entry.response.statusCode! < 300
-                ? Colors.green
-                : Colors.red,
-      ),
-      title: Text(
-        entry.request.method,
-        overflow: TextOverflow.ellipsis,
-        maxLines: 2,
-        style: const TextStyle(
-          fontSize: 14.0,
-          fontWeight: FontWeight.w600,
-        ),
+      // leading: ,
+      title: Row(
+        children: [
+          Icon(
+            entry.response.statusCode == null
+                ? Icons.public_off
+                : entry.response.statusCode! >= 200 &&
+                        entry.response.statusCode! < 300
+                    ? Icons.public
+                    : Icons.public_off,
+            color: entry.response.statusCode == null
+                ? Colors.grey
+                : entry.response.statusCode! >= 200 &&
+                        entry.response.statusCode! < 300
+                    ? Colors.green
+                    : Colors.red,
+            size: 16.0,
+          ),
+          const SizedBox(width: 8.0),
+          Text(
+            entry.request.method,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+            style: const TextStyle(
+              fontSize: 14.0,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
       ),
       subtitle: Column(
         mainAxisSize: MainAxisSize.min,
@@ -236,19 +255,25 @@ class _DatabaseItem extends StatelessWidget {
       onTap: () {
         entry.value?.copyToClipboard(context);
       },
-      leading: const Icon(
-        Icons.save_as_rounded,
-      ),
       title: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            entry.target,
-            style: const TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w600,
-            ),
+          Row(
+            children: [
+              const Icon(
+                Icons.save_as_rounded,
+                size: 16.0,
+              ),
+              const SizedBox(width: 8.0),
+              Text(
+                entry.target,
+                style: const TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
           ),
           // const SizedBox(height: 4.0),
           Text(
