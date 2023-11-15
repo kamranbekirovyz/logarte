@@ -14,6 +14,8 @@ abstract class LogarteEntry {
   DateTime get date => _date;
   String get timeFormatted =>
       '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}:${date.second}';
+
+  List<String> get contents;
 }
 
 class PlainLogarteEntry extends LogarteEntry {
@@ -27,6 +29,12 @@ class PlainLogarteEntry extends LogarteEntry {
         super(LogarteType.plain);
 
   String? get source => _source;
+
+  @override
+  List<String> get contents => [
+        message,
+        if (source != null) source!,
+      ];
 }
 
 class NavigatorLogarteEntry extends LogarteEntry {
@@ -39,6 +47,18 @@ class NavigatorLogarteEntry extends LogarteEntry {
     required this.previousRoute,
     required this.action,
   }) : super(LogarteType.navigation);
+
+  @override
+  List<String> get contents => [
+        if (route?.settings.name != null) route!.settings.name!,
+        if (route?.settings.arguments != null)
+          route!.settings.arguments.toString(),
+        action.name,
+        if (previousRoute != null && previousRoute!.settings.name != null)
+          previousRoute!.settings.name!,
+        if (previousRoute != null && previousRoute!.settings.arguments != null)
+          previousRoute!.settings.arguments.toString(),
+      ];
 }
 
 class DatabaseLogarteEntry extends LogarteEntry {
@@ -51,6 +71,13 @@ class DatabaseLogarteEntry extends LogarteEntry {
     required this.value,
     required this.source,
   }) : super(LogarteType.database);
+
+  @override
+  List<String> get contents => [
+        target,
+        if (value != null) value!,
+        source,
+      ];
 }
 
 class NetworkLogarteEntry extends LogarteEntry {
@@ -61,6 +88,19 @@ class NetworkLogarteEntry extends LogarteEntry {
     required this.request,
     required this.response,
   }) : super(LogarteType.network);
+
+  @override
+  List<String> get contents => [
+        request.url,
+        request.method,
+        if (request.headers != null) request.headers!.toString(),
+        if (request.body != null) request.body.toString(),
+        if (request.sentAt != null) request.sentAt.toString(),
+        if (response.statusCode != null) response.statusCode.toString(),
+        if (response.headers != null) response.headers!.toString(),
+        if (response.body != null) response.body.toString(),
+        if (response.receivedAt != null) response.receivedAt.toString(),
+      ];
 
   @override
   String toString() {

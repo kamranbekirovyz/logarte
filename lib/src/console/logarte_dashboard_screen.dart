@@ -3,13 +3,32 @@ import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/logarte_entry_item.dart';
 import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 
-class LogarteDashboardScreen extends StatelessWidget {
+class LogarteDashboardScreen extends StatefulWidget {
   final Logarte instance;
 
   const LogarteDashboardScreen(
     this.instance, {
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<LogarteDashboardScreen> createState() => _LogarteDashboardScreenState();
+}
+
+class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +44,16 @@ class LogarteDashboardScreen extends StatelessWidget {
                   snap: true,
                   automaticallyImplyLeading: false,
                   title: TextField(
+                    controller: _controller,
                     decoration: InputDecoration(
                       hintText: 'Search',
                       filled: true,
                       prefixIcon: const Icon(Icons.search),
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          // instance.clear();
-                        },
+                        onPressed: _controller.clear,
                       ),
                     ),
-                    onChanged: (value) {
-                      // instance.filter(value);
-                    },
                   ),
                   bottom: const TabBar(
                     isScrollable: true,
@@ -70,16 +85,38 @@ class LogarteDashboardScreen extends StatelessWidget {
             },
             // To rebuild the list when the logs list gets modified
             body: ValueListenableBuilder(
-              valueListenable: instance.logs,
+              valueListenable: widget.instance.logs,
               builder: (context, values, child) {
-                return TabBarView(
-                  children: [
-                    _List<LogarteEntry>(instance: instance),
-                    _List<PlainLogarteEntry>(instance: instance),
-                    _List<NetworkLogarteEntry>(instance: instance),
-                    _List<DatabaseLogarteEntry>(instance: instance),
-                    _List<NavigatorLogarteEntry>(instance: instance),
-                  ],
+                return AnimatedBuilder(
+                  animation: _controller,
+                  builder: (_, __) {
+                    final search = _controller.text.toLowerCase();
+
+                    return TabBarView(
+                      children: [
+                        _List<LogarteEntry>(
+                          instance: widget.instance,
+                          search: search,
+                        ),
+                        _List<PlainLogarteEntry>(
+                          instance: widget.instance,
+                          search: search,
+                        ),
+                        _List<NetworkLogarteEntry>(
+                          instance: widget.instance,
+                          search: search,
+                        ),
+                        _List<DatabaseLogarteEntry>(
+                          instance: widget.instance,
+                          search: search,
+                        ),
+                        _List<NavigatorLogarteEntry>(
+                          instance: widget.instance,
+                          search: search,
+                        ),
+                      ],
+                    );
+                  },
                 );
               },
             ),
@@ -91,26 +128,31 @@ class LogarteDashboardScreen extends StatelessWidget {
 }
 
 class _List<T extends LogarteEntry> extends StatelessWidget {
-  const _List({
-    Key? key,
-    required this.instance,
-  }) : super(key: key);
+  const _List({Key? key, required this.instance, required this.search})
+      : super(key: key);
 
   final Logarte instance;
+  final String search;
 
   @override
   Widget build(BuildContext context) {
     final logs = T == LogarteEntry
         ? instance.logs.value
-        : instance.logs.value.where((e) => e.runtimeType == T).toList();
+        : instance.logs.value.whereType<T>().toList();
+
+    final filtered = logs.where((log) {
+      return log.contents.any(
+        (content) => content.toLowerCase().contains(search),
+      );
+    }).toList();
 
     return Scrollbar(
       child: ListView.separated(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        itemCount: logs.length,
+        itemCount: filtered.length,
         padding: EdgeInsets.zero,
         itemBuilder: (context, index) {
-          final log = logs.reversed.toList()[index];
+          final log = filtered.reversed.toList()[index];
 
           return LogarteEntryItem(log, instance: instance);
         },
