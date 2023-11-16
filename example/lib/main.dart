@@ -25,6 +25,12 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Logarte Example',
       debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.dark,
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.dark,
+        colorSchemeSeed: Colors.blueGrey.shade900,
+      ),
       theme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed: Colors.blueGrey.shade900,
