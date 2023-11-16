@@ -9,7 +9,12 @@ extension LogarteStringXs on String {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
+          elevation: 0.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
           duration: const Duration(seconds: 1),
+          behavior: SnackBarBehavior.floating,
           content: Center(
             child: Text(
               'Copied',
