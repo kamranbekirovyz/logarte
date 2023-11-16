@@ -140,7 +140,7 @@ class _NavigationItem extends StatelessWidget {
         ],
       ),
       subtitle: Padding(
-        padding: const EdgeInsets.only(top: 4.0),
+        padding: const EdgeInsets.only(top: 2.0),
         child: Text(
           entry.timeFormatted,
           style: const TextStyle(
@@ -221,7 +221,7 @@ class _NetworkItem extends StatelessWidget {
             style: const TextStyle(fontSize: 14.0),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 4.0),
+            padding: const EdgeInsets.only(top: 2.0),
             child: Text(
               '${entry.timeFormatted} • ${'${entry.asReadableDuration} • ${entry.response.body.toString().asReadableSize}'}',
               style: const TextStyle(
@@ -283,7 +283,7 @@ class _DatabaseItem extends StatelessWidget {
         ],
       ),
       subtitle: Padding(
-        padding: const EdgeInsets.only(top: 4.0),
+        padding: const EdgeInsets.only(top: 2.0),
         child: Text(
           '${entry.timeFormatted} • ${entry.source.toString()}',
           style: const TextStyle(
