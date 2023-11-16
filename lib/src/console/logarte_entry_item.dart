@@ -183,11 +183,11 @@ class _NetworkItem extends StatelessWidget {
         children: [
           Icon(
             entry.response.statusCode == null
-                ? Icons.network_check_rounded
+                ? Icons.public_off_rounded
                 : entry.response.statusCode! >= 200 &&
                         entry.response.statusCode! < 300
-                    ? Icons.network_check_rounded
-                    : Icons.network_check_rounded,
+                    ? Icons.public_rounded
+                    : Icons.public_off_rounded,
             color: entry.response.statusCode == null
                 ? Colors.grey
                 : entry.response.statusCode! >= 200 &&

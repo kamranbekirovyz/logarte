@@ -55,29 +55,35 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                       ),
                     ),
                   ),
-                  bottom: const TabBar(
+                  bottom: TabBar(
                     isScrollable: true,
                     tabAlignment: TabAlignment.center,
+                    labelPadding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    indicatorSize: TabBarIndicatorSize.tab,
                     tabs: [
                       Tab(
-                        icon: Icon(Icons.list_alt_rounded),
-                        text: 'All',
+                        icon: const Icon(Icons.list_alt_rounded),
+                        text: 'All (${widget.instance.logs.value.length})',
                       ),
                       Tab(
-                        icon: Icon(Icons.bug_report_rounded),
-                        text: 'Logs',
+                        icon: const Icon(Icons.bug_report_rounded),
+                        text:
+                            'Logs (${widget.instance.logs.value.whereType<PlainLogarteEntry>().length})',
                       ),
                       Tab(
-                        icon: Icon(Icons.network_check_rounded),
-                        text: 'Network',
+                        icon: const Icon(Icons.public),
+                        text:
+                            'Network (${widget.instance.logs.value.whereType<NetworkLogarteEntry>().length})',
                       ),
                       Tab(
-                        icon: Icon(Icons.storage_rounded),
-                        text: 'Storage',
+                        icon: const Icon(Icons.storage_rounded),
+                        text:
+                            'Storage (${widget.instance.logs.value.whereType<DatabaseLogarteEntry>().length})',
                       ),
                       Tab(
-                        icon: Icon(Icons.navigation_rounded),
-                        text: 'Router',
+                        icon: const Icon(Icons.navigation_rounded),
+                        text:
+                            'Router (${widget.instance.logs.value.whereType<NavigatorLogarteEntry>().length})',
                       ),
                     ],
                   ),
