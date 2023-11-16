@@ -57,6 +57,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                   ),
                   bottom: const TabBar(
                     isScrollable: true,
+                    tabAlignment: TabAlignment.center,
                     tabs: [
                       Tab(
                         icon: Icon(Icons.list_alt_rounded),
