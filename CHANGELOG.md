@@ -1,3 +1,8 @@
+## 0.1.2
+
+* Added `LogarteMagicalTap` widget which tapped N times in a row will attach logarte to the screen.
+* Implemented search functionality and improved overall interface of the console.
+
 ## 0.1.1
 
 * Added `Logarte#onRocketLongPressed` and `Logarte#onRocketDoubleTapped` parameters and initial version of console logger.
