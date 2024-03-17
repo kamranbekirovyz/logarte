@@ -120,8 +120,8 @@ class HomePageState extends State<HomePage> {
               FilledButton.tonal(
                 onPressed: () {
                   logarte.database(
-                    target: 'button_clicked',
-                    value: true,
+                    target: 'language',
+                    value: 'en',
                     source: 'SharedPreferences',
                   );
                 },

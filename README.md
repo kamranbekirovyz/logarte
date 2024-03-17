@@ -5,10 +5,11 @@ A magical graphical debug console for Flutter.
 <img src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/cover.png?raw=true">
 
 ## 📦 Features
-- 🚀 **Graphical Console**: A beautiful and easy-to-use graphical console for debugging.
-- 🔒 **Password Protection**: Protect your graphical debug console with a password.
-- 📡 **Monitor Network Requests**: Logarte can track network requests and display them in the console.
-- 📤 **Share Logs**: Share logs and the network requests, with a single tap.
+- 🚀 **Graphical Console**: a beautiful graphical console for debugging.
+- 🔒 **Password Protection**: add password protection to graphical console.
+- 📡 **Network Requests**: see network requests, responses, status code and size.
+- 📁 **Database Writes**: see database write transactions and their content.
+- 📤 **Share Logs**: share all kinds of logs with platform share window.
 
 ## 🪚 Installation
 
@@ -117,6 +118,20 @@ MaterialApp(
   ],
 )
 ```
+
+### Track Database Writes
+
+To track database writes, you can use the `database` method of the `Logarte` instance.
+
+```dart
+logarte.database(
+  target: 'language',
+  value: 'en',
+  source: 'SharedPreferences',
+);
+```
+
+
 
 ## 🕹️ Example
 
