@@ -5,9 +5,10 @@ A magical graphical debug console for Flutter.
 <img src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/cover.png?raw=true">
 
 ## 📦 Features
-- **Password Protection**: Protect your graphical debug console with a password.
-- **Entry Button**: A floating button that can be used to open the console from anywhere in the app.
-- **Share Logs**: Share logs, even the network requests, with a single tap.
+- 🚀 **Graphical Console**: A beautiful and easy-to-use graphical console for debugging.
+- 🔒 **Password Protection**: Protect your graphical debug console with a password.
+- 📡 **Monitor Network Requests**: Logarte can track network requests and display them in the console.
+- 📤 **Share Logs**: Share logs and the network requests, with a single tap.
 
 ## 🪚 Installation
 
