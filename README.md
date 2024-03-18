@@ -11,9 +11,9 @@ Graphical debug console for Flutter to monitor network requests, database writes
 - 📁 **Database Writes**: see database write transactions and their content.
 - 📤 **Share Logs**: share all kinds of logs with platform share window.
 
-## Note from the developer
+## 👋🏻 Words from the author 
 
-Hi, I'm <a href="https://linkedin.com/kamranbekirovyz">Kamran</a>. I've been using this package for a while in the projects I work on. It's a simple and great tool and if you would like to see something either chat with me on <a href="https://t.me/flutterporelarte">Telegram channel</a> or create an <a href="https://github.com/kamranbekirovyz/logarte/issues">issue on GitHub</a>. I'm open to any kind of feedback and contribution.
+Hi, I'm <a href="https://linkedin.com/in/kamranbekirovyz">Kamran</a>. I've been using this package for a while in the projects I work on. It's a simple and great tool and if you would like to see something either chat with me on <a href="https://t.me/flutterporelarte">Telegram channel</a> or create an <a href="https://github.com/kamranbekirovyz/logarte/issues">issue on GitHub</a>. I'm open to any kind of feedback and contribution.
 
 ## 🪚 Installation
 

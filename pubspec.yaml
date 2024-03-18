@@ -1,6 +1,6 @@
 name: logarte
 description: Graphical Debug Console for Flutter
-version: 0.1.3
+version: 0.1.4
 repository: https://github.com/kamranbekirovyz/logarte
 
 environment:

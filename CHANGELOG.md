@@ -1,3 +1,7 @@
+## 0.1.4
+
+* Fix links in the documentation.
+
 ## 0.1.3
 
 * Added documentation for the package to release it on pub.dev.
