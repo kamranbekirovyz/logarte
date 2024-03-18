@@ -1,6 +1,6 @@
 # logarte
 
-A magical graphical debug console for Flutter.
+Graphical debug console for Flutter to monitor network requests, database writes, navigations and more.
 
 <img src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/cover.png?raw=true">
 
@@ -10,6 +10,10 @@ A magical graphical debug console for Flutter.
 - 📡 **Network Requests**: see network requests, responses, status code and size.
 - 📁 **Database Writes**: see database write transactions and their content.
 - 📤 **Share Logs**: share all kinds of logs with platform share window.
+
+## Note from the developer
+
+Hi, I'm <a href="https://linkedin.com/kamranbekirovyz">Kamran</a>. I've been using this package for a while in the projects I work on. It's a simple and great tool and if you would like to see something either chat with me on <a href="https://t.me/flutterporelarte">Telegram channel</a> or create an <a href="https://github.com/kamranbekirovyz/logarte/issues">issue on GitHub</a>. I'm open to any kind of feedback and contribution.
 
 ## 🪚 Installation
 
@@ -26,17 +30,17 @@ Then, run `flutter pub get` in your terminal to install the package.
 
 ### Create an instance
 
-You'll need a `Logarte` instance throughout the app. I, personally, prefer to store a global instance of `Logarte` in a separate file. Here is an example of how to create a `Logarte` instance:
+You'll need a `Logarte` instance throughout the app. I, personally, prefer to store a global instance of `Logarte` in a separate file.
 
 ```dart
 final Logarte logarte = Logarte(
     // Password for protecting the console
     password: '1234',
 
-    // Whether to ignore the password, helpful to ignore password in debug mode
-    ignorePassword: false,
+    // Whether to ignore the password
+    ignorePassword: !kReleaseMode,
 
-    // When share button is pressed, this callback will be called
+    // Sharing the network request log with system share window
     onShare: (String message) {
       Share.share(message);
     },
@@ -59,7 +63,7 @@ final Logarte logarte = Logarte(
 
 ### Open the console
 
-The `Logarte` console can be opened by two methods: using the entry rocket button or using `LogarteMagicalTap` which is a `GestureDetector` that opens the console when tapped 10 times.
+The `Logarte` console can be opened by two methods: clikcing the entry rocket button or using `LogarteMagicalTap` which opens the console when tapped 10 times.
 
 #### Rocket Entry Button
 
@@ -79,7 +83,7 @@ void initState() {
 
 #### LogarteMagicalTap
 
-`LogarteMagicalTap` is a widget that attaches the entry rocket button when tapped 10 times. Wrap any non-tappable widget, and keep it secret.
+`LogarteMagicalTap` is a widget that attaches the entry rocket button to the UI when tapped 10 times. Wrap any non-tappable widget, and keep it secret.
 
 ```dart
 LogarteMagicalTap(
@@ -107,6 +111,49 @@ That's it? Yes, that's it. Now, all the network requests will be logged in both 
 
 #### Other Clients
 
+```dart
+import 'package:http/http.dart' as http;
+
+final body = {
+  'name': 'Kamran',
+  'age': 22,
+};
+final headers = {
+  'Content-Type': 'application/json',
+};
+final endpoint = 'https://api.example.com';
+
+final response = await http.post(
+  Uri.parse(endpoint),
+  headers: headers,
+  body: jsonEncode(body),
+);
+
+logarte.network(
+  request: NetworkRequestLogarteEntry(
+    method: 'POST',
+    url: endpoint,
+    headers: headers,
+    body: body,
+  ),
+  response: NetworkResponseLogarteEntry(
+    statusCode: response.statusCode,
+    headers: response.headers,
+    body: response.body,
+  ),
+);
+```
+
+### Log messages
+
+You can log messages to the console using the `info` method of the `Logarte` instance and then see them in the graphical console.
+
+```dart
+logarte.info('This is an info message');
+```
+
+I'll add more methods for different log types in the future.
+
 ### Track Navigator Routes
 
 To track the navigator routes, you can add `LogarteNavigatorObserver` to the `MaterialApp`'s `navigatorObservers` list.
@@ -130,8 +177,6 @@ logarte.database(
   source: 'SharedPreferences',
 );
 ```
-
-
 
 ## 🕹️ Example
 

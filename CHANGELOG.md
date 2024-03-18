@@ -1,3 +1,8 @@
+## 0.1.3
+
+* Added documentation for the package to release it on pub.dev.
+* Upgrade dependencies to the latest versions.
+
 ## 0.1.2
 
 * Added `LogarteMagicalTap` widget which tapped N times in a row will attach logarte to the screen.
