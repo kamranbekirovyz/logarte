@@ -1,6 +1,6 @@
 # logarte
 
-Graphical debug console for Flutter to monitor network requests, database writes, navigations and more.
+In-app debug console and logger for Fltuter to monitor the app on-air.
 
 <img src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/cover.png?raw=true">
 

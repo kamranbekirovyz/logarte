@@ -1,5 +1,5 @@
 name: logarte
-description: Graphical Debug Console for Flutter
+description: In-app debug console and logger for Fltuter to monitor the app on-air
 version: 0.1.4
 repository: https://github.com/kamranbekirovyz/logarte
 

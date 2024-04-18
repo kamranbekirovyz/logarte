@@ -44,7 +44,7 @@ class LogarteDioInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     final Map<String, String>? responseHeaders = err.response?.headers.map.map(
       (key, value) => MapEntry(key, value.join(', ')),
     );
