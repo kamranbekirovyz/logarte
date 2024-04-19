@@ -1,3 +1,7 @@
+## 0.1.6
+
+* Fix images not being displayed in the documentation.
+
 ## 0.1.5
 
 * Some improvements in the documentation.

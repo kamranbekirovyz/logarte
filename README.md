@@ -2,7 +2,7 @@
 
 In-app debug console and logger for Flutter to monitor the app on-air.
 
-<img src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/cover.png">
+<img src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/cover.png?raw=true">
 
 ## 📦 Features
 - 🚀 **Graphical Console**: a beautiful graphical console for debugging.
@@ -15,7 +15,7 @@ In-app debug console and logger for Flutter to monitor the app on-air.
 
 |Dashboard|Request Details|Password Protection|
 |---|---|---|
-|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s1.png"/>|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s2.png"/>|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s3.png"/>
+|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s1.png?raw=true"/>|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s2.png?raw=true"/>|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s3.png?raw=true"/>
 
 ## 👋🏻 Words from the author 
 

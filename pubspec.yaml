@@ -1,6 +1,6 @@
 name: logarte
 description: In-app debug console and logger for Flutter to monitor the app on-air
-version: 0.1.5
+version: 0.1.6
 repository: https://github.com/kamranbekirovyz/logarte
 issue_tracker: https://github.com/kamranbekirovyz/logarte/issues
 homepage: https://bio.kamranbekirov.com
