@@ -11,9 +11,15 @@ In-app debug console and logger for Fltuter to monitor the app on-air.
 - 📁 **Database Writes**: see database write transactions and their content.
 - 📤 **Share Logs**: share all kinds of logs with platform share window.
 
+## 📱 Screenshots
+
+|Dashboard|Request Details|Password Protection|
+|---|---|---|
+|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s1.png"/>|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s2.png"/>|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s3.png"/>
+
 ## 👋🏻 Words from the author 
 
-Hi, I'm <a href="https://linkedin.com/in/kamranbekirovyz">Kamran</a>. I've been using this package for a while in the projects I work on. It's a simple and great tool and if you would like to see something either chat with me on <a href="https://t.me/flutterporelarte">Telegram channel</a> or create an <a href="https://github.com/kamranbekirovyz/logarte/issues">issue on GitHub</a>. I'm open to any kind of feedback and contribution.
+Hi, I'm <a href="https://linkedin.com/in/kamranbekirovyz">Kamran</a>. I've been using this package for a while in the projects I work on. It's a simple and great tool and if you ever need help with it, join my <a href="https://t.me/flutterporelarte">Telegram</a> channel or create an <a href="https://github.com/kamranbekirovyz/logarte/issues">issue</a>.
 
 ## 🪚 Installation
 
