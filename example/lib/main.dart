@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 import 'package:share_plus/share_plus.dart';
@@ -7,6 +6,36 @@ import 'package:share_plus/share_plus.dart';
 final logarte = Logarte(
   onShare: Share.share,
   password: 'logarte',
+  onRocketDoubleTapped: (context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          title: Text(
+            'onRocketDoubleTapped',
+          ),
+          content: Text(
+            'This callback is useful when you want to quickly access some pages or perform actions without leaving the currently page (toggle theme, change language and etc.).',
+          ),
+        );
+      },
+    );
+  },
+  onRocketLongPressed: (context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          title: Text(
+            'onRocketLongPressed',
+          ),
+          content: Text(
+            'This callback is useful when you want to quickly access some pages or perform actions without leaving the currently page (toggle theme, change language and etc.).',
+          ),
+        );
+      },
+    );
+  },
 );
 
 enum Environment { dev, staging, prod }
@@ -26,11 +55,6 @@ class App extends StatelessWidget {
       title: 'Logarte Example',
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.dark,
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.dark,
-        colorSchemeSeed: Colors.blueGrey.shade900,
-      ),
       theme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed: Colors.blueGrey.shade900,
@@ -64,9 +88,7 @@ class HomePageState extends State<HomePage> {
 
     logarte.attach(
       context: context,
-      visible: environment == Environment.dev ||
-          environment == Environment.staging ||
-          kDebugMode,
+      visible: false,
     );
   }
 
@@ -80,10 +102,24 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Logarte Example'),
+        title: const Text('Example'),
       ),
       body: Column(
         children: [
+          LogarteMagicalTap(
+            logarte: logarte,
+            child: Container(
+              color: Colors.blueGrey.shade100,
+              child: const ListTile(
+                enabled: true,
+                leading: Icon(Icons.touch_app_rounded),
+                title: Text('LogarteMagicalTap'),
+                subtitle: Text(
+                  'Tap this widget 10 times to attach the logarte rocket button UI.',
+                ),
+              ),
+            ),
+          ),
           const Divider(),
           ButtonBar(
             children: [
@@ -158,7 +194,7 @@ class HomePageState extends State<HomePage> {
               ),
               FilledButton.tonal(
                 onPressed: () {
-                  // logarte.log('Printed to console');
+                  logarte.info('Printed to console');
                 },
                 child: const Text('Plain log'),
               ),
