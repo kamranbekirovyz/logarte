@@ -52,7 +52,7 @@ class _PlainItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+      dense: true,
       onTap: () {
         entry.message.copyToClipboard(context);
       },
@@ -65,34 +65,20 @@ class _PlainItem extends StatelessWidget {
                 ),
                 const SizedBox(width: 8.0),
                 Text(
-                  entry.source!,
+                  entry.message,
                   style: const TextStyle(
                     fontSize: 14.0,
-                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
             )
           : null,
-      subtitle: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            entry.message,
-            style: const TextStyle(fontSize: 14.0),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: Text(
-              entry.timeFormatted,
-              style: const TextStyle(
-                fontSize: 12.0,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-        ],
+      subtitle: Text(
+        '${entry.timeFormatted}  • ${entry.source.toString()}',
+        style: const TextStyle(
+          fontSize: 12.0,
+          color: Colors.grey,
+        ),
       ),
     );
   }
@@ -111,7 +97,7 @@ class _NavigationItem extends StatelessWidget {
     final action = entry.action;
 
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+      dense: true,
       title: Row(
         children: [
           Icon(
@@ -140,7 +126,7 @@ class _NavigationItem extends StatelessWidget {
         ],
       ),
       subtitle: Padding(
-        padding: const EdgeInsets.only(top: 2.0),
+        padding: const EdgeInsets.only(top: 4.0),
         child: Text(
           entry.timeFormatted,
           style: const TextStyle(
@@ -166,19 +152,19 @@ class _NetworkItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => NetworkLogEntryDetailsScreen(
-              entry,
-              instance: instance,
-            ),
+            builder: (context) {
+              return NetworkLogEntryDetailsScreen(
+                entry,
+                instance: instance,
+              );
+            },
             settings: const RouteSettings(name: '/logarte_entry_details'),
           ),
         );
       },
-      // leading: ,
       title: Row(
         children: [
           Icon(
@@ -251,6 +237,7 @@ class _DatabaseItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      dense: true,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
       onTap: () {
         entry.value?.toString().copyToClipboard(context);
@@ -266,19 +253,14 @@ class _DatabaseItem extends StatelessWidget {
                 size: 20.0,
               ),
               const SizedBox(width: 8.0),
-              Text(
-                entry.target,
-                style: const TextStyle(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.w600,
-                ),
+              _LuxuryText(
+                text: '*${entry.target}*: ${entry.value}',
+                // style: const TextStyle(
+                //   fontSize: 14.0,
+                //   fontWeight: FontWeight.w600,
+                // ),
               ),
             ],
-          ),
-          // const SizedBox(height: 4.0),
-          Text(
-            entry.value.toString(),
-            style: const TextStyle(fontSize: 14.0),
           ),
         ],
       ),

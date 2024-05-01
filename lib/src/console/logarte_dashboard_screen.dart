@@ -68,7 +68,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                       Tab(
                         icon: const Icon(Icons.bug_report_rounded),
                         text:
-                            'Logs (${widget.instance.logs.value.whereType<PlainLogarteEntry>().length})',
+                            'Logging (${widget.instance.logs.value.whereType<PlainLogarteEntry>().length})',
                       ),
                       Tab(
                         icon: const Icon(Icons.public),
@@ -76,14 +76,14 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                             'Network (${widget.instance.logs.value.whereType<NetworkLogarteEntry>().length})',
                       ),
                       Tab(
-                        icon: const Icon(Icons.storage_rounded),
+                        icon: const Icon(Icons.save_as_rounded),
                         text:
-                            'Storage (${widget.instance.logs.value.whereType<DatabaseLogarteEntry>().length})',
+                            'Database (${widget.instance.logs.value.whereType<DatabaseLogarteEntry>().length})',
                       ),
                       Tab(
                         icon: const Icon(Icons.navigation_rounded),
                         text:
-                            'Router (${widget.instance.logs.value.whereType<NavigatorLogarteEntry>().length})',
+                            'Navigation (${widget.instance.logs.value.whereType<NavigatorLogarteEntry>().length})',
                       ),
                     ],
                   ),
