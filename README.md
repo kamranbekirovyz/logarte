@@ -19,7 +19,7 @@ In-app debug console and logger for Flutter to monitor the app on-air.
 
 ## 👋🏻 Words from the author 
 
-Hi, I'm <a href="https://bio.kamranbekirov.com">Kamran</a>. I've been using this package for a while in the projects I work on. It's a simple and great tool and if you ever need help with it, join my <a href="https://t.me/flutterporelarte" target="_blank">Telegram</a> channel or create an <a href="https://github.com/kamranbekirovyz/logarte/issues" target="_blank">issue</a>.
+Hi, I'm <a href="https://bio.kamranbekirov.com">Kamran</a>. I've been using this package for a while in the projects I work on. It's a simple and great tool and if you ever need help with it create an <a href="https://github.com/kamranbekirovyz/logarte/issues" target="_blank">issue</a>.
 
 ## 🪚 Installation
 
