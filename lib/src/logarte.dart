@@ -59,15 +59,14 @@ class Logarte {
   }) {
     // TODO: try and catch
 
-    if (!disableDebugConsoleLogs){
-      _logger.log(
-        level,
-        message.toString(),
-      );
-    }
+    _logger.log(
+      level,
+      message.toString(),
+    );
+    
     
 
-    if (write) {
+    if (write && !disableDebugConsoleLogs) {
       _add(
         PlainLogarteEntry(
           message.toString(),
