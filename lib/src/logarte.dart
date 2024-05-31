@@ -5,6 +5,7 @@ import 'package:logarte/src/console/logarte_overlay.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:logarte/src/extensions/route_extensions.dart';
 import 'package:logarte/src/logger/logger.dart';
+import 'package:logarte/src/logger/outputs/memory_output.dart';
 import 'package:logarte/src/logger/printers/pretty_printer.dart';
 import 'package:logarte/src/models/logarte_entry.dart';
 import 'package:logarte/src/models/navigation_action.dart';
@@ -29,14 +30,13 @@ class Logarte {
     this.disableDebugConsoleLogs = kReleaseMode,
   }) {
     _logger = Logger(
+      output:  disableDebugConsoleLogs ? MemoryOutput(bufferSize: 1) : null,
+      level: disableDebugConsoleLogs? Level.off : Level.trace,
       printer: PrettyPrinter(
         lineLength: 100,
         methodCount: 0,
       ),
     );
-    if (disableDebugConsoleLogs){
-      Logger.level = Level.off;
-    }
   }
 
   final logs = ValueNotifier(<LogarteEntry>[]);
@@ -63,14 +63,12 @@ class Logarte {
     Trace? trace,
   }) {
     // TODO: try and catch
-    _logger.log(
-      level,
-      message.toString(),
-    );
-
-
-    
-    
+    if (!disableDebugConsoleLogs){
+      _logger.log(
+        level,
+        message.toString(),
+      );
+    }
 
     if (write) {
       _add(
