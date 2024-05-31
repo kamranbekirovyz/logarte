@@ -66,7 +66,7 @@ class Logarte {
     
     
 
-    if (write && !disableDebugConsoleLogs) {
+    if (write) {
       _add(
         PlainLogarteEntry(
           message.toString(),
