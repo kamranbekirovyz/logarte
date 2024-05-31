@@ -34,6 +34,9 @@ class Logarte {
         methodCount: 0,
       ),
     );
+    if (disableDebugConsoleLogs){
+      Logger.level = Level.off;
+    }
   }
 
   final logs = ValueNotifier(<LogarteEntry>[]);
@@ -60,12 +63,11 @@ class Logarte {
     Trace? trace,
   }) {
     // TODO: try and catch
-    if (!disableDebugConsoleLogs){
-      _logger.log(
-        level,
-        message.toString(),
-      );
-    }
+    _logger.log(
+      level,
+      message.toString(),
+    );
+
 
     
     
