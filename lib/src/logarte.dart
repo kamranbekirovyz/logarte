@@ -17,6 +17,7 @@ class Logarte {
   final bool ignorePassword;
   final bool disableDebugConsoleLogs;
   final Function(String data)? onShare;
+  final int logBufferLength;
   final Function(BuildContext context)? onRocketLongPressed;
   final Function(BuildContext context)? onRocketDoubleTapped;
   late final Logger _logger;
@@ -28,6 +29,7 @@ class Logarte {
     this.onRocketLongPressed,
     this.onRocketDoubleTapped,
     this.disableDebugConsoleLogs = kReleaseMode,
+    this.logBufferLength = 2500,
   }) {
     _logger = Logger(
       output:  disableDebugConsoleLogs ? MemoryOutput(bufferSize: 1) : null,
@@ -40,7 +42,13 @@ class Logarte {
   }
 
   final logs = ValueNotifier(<LogarteEntry>[]);
-  void _add(LogarteEntry entry) => logs.value = [...logs.value, entry];
+  void _add(LogarteEntry entry) {
+    //Drop the oldest log entry to prevent ram bloat
+    if (logs.value.length > logBufferLength){
+      logs.value.removeAt(0);
+    }
+    logs.value = [...logs.value, entry];
+  }
 
   void info(
     Object? message, {
