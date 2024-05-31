@@ -58,11 +58,13 @@ class Logarte {
     Trace? trace,
   }) {
     // TODO: try and catch
+    if (!disableDebugConsoleLogs){
+      _logger.log(
+        level,
+        message.toString(),
+      );
+    }
 
-    _logger.log(
-      level,
-      message.toString(),
-    );
     
     
 
