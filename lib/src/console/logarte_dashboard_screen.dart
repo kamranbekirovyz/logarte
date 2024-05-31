@@ -5,10 +5,10 @@ import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 
 class LogarteDashboardScreen extends StatefulWidget {
   final Logarte instance;
-
+  final bool showBackButton;
   const LogarteDashboardScreen(
     this.instance, {
-    Key? key,
+    Key? key, this.showBackButton = false
   }) : super(key: key);
 
   @override
@@ -43,17 +43,24 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                   floating: true,
                   snap: true,
                   automaticallyImplyLeading: false,
-                  title: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      hintText: 'Search',
-                      filled: true,
-                      prefixIcon: const Icon(Icons.search),
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: _controller.clear,
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      if (widget.showBackButton)... [const BackButton()],
+                      TextField(
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          hintText: 'Search',
+                          filled: true,
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.clear),
+                            onPressed: _controller.clear,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                   bottom: TabBar(
                     isScrollable: true,
