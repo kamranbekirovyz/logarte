@@ -59,7 +59,7 @@ class Logarte {
   }) {
     // TODO: try and catch
 
-    if (disableDebugConsoleLogs){
+    if (!disableDebugConsoleLogs){
       _logger.log(
         level,
         message.toString(),
