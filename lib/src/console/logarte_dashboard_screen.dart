@@ -42,25 +42,19 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                 SliverAppBar(
                   floating: true,
                   snap: true,
+                  leading: widget.showBackButton ? const BackButton() : null,
                   automaticallyImplyLeading: false,
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      if (widget.showBackButton)... [const BackButton()],
-                      TextField(
-                        controller: _controller,
-                        decoration: InputDecoration(
-                          hintText: 'Search',
-                          filled: true,
-                          prefixIcon: const Icon(Icons.search),
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.clear),
-                            onPressed: _controller.clear,
-                          ),
-                        ),
+                  title: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      hintText: 'Search',
+                      filled: true,
+                      prefixIcon: const Icon(Icons.search),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: _controller.clear,
                       ),
-                    ],
+                    ),
                   ),
                   bottom: TabBar(
                     isScrollable: true,
