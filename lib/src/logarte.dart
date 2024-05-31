@@ -13,6 +13,7 @@ import 'package:stack_trace/stack_trace.dart';
 class Logarte {
   final String? password;
   final bool ignorePassword;
+  final bool disableDebugConsoleLogs;
   final Function(String data)? onShare;
   final Function(BuildContext context)? onRocketLongPressed;
   final Function(BuildContext context)? onRocketDoubleTapped;
@@ -24,6 +25,7 @@ class Logarte {
     this.onShare,
     this.onRocketLongPressed,
     this.onRocketDoubleTapped,
+    this.disableDebugConsoleLogs = kReleaseMode,
   }) {
     _logger = Logger(
       printer: PrettyPrinter(
@@ -57,10 +59,13 @@ class Logarte {
   }) {
     // TODO: try and catch
 
-    _logger.log(
-      level,
-      message.toString(),
-    );
+    if (disableDebugConsoleLogs){
+      _logger.log(
+        level,
+        message.toString(),
+      );
+    }
+    
 
     if (write) {
       _add(
