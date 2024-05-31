@@ -42,9 +42,10 @@ class Logarte {
     Object? message, {
     bool write = true,
     Trace? trace,
+    Level level = Level.info,
   }) {
     _log(
-      Level.info,
+      level,
       message,
       write: write,
       trace: trace ?? Trace.current(),
