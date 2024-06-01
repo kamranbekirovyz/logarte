@@ -41,12 +41,14 @@ class Logarte {
     Object? message, {
     bool write = true,
     Trace? trace,
+    String? source,
   }) {
     _log(
       Level.info,
       message,
       write: write,
       trace: trace ?? Trace.current(),
+        source: source
     );
   }
 
@@ -55,7 +57,7 @@ class Logarte {
     Object? message, {
     bool write = true,
     Trace? trace,
-        String? source,
+    String? source,
   }) {
     // TODO: try and catch
 
