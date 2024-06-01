@@ -20,15 +20,13 @@ abstract class LogarteEntry {
 
 class PlainLogarteEntry extends LogarteEntry {
   final String message;
-  final String? _source;
+  final String? source;
 
   PlainLogarteEntry(
     this.message, {
-    required Trace trace,
-  })  : _source = trace.source,
-        super(LogarteType.plain);
+    this.source,
+  })  : super(LogarteType.plain);
 
-  String? get source => _source;
 
   @override
   List<String> get contents => [
