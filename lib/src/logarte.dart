@@ -55,13 +55,14 @@ class Logarte {
     Object? message, {
     bool write = true,
     Trace? trace,
-    Level level = Level.info,
+    Level level = Level.info, String? source,
   }) {
     _log(
       level,
       message,
       write: write,
       trace: trace ?? Trace.current(),
+        source: source
     );
   }
 
