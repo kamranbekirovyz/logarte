@@ -9,6 +9,7 @@ import 'package:logarte/src/logger/printers/pretty_printer.dart';
 import 'package:logarte/src/models/logarte_entry.dart';
 import 'package:logarte/src/models/navigation_action.dart';
 import 'package:stack_trace/stack_trace.dart';
+import 'package:logarte/src/logger/level.dart';
 
 class Logarte {
   final String? password;

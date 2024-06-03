@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
-
+import 'package:logarte/src/logger/level.dart';
 import 'package:logarte/src/logger/ansi_color.dart';
 import 'package:logarte/src/logger/log_printer.dart';
 import 'package:logarte/src/logger/logger.dart';
