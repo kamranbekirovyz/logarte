@@ -114,7 +114,8 @@ class Logger {
     } else if (level == Level.all) {
       throw ArgumentError('Log events cannot have Level.all');
     } else if (level == Level.off) {
-      throw ArgumentError('Log events cannot have Level.off');
+      //throw ArgumentError('Log events cannot have Level.off');
+      return; // Do nothing if nothing to log
     }
 
     var logEvent = LogEvent(
