@@ -1,4 +1,5 @@
 import 'package:logarte/src/logger/logger.dart';
+import 'package:logarte/src/logger/level.dart';
 
 /// An abstract filter of log messages.
 ///
