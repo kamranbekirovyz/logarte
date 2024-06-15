@@ -4,6 +4,7 @@ import 'package:logarte/src/console/logarte_auth_screen.dart';
 import 'package:logarte/src/console/logarte_overlay.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:logarte/src/extensions/route_extensions.dart';
+import 'package:logarte/src/extensions/trace_extensions.dart';
 import 'package:logarte/src/logger/logger.dart';
 import 'package:logarte/src/logger/printers/pretty_printer.dart';
 import 'package:logarte/src/models/logarte_entry.dart';
@@ -40,12 +41,14 @@ class Logarte {
     Object? message, {
     bool write = true,
     Trace? trace,
+    String? source,
   }) {
     _log(
       Level.info,
       message,
       write: write,
       trace: trace ?? Trace.current(),
+        source: source
     );
   }
 
@@ -54,6 +57,7 @@ class Logarte {
     Object? message, {
     bool write = true,
     Trace? trace,
+    String? source,
   }) {
     // TODO: try and catch
 
@@ -66,7 +70,7 @@ class Logarte {
       _add(
         PlainLogarteEntry(
           message.toString(),
-          trace: trace ?? Trace.current(),
+          source: source ?? (trace ?? Trace.current()).source,
         ),
       );
     }
