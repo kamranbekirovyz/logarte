@@ -5,10 +5,10 @@ import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 
 class LogarteDashboardScreen extends StatefulWidget {
   final Logarte instance;
-
+  final bool showBackButton;
   const LogarteDashboardScreen(
     this.instance, {
-    Key? key,
+    Key? key, this.showBackButton = false
   }) : super(key: key);
 
   @override
@@ -42,6 +42,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                 SliverAppBar(
                   floating: true,
                   snap: true,
+                  leading: widget.showBackButton ? const BackButton() : null,
                   automaticallyImplyLeading: false,
                   title: TextField(
                     controller: _controller,
