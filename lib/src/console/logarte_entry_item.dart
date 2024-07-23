@@ -66,6 +66,7 @@ class _PlainItem extends StatelessWidget {
                 const SizedBox(width: 8.0),
                 Text(
                   entry.message,
+                  softWrap: true,
                   style: const TextStyle(
                     fontSize: 14.0,
                   ),
