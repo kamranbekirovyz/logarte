@@ -82,7 +82,7 @@ void initState() {
 
   logarte.attach(
     context: context,
-    visilble: !kReleaseMode,
+    visible: !kReleaseMode,
   );
 }
 ```
