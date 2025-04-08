@@ -5,7 +5,7 @@ import 'package:share_plus/share_plus.dart';
 
 final logarte = Logarte(
   onShare: Share.share,
-  password: 'logarte',
+  password: '1234',
   onRocketDoubleTapped: (context) {
     showDialog(
       context: context,
