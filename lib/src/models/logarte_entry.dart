@@ -1,9 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
-import 'package:logarte/src/extensions/trace_extensions.dart';
 import 'package:logarte/src/models/logarte_type.dart';
 import 'package:logarte/src/models/navigation_action.dart';
-import 'package:stack_trace/stack_trace.dart';
 
 abstract class LogarteEntry {
   final LogarteType type;
@@ -25,8 +23,7 @@ class PlainLogarteEntry extends LogarteEntry {
   PlainLogarteEntry(
     this.message, {
     this.source,
-  })  : super(LogarteType.plain);
-
+  }) : super(LogarteType.plain);
 
   @override
   List<String> get contents => [

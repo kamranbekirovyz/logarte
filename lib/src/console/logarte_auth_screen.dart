@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
-import 'package:logarte/src/console/logarte_dashboard_screen.dart';
 import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 
 T? ambiguate<T>(T? value) => value;

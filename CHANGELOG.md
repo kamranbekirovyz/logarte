@@ -1,6 +1,7 @@
 ## 0.2.0
 
 * Upgrade dependencies.
+* Update example project.
 
 ## 0.1.6
 

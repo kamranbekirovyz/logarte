@@ -121,7 +121,7 @@ class HomePageState extends State<HomePage> {
             ),
           ),
           const Divider(),
-          ButtonBar(
+          OverflowBar(
             children: [
               FilledButton.tonal(
                 onPressed: () async {
