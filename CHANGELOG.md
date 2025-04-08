@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Upgrade dependencies.
+
 ## 0.1.6
 
 * Fix images not being displayed in the documentation.
