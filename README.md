@@ -5,10 +5,10 @@ In-app debug console and logger for Flutter to monitor the app on-air.
 <img src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/cover.png?raw=true">
 
 ## 📦 Features
-- 🚀 **Graphical Console**: a beautiful graphical console for debugging.
-- 🔒 **Password Protection**: add password protection to graphical console.
+- 🚀 **Secret UI Console**: a beautiful in-app UI for debugging.
+- 🔒 **Password Protection**: add password to the secret UI console.
 - 📡 **Network Requests**: see network requests, responses, status code and size.
-- 📁 **Database Writes**: see database write transactions and their content.
+- 📁 **Database Transactions**: see database write transactions and their content.
 - 📤 **Share Logs**: share all kinds of logs with platform share window.
 
 ## 📱 Screenshots
