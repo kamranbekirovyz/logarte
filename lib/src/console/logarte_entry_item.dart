@@ -64,10 +64,12 @@ class _PlainItem extends StatelessWidget {
                   size: 20.0,
                 ),
                 const SizedBox(width: 8.0),
-                Text(
-                  entry.message,
-                  style: const TextStyle(
-                    fontSize: 14.0,
+                Expanded(
+                  child: Text(
+                    entry.message,
+                    style: const TextStyle(
+                      fontSize: 14.0,
+                    ),
                   ),
                 ),
               ],
