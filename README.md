@@ -152,10 +152,10 @@ logarte.network(
 
 ### Log messages
 
-You can log messages to the console using the `info` method of the `Logarte` instance and then see them in the graphical console.
+You can log messages to the console using the `logarte.log()` method and then see them in the graphical console.
 
 ```dart
-logarte.info('This is an info message');
+logarte.log('This is an info message');
 ```
 
 I'll add more methods for different log types in the future.

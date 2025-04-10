@@ -187,14 +187,14 @@ class HomePageState extends State<HomePage> {
                   try {
                     throw Exception('Exception');
                   } catch (e, s) {
-                    logarte.error(e, stackTrace: s);
+                    logarte.log(e, stackTrace: s);
                   }
                 },
                 child: const Text('Exception'),
               ),
               FilledButton.tonal(
                 onPressed: () {
-                  logarte.info('Printed to console');
+                  logarte.log('Printed to console');
                 },
                 child: const Text('Plain log'),
               ),

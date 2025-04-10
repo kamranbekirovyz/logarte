@@ -51,6 +51,20 @@ class Logarte {
     );
   }
 
+  void log(
+    Object? message, {
+    bool write = true,
+    StackTrace? stackTrace,
+    String? source,
+  }) {
+    _log(
+      message,
+      write: write,
+      trace: stackTrace != null ? Trace.from(stackTrace) : null,
+      source: source,
+    );
+  }
+
   @Deprecated('Use logarte.log() instead')
   void error(
     Object? message, {
@@ -111,7 +125,7 @@ class Logarte {
     String? source,
   }) {
     developer.log(
-      message.toString(),
+      '${message.toString()}\n\n${trace?.toString()}',
       name: 'logarte',
     );
 
