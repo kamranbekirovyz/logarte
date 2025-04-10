@@ -1,5 +1,7 @@
 ## 0.2.0
 
+* Simplify the logging method.
+* Deprecated `logarte.info()` and `logarte.error()` methods. Use `logarte.log()` instead.
 * Upgrade dependencies.
 * Update example project.
 
