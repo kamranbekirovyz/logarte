@@ -5,6 +5,7 @@ In-app debug console and logger for Flutter to monitor the app on-air.
 <img src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/cover.png?raw=true">
 
 ## 📦 Features
+
 - 🚀 **Secret UI Console**: a beautiful in-app UI for debugging.
 - 🔒 **Password Protection**: add password to the secret UI console.
 - 📡 **Network Requests**: see network requests, responses, status code and size.
@@ -13,11 +14,11 @@ In-app debug console and logger for Flutter to monitor the app on-air.
 
 ## 📱 Screenshots
 
-|Dashboard|Request Details|Password Protection|
-|---|---|---|
-|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s1.png?raw=true"/>|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s2.png?raw=true"/>|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s3.png?raw=true"/>
+| Dashboard                                                                                         | Request Details                                                                                   | Password Protection                                                                               |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| <img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s1.png?raw=true"/> | <img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s2.png?raw=true"/> | <img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s3.png?raw=true"/> |
 
-## 👋🏻 Words from the author 
+## 👋🏻 Words from the author
 
 Hi, I'm <a href="https://bio.kamranbekirov.com">Kamran</a>. I've been using this package for a while in the projects I work on. It's a simple and great tool and if you ever need help with it create an <a href="https://github.com/kamranbekirovyz/logarte/issues" target="_blank">issue</a>.
 
@@ -69,7 +70,7 @@ final Logarte logarte = Logarte(
 
 ### Open the console
 
-The `Logarte` console can be opened by two methods: clikcing the entry rocket button or using `LogarteMagicalTap` which opens the console when tapped 10 times.
+The `Logarte` console can be opened by two methods: clicking the entry rocket button or using `LogarteMagicalTap` which opens the console when tapped 10 times.
 
 #### Rocket Entry Button
 
@@ -189,4 +190,5 @@ logarte.database(
 For a more detailed example, check the <a href="https://github.com/kamranbekirovyz/logarte/blob/main/example/lib/main.dart" target="_blank">example</a> directory in this repository.
 
 ## 📄 License
+
 This package is open-source and released under the <a href="https://github.com/kamranbekirovyz/logarte/blob/main/LICENSE" target="_blank">MIT License</a>.
