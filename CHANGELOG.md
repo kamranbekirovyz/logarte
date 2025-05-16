@@ -1,3 +1,7 @@
+## 0.2.1
+
+* Simplified the docs.
+
 ## 0.2.0
 
 * Simplify the logging method.
