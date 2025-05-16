@@ -1,140 +1,128 @@
 # logarte
 
-In-app debug console and logger for Flutter to monitor the app on-air.
-
-<img src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/cover.png?raw=true">
+In-app debug console and logger for Flutter apps.
 
 ## 📦 Features
-- 🚀 **Secret UI Console**: a beautiful in-app UI for debugging.
-- 🔒 **Password Protection**: add password to the secret UI console.
-- 📡 **Network Requests**: see network requests, responses, status code and size.
-- 📁 **Database Transactions**: see database write transactions and their content.
-- 📤 **Share Logs**: share all kinds of logs with platform share window.
+- 🚀 **In-app console**: Monitor your app inside your app
+- 🔒 **Access control**: Optional password protection
+- 📡 **Network inspector**: Track API calls and responses
+- 📁 **Storage monitor**: Track local storage operations
+- 📤 **Copy & export**: Share debug logs with your team
 
 ## 📱 Screenshots
 
-|Dashboard|Request Details|Password Protection|
+|Console|API Request|Password|
 |---|---|---|
-|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s1.png?raw=true"/>|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s2.png?raw=true"/>|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/doc/s3.png?raw=true"/>
+|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/res/s1.png?raw=true"/>|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/res/s2.png?raw=true"/>|<img width="200" src="https://github.com/kamranbekirovyz/logarte/blob/main/res/s3.png?raw=true"/>
 
-## 👋🏻 Words from the author 
+## 🩵 Sponsors
 
-Hi, I'm <a href="https://bio.kamranbekirov.com">Kamran</a>. I've been using this package for a while in the projects I work on. It's a simple and great tool and if you ever need help with it create an <a href="https://github.com/kamranbekirovyz/logarte/issues" target="_blank">issue</a>.
+Want to say "thanks"? Check out our sponsors:
 
-## 🪚 Installation
+<a href="https://userorient.com" target="_blank">
+	<img src="https://www.userorient.com/assets/extras/sponsor.png">
+</a>
 
-To use this package, add `logarte` as a dependency in your `pubspec.yaml` file:
+## 🪚 Usage
+
+### Add to pubspec.yaml
 
 ```yaml
 dependencies:
-  logarte: -latest_version-
+  logarte: ^0.2.1
 ```
 
-Then, run `flutter pub get` in your terminal to install the package.
-
-## 🚀 Usage
+Then run `flutter pub get`.
 
 ### Initialize
 
-You'll need a `Logarte` instance throughout the app. I, personally, prefer to store a global instance of `Logarte` in a separate file.
+Create a global `Logarte` instance:
 
 ```dart
 final Logarte logarte = Logarte(
-    // Password for protecting the console
+    // Protect with password
     password: '1234',
+    
+    // Skip password in debug mode
+    ignorePassword: kDebugMode,
 
-    // Whether to ignore the password
-    ignorePassword: !kReleaseMode,
-
-    // Sharing the network request log with system share window
-    onShare: (String message) {
-      Share.share(message);
+    // Share network request
+    onShare: (String content) {
+      Share.share(content);
     },
 
-    // Action to be performed when the rocket button is long pressed
-    onRocketLongPressed: (BuildContext context) {
-        // Example: toggle theme mode
-
-        print('Rocket long pressed');
-    },
-
-    // Action to be performed when the rocket button is double tapped
-    onRocketDoubleTapped: (BuildContext context) {
-        // Example: switch between languages
-
-        print('Rocket double tapped');
-    },
+    // Add shortcut actions (optional)
+    onRocketLongPressed: (context) {
+      // e.g: toggle theme mode
+    }
+    onRocketDoubleTapped: (context) {
+      // e.g: change language
+    }
 );
 ```
 
-### Open the console
+### Enable the debug console
 
-The `Logarte` console can be opened by two methods: clikcing the entry rocket button or using `LogarteMagicalTap` which opens the console when tapped 10 times.
+#### In debug mode
 
-#### Rocket Entry Button
-
-It's a floating button that can be used to open the console from anywhere in the app. You simply attach it to the UI and it will be visible on top of everything. Add a boolean to the `attach` method to make it visible only in debug mode, or in any other condition.
+Ideally, you should attach the floating button to the widget tree, then click it to open the debug console. This is the preferred way because you don't know when you'll need it and sometimes you might need to go back and forth many times. So, it's better to have it on the UI always.
 
 ```dart
 @override
 void initState() {
   super.initState();
-
+  
   logarte.attach(
     context: context,
-    visible: !kReleaseMode,
+    visible: kDebugMode,
   );
 }
 ```
 
-#### LogarteMagicalTap
+This will attach the floating button when in debug mode. Curious how you can access it in production when it's not debug mode? Check below.
 
-`LogarteMagicalTap` is a widget that attaches the entry rocket button to the UI when tapped 10 times. Wrap any non-tappable widget, and keep it secret.
+#### In production
+
+Logarte is as valuable in production mode as it is in debug mode. Whenever you find a bug, notice something not working, API requests failing, etc., you should be able to check the console and find why.
+
+Two ways to access in production:
+
+##### Hidden gesture trigger
+
+`LogarteMagicalTap` is a widget that attaches the floating button to the UI when tapped 10 times. Wrap any non-tappable widget, keep it secret, and make sure you've set a password while initializing.
 
 ```dart
 LogarteMagicalTap(
   logarte: logarte,
-  child: Text(
-    'LibroKit v2.2',
-  ),
+  child: Text('App Version 1.0'),
 )
 ```
 
-### Track Network Requests
+##### Manual trigger
 
-You can track network requests by either using `LogarteDioInterceptor` for `Dio` or the custom method for other clients.
-
-#### Dio
+You might also have creative ideas on when and how to open the console. For example, I used a shake detection plugin and attached the floating button when the device was shaken 3 times consecutively. From my experience, this is extremely valuable. Why? Imagine: you've opened your app, went to deeper screens, and an API call failed. You say 'Thank God I've already integrated logarte. Let's open that console!' But you need to go to the page where you used `LogarteMagicalTap`, which might be too far or not visible at that stage of the app - maybe you're showing it on the profile page and you are on the login page. So be creative about where to add it and consider using shake detection or anything that would serve you better.
 
 ```dart
-_dio = Dio()
-  ..interceptors.add(
-    LogarteDioInterceptor(logarte),
-  );
+logarte.openConsole(context);
+```
+
+Different from the `.attach(context)` method, this will directly open the console (password page if set, else the console itself).
+
+### Log network requests
+
+#### With Dio
+
+```dart
+dio.interceptors.add(LogarteDioInterceptor(logarte));
 ```
 
 That's it? Yes, that's it. Now, all the network requests will be logged in both the debug and the graphical console.
 
-#### Other Clients
+#### With other HTTP clients
+
 
 ```dart
-import 'package:http/http.dart' as http;
-
-final body = {
-  'name': 'Kamran',
-  'age': 22,
-};
-final headers = {
-  'Content-Type': 'application/json',
-};
-final endpoint = 'https://api.example.com';
-
-final response = await http.post(
-  Uri.parse(endpoint),
-  headers: headers,
-  body: jsonEncode(body),
-);
-
+// After your HTTP request:
 logarte.network(
   request: NetworkRequestLogarteEntry(
     method: 'POST',
@@ -152,29 +140,21 @@ logarte.network(
 
 ### Log messages
 
-You can log messages to the console using the `logarte.log()` method and then see them in the graphical console.
-
 ```dart
-logarte.log('This is an info message');
+logarte.log('Button clicked');
 ```
 
-I'll add more methods for different log types in the future.
+This will log messages in both your IDE's debug console and the in-app logarte console.
 
-### Track Navigator Routes
-
-To track the navigator routes, you can add `LogarteNavigatorObserver` to the `MaterialApp`'s `navigatorObservers` list.
+### Track navigation
 
 ```dart
 MaterialApp(
-  navigatorObservers: [
-    LogarteNavigatorObserver(logarte),
-  ],
+  navigatorObservers: [LogarteNavigatorObserver(logarte)],
 )
 ```
 
-### Track Database Writes
-
-To track database writes, you can use the `database` method of the `Logarte` instance.
+### Track storage operations
 
 ```dart
 logarte.database(
@@ -186,7 +166,7 @@ logarte.database(
 
 ## 🕹️ Example
 
-For a more detailed example, check the <a href="https://github.com/kamranbekirovyz/logarte/blob/main/example/lib/main.dart" target="_blank">example</a> directory in this repository.
+See the complete [example](https://github.com/kamranbekirovyz/logarte/blob/main/example/lib/main.dart) in this repository.
 
 ## 📄 License
-This package is open-source and released under the <a href="https://github.com/kamranbekirovyz/logarte/blob/main/LICENSE" target="_blank">MIT License</a>.
+MIT License - see [LICENSE](https://github.com/kamranbekirovyz/logarte/blob/main/LICENSE).
