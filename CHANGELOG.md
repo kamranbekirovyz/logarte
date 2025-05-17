@@ -1,3 +1,7 @@
+## 0.2.2
+
+* You can now drag the entry button to anywhere on the screen with edge snapping behavior.
+
 ## 0.2.1
 
 * Simplified the docs.
