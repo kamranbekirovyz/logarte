@@ -102,105 +102,135 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Example'),
+        title: const Text('Logarte Example'),
       ),
-      body: Column(
-        children: [
-          LogarteMagicalTap(
-            logarte: logarte,
-            child: Container(
-              color: Colors.blueGrey.shade100,
-              child: const ListTile(
-                enabled: true,
-                leading: Icon(Icons.touch_app_rounded),
-                title: Text('LogarteMagicalTap'),
-                subtitle: Text(
-                  'Tap this widget 10 times to attach the logarte rocket button UI.',
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 16),
+            LogarteMagicalTap(
+              logarte: logarte,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.blueGrey.shade50,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const ListTile(
+                  leading: Icon(Icons.touch_app_rounded),
+                  title: Text('LogarteMagicalTap'),
+                  subtitle: Text(
+                    'Tap 10 times to attach the magical button.',
+                  ),
                 ),
               ),
             ),
-          ),
-          const Divider(),
-          OverflowBar(
-            children: [
-              FilledButton.tonal(
-                onPressed: () async {
-                  await _dio.get('https://jsonplaceholder.typicode.com/posts');
-                },
-                child: const Text('GET'),
-              ),
-              FilledButton.tonal(
-                onPressed: () async {
-                  await _dio.post('https://jsonplaceholder.typicode.com/posts');
-                },
-                child: const Text('POST'),
-              ),
-              FilledButton.tonal(
-                onPressed: () async {
-                  await _dio.put('https://jsonplaceholder.typicode.com/posts');
-                },
-                child: const Text('PUT'),
-              ),
-              FilledButton.tonal(
-                onPressed: () async {
-                  await _dio
-                      .delete('https://jsonplaceholder.typicode.com/posts');
-                },
-                child: const Text('DELETE'),
-              ),
-            ],
-          ),
-          const Divider(),
-          OverflowBar(
-            children: [
-              FilledButton.tonal(
-                onPressed: () {
-                  logarte.database(
-                    target: 'language',
-                    value: 'en',
-                    source: 'SharedPreferences',
-                  );
-                },
-                child: const Text('Write to database'),
-              ),
-              FilledButton.tonal(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    routeSettings: const RouteSettings(
-                      name: '/test-dialog',
-                    ),
-                    builder: (BuildContext context) {
-                      return const AlertDialog(
-                        title: Text('Dialog'),
-                        content: Text(
-                          'Opening of this dialog was logged to Logarte',
-                        ),
-                      );
-                    },
-                  );
-                },
-                child: const Text('Open dialog'),
-              ),
-              FilledButton.tonal(
-                onPressed: () {
-                  try {
-                    throw Exception('Exception');
-                  } catch (e, s) {
-                    logarte.log(e, stackTrace: s);
-                  }
-                },
-                child: const Text('Exception'),
-              ),
-              FilledButton.tonal(
-                onPressed: () {
-                  logarte.log('Printed to console');
-                },
-                child: const Text('Plain log'),
-              ),
-            ],
-          ),
-        ],
+            const Divider(
+              height: 40,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'HTTP Requests',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 12),
+                FilledButton.tonal(
+                  onPressed: () async {
+                    await _dio
+                        .get('https://jsonplaceholder.typicode.com/posts');
+                  },
+                  child: const Text('GET'),
+                ),
+                FilledButton.tonal(
+                  onPressed: () async {
+                    await _dio
+                        .post('https://jsonplaceholder.typicode.com/posts');
+                  },
+                  child: const Text('POST'),
+                ),
+                FilledButton.tonal(
+                  onPressed: () async {
+                    await _dio
+                        .put('https://jsonplaceholder.typicode.com/posts');
+                  },
+                  child: const Text('PUT'),
+                ),
+                FilledButton.tonal(
+                  onPressed: () async {
+                    await _dio
+                        .delete('https://jsonplaceholder.typicode.com/posts');
+                  },
+                  child: const Text('DELETE'),
+                ),
+              ],
+            ),
+            const Divider(
+              height: 40,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Other logs',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 12),
+                FilledButton.tonalIcon(
+                  onPressed: () {
+                    logarte.database(
+                      target: 'language',
+                      value: 'en',
+                      source: 'SharedPreferences',
+                    );
+                  },
+                  label: const Text('Write to database'),
+                  icon: const Icon(Icons.storage_outlined),
+                ),
+                FilledButton.tonalIcon(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      routeSettings: const RouteSettings(
+                        name: '/test-dialog',
+                      ),
+                      builder: (BuildContext context) {
+                        return const AlertDialog(
+                          title: Text('Dialog'),
+                          content: Text(
+                            'Opening of this dialog was logged to Logarte',
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  label: const Text('Open dialog'),
+                  icon: const Icon(Icons.open_in_new),
+                ),
+                FilledButton.tonalIcon(
+                  onPressed: () {
+                    try {
+                      throw Exception('Exception');
+                    } catch (e, s) {
+                      logarte.log(e, stackTrace: s);
+                    }
+                  },
+                  label: const Text('Exception'),
+                  icon: const Icon(Icons.error_outline),
+                ),
+                FilledButton.tonalIcon(
+                  onPressed: () {
+                    logarte.log('Printed to console');
+                  },
+                  label: const Text('Plain log'),
+                  icon: const Icon(Icons.print_outlined),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
