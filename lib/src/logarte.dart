@@ -6,10 +6,8 @@ import 'package:logarte/src/console/logarte_auth_screen.dart';
 import 'package:logarte/src/console/logarte_overlay.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:logarte/src/extensions/route_extensions.dart';
-import 'package:logarte/src/extensions/trace_extensions.dart';
 import 'package:logarte/src/models/logarte_entry.dart';
 import 'package:logarte/src/models/navigation_action.dart';
-import 'package:stack_trace/stack_trace.dart';
 
 class Logarte {
   final String? password;
@@ -40,13 +38,11 @@ class Logarte {
   void info(
     Object? message, {
     bool write = true,
-    Trace? trace,
     String? source,
   }) {
     _log(
       message,
       write: write,
-      trace: trace ?? Trace.current(),
       source: source,
     );
   }
@@ -60,7 +56,7 @@ class Logarte {
     _log(
       message,
       write: write,
-      trace: stackTrace != null ? Trace.from(stackTrace) : null,
+      stackTrace: stackTrace,
       source: source,
     );
   }
@@ -74,7 +70,6 @@ class Logarte {
     _log(
       'ERROR: $message\n\nTRACE: $stackTrace',
       write: write,
-      trace: Trace.current(),
     );
   }
 
@@ -121,19 +116,20 @@ class Logarte {
   void _log(
     Object? message, {
     bool write = true,
-    Trace? trace,
     String? source,
+    StackTrace? stackTrace,
   }) {
     developer.log(
-      '${message.toString()}\n\n${trace?.toString()}',
+      message.toString(),
       name: 'logarte',
+      stackTrace: stackTrace,
     );
 
     if (write) {
       _add(
         PlainLogarteEntry(
-          message.toString(),
-          source: source ?? (trace ?? Trace.current()).source,
+          '${message.toString()}${stackTrace != null ? '\n\n$stackTrace' : ''}',
+          source: source,
         ),
       );
     }

@@ -56,27 +56,25 @@ class _PlainItem extends StatelessWidget {
       onTap: () {
         entry.message.copyToClipboard(context);
       },
-      title: entry.source != null
-          ? Row(
-              children: [
-                const Icon(
-                  Icons.bug_report,
-                  size: 20.0,
-                ),
-                const SizedBox(width: 8.0),
-                Expanded(
-                  child: Text(
-                    entry.message,
-                    style: const TextStyle(
-                      fontSize: 14.0,
-                    ),
-                  ),
-                ),
-              ],
-            )
-          : null,
+      title: Row(
+        children: [
+          const Icon(
+            Icons.bug_report,
+            size: 20.0,
+          ),
+          const SizedBox(width: 8.0),
+          Expanded(
+            child: Text(
+              entry.message,
+              style: const TextStyle(
+                fontSize: 14.0,
+              ),
+            ),
+          ),
+        ],
+      ),
       subtitle: Text(
-        '${entry.timeFormatted}  • ${entry.source.toString()}',
+        '${entry.timeFormatted} ${entry.source != null ? '• ${entry.source}' : ''}',
         style: const TextStyle(
           fontSize: 12.0,
           color: Colors.grey,

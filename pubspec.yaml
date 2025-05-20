@@ -1,6 +1,6 @@
 name: logarte
 description: Powerful in-app debug console for Flutter apps with network inspector, storage monitor, and password protection
-version: 0.2.2
+version: 0.2.3
 repository: https://github.com/kamranbekirovyz/logarte
 issue_tracker: https://github.com/kamranbekirovyz/logarte/issues
 homepage: https://bio.kamranbekirov.com
@@ -14,7 +14,6 @@ dependencies:
   dio: ^5.8.0+1
   flutter:
     sdk: flutter
-  stack_trace: ^1.12.1
 
 dev_dependencies:
   flutter_test:
