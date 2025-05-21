@@ -39,71 +39,72 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
                 ValueListenableBuilder(
-                    valueListenable: widget.instance.logs,
-                    builder: (context, logs, _) {
-                      return SliverAppBar(
-                        floating: true,
-                        snap: true,
-                        leading:
-                            widget.showBackButton ? const BackButton() : null,
-                        automaticallyImplyLeading: false,
-                        actions: [
-                          if (widget.instance.logs.value.isNotEmpty)
-                            IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () {
-                                widget.instance.clearAll();
-                              },
-                            ),
-                        ],
-                        title: TextField(
-                          controller: _controller,
-                          decoration: InputDecoration(
-                            hintText: 'Search',
-                            filled: true,
-                            prefixIcon: const Icon(Icons.search),
-                            suffixIcon: IconButton(
-                              icon: const Icon(Icons.clear),
-                              onPressed: _controller.clear,
-                            ),
+                  valueListenable: widget.instance.logs,
+                  builder: (context, logs, child) {
+                    return SliverAppBar(
+                      floating: true,
+                      snap: true,
+                      leading:
+                          widget.showBackButton ? const BackButton() : null,
+                      automaticallyImplyLeading: false,
+                      actions: [
+                        widget.instance.logs.value.isNotEmpty
+                            ? IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () {
+                                  widget.instance.clearAll();
+                                },
+                              )
+                            : const SizedBox.shrink(),
+                      ],
+                      title: TextField(
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          hintText: 'Search',
+                          filled: true,
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.clear),
+                            onPressed: _controller.clear,
                           ),
                         ),
-                        bottom: TabBar(
-                          isScrollable: true,
-                          tabAlignment: TabAlignment.center,
-                          labelPadding:
-                              const EdgeInsets.symmetric(horizontal: 12.0),
-                          indicatorSize: TabBarIndicatorSize.tab,
-                          tabs: [
-                            Tab(
-                              icon: const Icon(Icons.list_alt_rounded),
-                              text:
-                                  'All (${widget.instance.logs.value.length})',
-                            ),
-                            Tab(
-                              icon: const Icon(Icons.bug_report_rounded),
-                              text:
-                                  'Logging (${widget.instance.logs.value.whereType<PlainLogarteEntry>().length})',
-                            ),
-                            Tab(
-                              icon: const Icon(Icons.public),
-                              text:
-                                  'Network (${widget.instance.logs.value.whereType<NetworkLogarteEntry>().length})',
-                            ),
-                            Tab(
-                              icon: const Icon(Icons.save_as_rounded),
-                              text:
-                                  'Database (${widget.instance.logs.value.whereType<DatabaseLogarteEntry>().length})',
-                            ),
-                            Tab(
-                              icon: const Icon(Icons.navigation_rounded),
-                              text:
-                                  'Navigation (${widget.instance.logs.value.whereType<NavigatorLogarteEntry>().length})',
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
+                      ),
+                      bottom: TabBar(
+                        isScrollable: true,
+                        tabAlignment: TabAlignment.center,
+                        labelPadding:
+                            const EdgeInsets.symmetric(horizontal: 12.0),
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        tabs: [
+                          Tab(
+                            icon: const Icon(Icons.list_alt_rounded),
+                            text: 'All (${widget.instance.logs.value.length})',
+                          ),
+                          Tab(
+                            icon: const Icon(Icons.bug_report_rounded),
+                            text:
+                                'Logging (${widget.instance.logs.value.whereType<PlainLogarteEntry>().length})',
+                          ),
+                          Tab(
+                            icon: const Icon(Icons.public),
+                            text:
+                                'Network (${widget.instance.logs.value.whereType<NetworkLogarteEntry>().length})',
+                          ),
+                          Tab(
+                            icon: const Icon(Icons.save_as_rounded),
+                            text:
+                                'Database (${widget.instance.logs.value.whereType<DatabaseLogarteEntry>().length})',
+                          ),
+                          Tab(
+                            icon: const Icon(Icons.navigation_rounded),
+                            text:
+                                'Navigation (${widget.instance.logs.value.whereType<NavigatorLogarteEntry>().length})',
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ];
             },
             // To rebuild the list when the logs list gets modified
