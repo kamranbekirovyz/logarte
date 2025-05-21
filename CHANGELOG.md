@@ -1,3 +1,7 @@
+## 0.2.4
+
+* Improve database log's format and fix overflow issue on console.
+
 ## 0.2.3
 
 * Fix stack trace not being shown on logs.

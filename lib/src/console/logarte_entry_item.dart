@@ -242,25 +242,25 @@ class _DatabaseItem extends StatelessWidget {
       onTap: () {
         entry.value?.toString().copyToClipboard(context);
       },
-      title: Column(
-        mainAxisSize: MainAxisSize.min,
+      title: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.save_as_rounded,
-                size: 20.0,
-              ),
-              const SizedBox(width: 8.0),
-              _LuxuryText(
-                text: '*${entry.target}*: ${entry.value}',
-                // style: const TextStyle(
-                //   fontSize: 14.0,
-                //   fontWeight: FontWeight.w600,
-                // ),
-              ),
-            ],
+          const Padding(
+            padding: EdgeInsets.only(top: 4),
+            child: Icon(
+              Icons.save_as_rounded,
+              size: 20.0,
+            ),
+          ),
+          const SizedBox(width: 8.0),
+          Expanded(
+            child: _LuxuryText(
+              text: '*${entry.target}*: ${entry.value}',
+              // style: const TextStyle(
+              //   fontSize: 14.0,
+              //   fontWeight: FontWeight.w600,
+              // ),
+            ),
           ),
         ],
       ),
@@ -323,6 +323,7 @@ class _LuxuryText extends StatelessWidget {
         children: children,
         style: const TextStyle(
           fontSize: 14.0,
+          height: 22 / 14,
           color: Colors.black,
         ),
       ),

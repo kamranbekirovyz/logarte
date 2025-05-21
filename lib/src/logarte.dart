@@ -172,7 +172,7 @@ class Logarte {
   }) {
     try {
       _log(
-        '$target was written to database from $source with value: $value',
+        '$source: $target → $value',
         write: false,
       );
 
