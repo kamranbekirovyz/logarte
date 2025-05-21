@@ -21,8 +21,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
-  share_plus: 8b6f8b3447e494cca5317c8c3073de39b3600d1f
+  path_provider_foundation: 2a68637f8a62df7f6e790a428d1bdf72cb4e2d59
+  share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 

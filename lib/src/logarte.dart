@@ -36,6 +36,10 @@ class Logarte {
     logs.value = [...logs.value, entry];
   }
 
+  void clearAll() {
+    logs.value = [];
+  }
+
   @Deprecated('Use logarte.log() instead')
   void info(
     Object? message, {
