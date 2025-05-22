@@ -6,9 +6,11 @@ import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 class LogarteDashboardScreen extends StatefulWidget {
   final Logarte instance;
   final bool showBackButton;
+
   const LogarteDashboardScreen(
     this.instance, {
-    Key? key, this.showBackButton = false
+    Key? key,
+    this.showBackButton = false,
   }) : super(key: key);
 
   @override
@@ -34,7 +36,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
   Widget build(BuildContext context) {
     return LogarteThemeWrapper(
       child: DefaultTabController(
-        length: 5,
+        length: widget.instance.customTab != null ? 6 : 5,
         child: Scaffold(
           body: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -86,6 +88,11 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                         text:
                             'Navigation (${widget.instance.logs.value.whereType<NavigatorLogarteEntry>().length})',
                       ),
+                      if (widget.instance.customTab != null)
+                        const Tab(
+                          icon: Icon(Icons.extension_rounded),
+                          text: 'Custom',
+                        ),
                     ],
                   ),
                 ),
@@ -122,6 +129,8 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                           instance: widget.instance,
                           search: search,
                         ),
+                        if (widget.instance.customTab != null)
+                          widget.instance.customTab!,
                       ],
                     );
                   },

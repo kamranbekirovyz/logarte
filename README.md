@@ -164,6 +164,21 @@ logarte.database(
 );
 ```
 
+### Add custom debug tab
+
+While initializing, you can pass a custom tab widget to the `Logarte` instance. This tab will be shown in the console.
+
+This is useful when you want to add a custom tab to the console, for example, to change the environment, copy device's FCM token, clear local cache, etc.
+
+```dart
+final Logarte logarte = Logarte(
+  ...
+  customTab: const MyCustomTab(),
+  ...
+);
+```
+
+
 ## 🕹️ Example
 
 See the complete [example](https://github.com/kamranbekirovyz/logarte/blob/main/example/lib/main.dart) in this repository.

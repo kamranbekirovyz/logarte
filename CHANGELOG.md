@@ -1,3 +1,7 @@
+## 0.3.0
+
+* You can now pass a custom tab to the console.
+
 ## 0.2.4
 
 * Improve database log's format and fix overflow issue on console.

@@ -16,6 +16,7 @@ class Logarte {
   final int logBufferLength;
   final Function(BuildContext context)? onRocketLongPressed;
   final Function(BuildContext context)? onRocketDoubleTapped;
+  final Widget? customTab;
 
   Logarte({
     this.password,
@@ -24,6 +25,7 @@ class Logarte {
     this.onRocketLongPressed,
     this.onRocketDoubleTapped,
     this.logBufferLength = 2500,
+    this.customTab,
   });
 
   final logs = ValueNotifier(<LogarteEntry>[]);
