@@ -147,7 +147,8 @@ class Logarte {
     required NavigationAction action,
   }) {
     try {
-      if ([route.routeName, previousRoute.routeName].any((e) => e?.contains('/logarte') == true)) {
+      if ([route.routeName, previousRoute.routeName]
+          .any((e) => e?.contains('/logarte') == true)) {
         return;
       }
 
