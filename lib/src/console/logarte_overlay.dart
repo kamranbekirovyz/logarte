@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/logarte_auth_screen.dart';
+import 'package:logarte/src/console/logarte_fab_state.dart';
 
 class LogarteOverlay extends StatelessWidget {
   final Logarte instance;
@@ -163,7 +164,6 @@ class _LogarteFAB extends StatefulWidget {
 }
 
 class _LogarteFABState extends State<_LogarteFAB> {
-  bool _isOpened = false;
 
   @override
   void setState(VoidCallback fn) {
@@ -173,7 +173,7 @@ class _LogarteFABState extends State<_LogarteFAB> {
   Future<void> _onPressed() async {
     if (!widget.onTapAllowed) return;
 
-    if (_isOpened) {
+    if (LogarteFabState.instance.isOpened) {
       Navigator.of(context).pop();
     } else {
       Navigator.of(context).push<void>(
@@ -185,38 +185,41 @@ class _LogarteFABState extends State<_LogarteFAB> {
         ),
       );
     }
-
-    setState(() => _isOpened = !_isOpened);
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _onPressed,
-      onDoubleTap: () {
-        if (!_isOpened && widget.onTapAllowed) {
-          widget.instance.onRocketDoubleTapped?.call(context);
-        }
+    return ValueListenableBuilder(
+      valueListenable: LogarteFabState.instance.fabStateListener,
+      builder: (_, bool isOpened, Widget? child) {
+        return GestureDetector(
+          onTap: _onPressed,
+          onDoubleTap: () {
+            if (!isOpened && widget.onTapAllowed) {
+              widget.instance.onRocketDoubleTapped?.call(context);
+            }
+          },
+          onLongPress: () {
+            if (!isOpened && widget.onTapAllowed) {
+              widget.instance.onRocketLongPressed?.call(context);
+            }
+          },
+          child: AnimatedContainer(
+            duration: kThemeAnimationDuration,
+            width: 52,
+            height: 52,
+            decoration: BoxDecoration(
+              color: isOpened ? Colors.red : Colors.lightBlue,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Icon(
+              isOpened ? Icons.close : Icons.terminal,
+              size: 28,
+              color: Colors.white,
+            ),
+          ),
+        );
       },
-      onLongPress: () {
-        if (!_isOpened && widget.onTapAllowed) {
-          widget.instance.onRocketLongPressed?.call(context);
-        }
-      },
-      child: AnimatedContainer(
-        duration: kThemeAnimationDuration,
-        width: 52,
-        height: 52,
-        decoration: BoxDecoration(
-          color: _isOpened ? Colors.red : Colors.lightBlue,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Icon(
-          _isOpened ? Icons.close : Icons.terminal,
-          size: 28,
-          color: Colors.white,
-        ),
-      ),
     );
   }
 }

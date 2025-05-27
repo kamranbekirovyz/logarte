@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
+import 'package:logarte/src/console/logarte_fab_state.dart';
 import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 
 T? ambiguate<T>(T? value) => value;
@@ -27,13 +28,16 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
   @override
   void initState() {
     super.initState();
-
     _controller = TextEditingController();
+    LogarteFabState.instance.open();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    if (!_isLoggedIn) {
+      LogarteFabState.instance.close();
+    }
     super.dispose();
   }
 
@@ -79,6 +83,7 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
 
   void _onSubmit() {
     if (widget.instance.password == _controller.text) {
+      _isLoggedIn = true;
       _goToDashboard();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -96,7 +101,5 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
         settings: const RouteSettings(name: '/logarte_dashboard'),
       ),
     );
-
-    _isLoggedIn = true;
   }
 }
