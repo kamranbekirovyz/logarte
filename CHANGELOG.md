@@ -1,3 +1,7 @@
+## 0.3.1
+
+* Added `disableDebugConsoleLogs` parameter to disable logs in IDE's debug console (default is false).
+
 ## 0.3.0
 
 * You can now pass a custom tab to the console.

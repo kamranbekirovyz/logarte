@@ -51,6 +51,9 @@ final Logarte logarte = Logarte(
       Share.share(content);
     },
 
+    // To have logs in IDE's debug console (default is false)
+    disableDebugConsoleLogs: false,
+
     // Add shortcut actions (optional)
     onRocketLongPressed: (context) {
       // e.g: toggle theme mode
