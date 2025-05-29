@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/logarte_entry_item.dart';
+import 'package:logarte/src/console/logarte_fab_state.dart';
 import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 
 class LogarteDashboardScreen extends StatefulWidget {
@@ -24,11 +25,13 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    LogarteFabState.instance.open();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    LogarteFabState.instance.close();
     super.dispose();
   }
 
