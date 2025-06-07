@@ -1,3 +1,8 @@
+## 1.0.0
+
+* Hitting first stable release! 🎉 Logarte is now "readier" for production use.
+* Fixed a bug where clicking floating button in network details page would stuck the console.
+
 ## 0.3.1
 
 * Added `disableDebugConsoleLogs` parameter to disable logs in IDE's debug console (default is false).
