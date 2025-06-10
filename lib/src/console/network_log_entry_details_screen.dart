@@ -5,6 +5,8 @@ import 'package:logarte/src/extensions/entry_extensions.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:logarte/src/extensions/string_extensions.dart';
 
+enum MenuItem { copy, copyCurl }
+
 class NetworkLogEntryDetailsScreen extends StatelessWidget {
   final NetworkLogarteEntry entry;
   final Logarte instance;
@@ -14,6 +16,19 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
     Key? key,
     required this.instance,
   }) : super(key: key);
+
+  void handleClick(BuildContext context, MenuItem item) {
+    switch (item) {
+      case MenuItem.copy:
+          final text = entry.toString();
+          text.copyToClipboard(context);
+        break;
+      case MenuItem.copyCurl:
+        final cmd = entry.toCurlCommand();
+        cmd.copyToClipboard(context);
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +47,27 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
           centerTitle: false,
           actions: [
             IconButton(
+              tooltip: 'Share',
               icon: const Icon(Icons.share),
               onPressed: () {
                 final text = entry.toString();
                 instance.onShare?.call(text);
               },
             ),
-            IconButton(
-              icon: const Icon(Icons.copy_all),
-              onPressed: () {
-                final text = entry.toString();
-                text.copyToClipboard(context);
-              },
+            PopupMenuButton<MenuItem>(
+              tooltip: 'More',
+              icon: const Icon(Icons.more_vert),
+              onSelected: (item) => handleClick(context, item),
+              itemBuilder: (_) => <PopupMenuEntry<MenuItem>>[
+                const PopupMenuItem<MenuItem>(
+                  value: MenuItem.copy,
+                  child: Text('Copy'),
+                ),
+                const PopupMenuItem<MenuItem>(
+                  value: MenuItem.copyCurl,
+                  child: Text('Copy as cURL'),
+                ),
+              ],
             ),
             const SizedBox(width: 12.0),
           ],
