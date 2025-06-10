@@ -75,6 +75,11 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
                           ),
                           const Divider(height: 0.0),
                           SelectableCopiableTile(
+                            title: 'QUERY PARAMETERS',
+                            subtitle: entry.extractQueryParams,
+                          ),
+                          const Divider(height: 0.0),
+                          SelectableCopiableTile(
                             title: 'HEADERS',
                             subtitle: entry.request.headers.prettyJson,
                           ),

@@ -141,7 +141,7 @@ class HomePageState extends State<HomePage> {
                 FilledButton.tonal(
                   onPressed: () async {
                     await _dio
-                        .get('https://jsonplaceholder.typicode.com/posts');
+                        .get('https://jsonplaceholder.typicode.com/comments?postId=1');
                   },
                   child: const Text('GET'),
                 ),
