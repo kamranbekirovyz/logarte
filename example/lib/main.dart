@@ -113,6 +113,9 @@ class HomePageState extends State<HomePage> {
             const SizedBox(height: 16),
             LogarteMagicalTap(
               logarte: logarte,
+              onTapCountUpdate: (count) {
+                logarte.log('On tap count updated: $count');
+              },
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.blueGrey.shade50,
@@ -140,8 +143,8 @@ class HomePageState extends State<HomePage> {
                 const SizedBox(height: 12),
                 FilledButton.tonal(
                   onPressed: () async {
-                    await _dio
-                        .get('https://jsonplaceholder.typicode.com/comments?postId=1');
+                    await _dio.get(
+                        'https://jsonplaceholder.typicode.com/comments?postId=1');
                   },
                   child: const Text('GET'),
                 ),

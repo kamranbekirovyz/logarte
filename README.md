@@ -98,6 +98,9 @@ Two ways to access in production:
 LogarteMagicalTap(
   logarte: logarte,
   child: Text('App Version 1.0'),
+  onTapCountUpdate: (count) {
+     logarte.log('On tap count updated: $count');
+  },
 )
 ```
 

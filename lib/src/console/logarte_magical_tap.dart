@@ -1,3 +1,5 @@
+import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
+
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 
@@ -14,6 +16,9 @@ class LogarteMagicalTap extends StatefulWidget {
   /// The [Logarte] instance to show when the user taps the widget.
   final Logarte logarte;
 
+  /// Callback to handle taps count.
+  final Function(int count)? onTapCountUpdate;
+
   /// Creates a new instance of [LogarteMagicalTap].
   ///
   /// The [child] and [logarte] arguments are required.
@@ -22,6 +27,7 @@ class LogarteMagicalTap extends StatefulWidget {
     required this.child,
     required this.logarte,
     this.behavior = HitTestBehavior.translucent,
+    this.onTapCountUpdate,
   }) : super(key: key);
 
   @override
@@ -44,7 +50,7 @@ class _LogarteMagicalTapState extends State<LogarteMagicalTap> {
       behavior: widget.behavior,
       onTap: () {
         _count++;
-
+        widget.onTapCountUpdate?.call(_count);
         if (_count == 10) {
           widget.logarte.attach(context: context, visible: true);
         }
