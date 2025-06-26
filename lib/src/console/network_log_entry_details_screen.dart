@@ -45,6 +45,14 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
                 text.copyToClipboard(context);
               },
             ),
+            IconButton(
+              icon: const Text('cURL'),
+              onPressed: () {
+                final text = entry.cURL;
+                text.copyToClipboard(context);
+             
+              },
+            ),
             const SizedBox(width: 12.0),
           ],
         ),
