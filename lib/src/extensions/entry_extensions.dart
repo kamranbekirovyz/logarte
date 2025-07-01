@@ -8,4 +8,14 @@ extension LogarteNetworkEntryXs on NetworkLogarteEntry {
 
     return '${response.receivedAt!.difference(request.sentAt!).inMilliseconds} ms';
   }
+
+  String get extractQueryParams {
+    Uri uri = Uri.parse(request.url);
+    final params = uri.queryParameters;
+    StringBuffer formatted = StringBuffer();
+    params.forEach((key, value) {
+      formatted.write("$key = $value");
+    });
+    return formatted.toString();
+  }
 }
