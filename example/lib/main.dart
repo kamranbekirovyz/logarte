@@ -127,6 +127,16 @@ class HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+            ListTile(
+              leading: const Icon(Icons.dashboard_outlined),
+              title: const Text('Logarte console'),
+              subtitle: const Text(
+                'Tap to open the console directly.',
+              ),
+              onTap: () {
+                logarte.openConsole(context);
+              },
+            ),
             const Divider(
               height: 40,
             ),
