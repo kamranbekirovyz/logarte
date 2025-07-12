@@ -1,3 +1,8 @@
+## 1.1.0
+
+* Added back button to the console when it was launched without the floating button. Thanks community!
+* Update dio dependency version range to ensure compatibility.
+
 ## 1.0.0
 
 * Hitting first stable release! 🎉 Logarte is now "readier" for production use.
