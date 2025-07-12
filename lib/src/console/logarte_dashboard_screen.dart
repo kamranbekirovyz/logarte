@@ -47,7 +47,14 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                 SliverAppBar(
                   floating: true,
                   snap: true,
-                  leading: widget.showBackButton ? const BackButton() : null,
+                  leading: widget.showBackButton
+                      ? IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                        )
+                      : null,
                   automaticallyImplyLeading: false,
                   title: TextField(
                     controller: _controller,

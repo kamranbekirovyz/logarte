@@ -204,6 +204,14 @@ class Logarte {
     }
   }
 
+  /// Check if LogarteOverlay is currently attached
+  bool get isOverlayAttached => LogarteOverlay.isAttached;
+
+  /// Detach the LogarteOverlay if it's currently attached
+  void detachOverlay() {
+    LogarteOverlay.detach();
+  }
+
   Future<void> openConsole(BuildContext context) async {
     return Navigator.of(context).push<void>(
       MaterialPageRoute(
