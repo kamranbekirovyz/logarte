@@ -83,6 +83,7 @@ class HomePageState extends State<HomePage> {
     super.initState();
 
     _dio = Dio()
+      ..interceptors.add(MockResponseInterceptor())
       ..interceptors.add(
         LogarteDioInterceptor(logarte),
       );

@@ -31,6 +31,7 @@ class Logarte {
   });
 
   final logs = ValueNotifier(<LogarteEntry>[]);
+
   void _add(LogarteEntry entry) {
     if (logs.value.length > logBufferLength) {
       logs.value.removeAt(0);

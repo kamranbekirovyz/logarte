@@ -3,6 +3,7 @@ import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/logarte_entry_item.dart';
 import 'package:logarte/src/console/logarte_fab_state.dart';
 import 'package:logarte/src/console/logarte_theme_wrapper.dart';
+import 'package:logarte/src/console/mocker_content.dart';
 
 class LogarteDashboardScreen extends StatefulWidget {
   final Logarte instance;
@@ -39,7 +40,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
   Widget build(BuildContext context) {
     return LogarteThemeWrapper(
       child: DefaultTabController(
-        length: widget.instance.customTab != null ? 6 : 5,
+        length: widget.instance.customTab != null ? 7 : 5,
         child: Scaffold(
           body: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -91,6 +92,10 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                         text:
                             'Navigation (${widget.instance.logs.value.whereType<NavigatorLogarteEntry>().length})',
                       ),
+                      const Tab(
+                        icon: Icon(Icons.smoke_free),
+                        text: 'Mocker',
+                      ),
                       if (widget.instance.customTab != null)
                         const Tab(
                           icon: Icon(Icons.extension_rounded),
@@ -132,6 +137,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                           instance: widget.instance,
                           search: search,
                         ),
+                        MockerContent(),
                         if (widget.instance.customTab != null)
                           widget.instance.customTab!,
                       ],
