@@ -40,7 +40,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
   Widget build(BuildContext context) {
     return LogarteThemeWrapper(
       child: DefaultTabController(
-        length: widget.instance.customTab != null ? 7 : 5,
+        length: widget.instance.customTab != null ? 7 : 6,
         child: Scaffold(
           body: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
