@@ -59,7 +59,10 @@ class _MockerContentState extends State<MockerContent> {
                         ),
                       ),
                     );
-                  })
+                  }),
+                  const SizedBox(
+                    height: 52,
+                  ),
                 ],
               ),
             ),
