@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:logarte/src/console/mocker_content.dart';
 
 class MockerKeyDetailScreen extends StatefulWidget {
   final String? mockKey;
@@ -51,7 +53,7 @@ class _MockerKeyDetailScreenState extends State<MockerKeyDetailScreen> {
                 _valueController.text.trim().isEmpty) {
               return;
             }
-            _sharedPreferences.setString(
+            _sharedPreferences.setLogarteString(
                 _keyController.text, _valueController.text);
             Navigator.of(context).pop(true);
           },

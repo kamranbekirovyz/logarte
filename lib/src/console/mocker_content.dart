@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/src/console/mocker_key_detail_screen.dart';
+import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MockerContent extends StatefulWidget {
@@ -17,7 +18,7 @@ class _MockerContentState extends State<MockerContent> {
       builder:
           (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot) {
         if (!snapshot.hasData) return const SizedBox.shrink();
-        final keys = snapshot.data!.getKeys();
+        final keys = snapshot.data!.filteredKeys;
         final preferences = snapshot.data!;
         return Scaffold(
           bottomNavigationBar: Padding(
