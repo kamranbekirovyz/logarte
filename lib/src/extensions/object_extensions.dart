@@ -25,4 +25,7 @@ extension SharedPreferencesExt on SharedPreferences {
 
   void setLogarteString(String key, String value) =>
       setString('$logartePrefix$key', value);
+
+  void deleteLogarteString(String key,) =>
+      remove('$logartePrefix$key');
 }

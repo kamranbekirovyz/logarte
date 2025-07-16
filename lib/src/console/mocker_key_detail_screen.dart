@@ -30,7 +30,7 @@ class _MockerKeyDetailScreenState extends State<MockerKeyDetailScreen> {
 
   _init() async {
     _sharedPreferences = await SharedPreferences.getInstance();
-    _keyController.text = widget.mockKey ?? 'Key';
+    _keyController.text = (widget.mockKey ?? 'Key').replaceAll(logartePrefix, '');
     _valueController.text =
         _sharedPreferences.getString(widget.mockKey ?? 'Value') ?? '';
     setState(() {});
@@ -43,23 +43,33 @@ class _MockerKeyDetailScreenState extends State<MockerKeyDetailScreen> {
         title: Text(widget.mockKey ?? 'Add'),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 52,
-          horizontal: 16,
-        ),
-        child: ElevatedButton(
-          onPressed: () {
-            if (_keyController.text.trim().isEmpty ||
-                _valueController.text.trim().isEmpty) {
-              return;
-            }
-            _sharedPreferences.setLogarteString(
-                _keyController.text, _valueController.text);
-            Navigator.of(context).pop(true);
-          },
-          child: const Text('Save'),
-        ),
-      ),
+          padding: const EdgeInsets.symmetric(
+            vertical: 52,
+            horizontal: 16,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  _sharedPreferences.deleteLogarteString(_keyController.text);
+                  Navigator.of(context).pop(true);
+                },
+                child: const Text('Delete'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (_keyController.text.trim().isEmpty || _valueController.text.trim().isEmpty) {
+                    return;
+                  }
+                  _sharedPreferences.setLogarteString(
+                      _keyController.text, _valueController.text);
+                  Navigator.of(context).pop(true);
+                },
+                child: const Text('Save'),
+              ),
+            ],
+          )),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
