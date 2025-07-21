@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/logarte_entry_item.dart';
 import 'package:logarte/src/console/logarte_fab_state.dart';
+import 'package:logarte/src/console/logarte_filter_setting.dart';
 import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 
 class LogarteDashboardScreen extends StatefulWidget {
@@ -68,6 +69,19 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                       ),
                     ),
                   ),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => LogarteFilterSetting(
+                            logarte: widget.instance,
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.filter_list_rounded),
+                    ),
+                  ],
                   bottom: TabBar(
                     isScrollable: true,
                     tabAlignment: TabAlignment.center,
