@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
+import 'package:logarte/src/models/logarte_network_filter.dart';
+import 'package:logarte/src/models/logarte_search_filter.dart';
 import 'package:logarte/src/models/logarte_type.dart';
 import 'package:logarte/src/models/navigation_action.dart';
 
@@ -13,7 +15,7 @@ abstract class LogarteEntry {
   String get timeFormatted =>
       '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}:${date.second}';
 
-  List<String> get contents;
+  List<String> getContents(LogarteSearchFilter? filter);
 }
 
 class PlainLogarteEntry extends LogarteEntry {
@@ -26,7 +28,7 @@ class PlainLogarteEntry extends LogarteEntry {
   }) : super(LogarteType.plain);
 
   @override
-  List<String> get contents => [
+  List<String> getContents(LogarteSearchFilter? filter) => [
         message,
         if (source != null) source!,
       ];
@@ -44,7 +46,7 @@ class NavigatorLogarteEntry extends LogarteEntry {
   }) : super(LogarteType.navigation);
 
   @override
-  List<String> get contents => [
+  List<String> getContents(LogarteSearchFilter? filter) => [
         if (route?.settings.name != null) route!.settings.name!,
         if (route?.settings.arguments != null)
           route!.settings.arguments.toString(),
@@ -68,7 +70,7 @@ class DatabaseLogarteEntry extends LogarteEntry {
   }) : super(LogarteType.database);
 
   @override
-  List<String> get contents => [
+  List<String> getContents(LogarteSearchFilter? filter) => [
         target,
         if (value != null) value.toString(),
         source,
@@ -85,17 +87,20 @@ class NetworkLogarteEntry extends LogarteEntry {
   }) : super(LogarteType.network);
 
   @override
-  List<String> get contents => [
-        request.url,
-        request.method,
-        if (request.headers != null) request.headers!.toString(),
-        if (request.body != null) request.body.toString(),
-        if (request.sentAt != null) request.sentAt.toString(),
-        if (response.statusCode != null) response.statusCode.toString(),
-        if (response.headers != null) response.headers!.toString(),
-        if (response.body != null) response.body.toString(),
-        if (response.receivedAt != null) response.receivedAt.toString(),
-      ];
+  List<String> getContents(LogarteSearchFilter? filter) {
+    final searchFilter = filter?.network ?? const LogarteNetworkSearchFilter();
+    return [
+      searchFilter.url ? request.url : null,
+      searchFilter.method ? request.method : null,
+      searchFilter.header ? request.headers?.toString() : null,
+      searchFilter.body ? request.body?.toString() : null,
+      searchFilter.time ? request.sentAt?.toString() : null,
+      searchFilter.statusCode ? response.statusCode?.toString() : null,
+      searchFilter.header ? response.headers?.toString() : null,
+      searchFilter.body ? response.body?.toString() : null,
+      searchFilter.time ? response.receivedAt?.toString() : null,
+    ].whereType<String>().toList();
+  }
 
   @override
   String toString() {

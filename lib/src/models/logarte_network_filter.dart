@@ -1,31 +1,35 @@
-class LogarteNetworkFilter {
+class LogarteNetworkSearchFilter {
   final bool statusCode;
   final bool method;
-  final bool host;
-  final bool path;
+  final bool url;
+  final bool header;
   final bool body;
+  final bool time;
 
-  const LogarteNetworkFilter({
+  const LogarteNetworkSearchFilter({
     this.statusCode = true,
     this.method = true,
-    this.host = true,
-    this.path = true,
+    this.url = true,
+    this.header = true,
     this.body = true,
+    this.time = true,
   });
 
-  LogarteNetworkFilter copyWith({
+  LogarteNetworkSearchFilter copyWith({
     bool? statusCode,
     bool? method,
-    bool? host,
-    bool? path,
+    bool? url,
+    bool? header,
     bool? body,
+    bool? time,
   }) {
-    return LogarteNetworkFilter(
+    return LogarteNetworkSearchFilter(
       statusCode: statusCode ?? this.statusCode,
       method: method ?? this.method,
-      host: host ?? this.host,
-      path: path ?? this.path,
+      url: url ?? this.url,
+      header: header ?? this.header,
       body: body ?? this.body,
+      time: time ?? this.time,
     );
   }
 }

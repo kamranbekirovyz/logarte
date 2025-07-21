@@ -41,7 +41,7 @@ class _LogarteFilterSettingState extends State<LogarteFilterSetting> {
               width: double.infinity,
               child: SingleChildScrollView(
                 child: ValueListenableBuilder(
-                    valueListenable: widget.logarte.networkFilter,
+                    valueListenable: widget.logarte.searchFilter,
                     builder: (context, value, child) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,59 +56,98 @@ class _LogarteFilterSettingState extends State<LogarteFilterSetting> {
                                   fontSize: 16.0, fontWeight: FontWeight.bold),
                             ),
                           ),
-                          const SizedBox(height: 16.0),
+                          const SizedBox(height: 8.0),
                           LogarteFilterItem(
                             title: 'Status Code',
-                            value:
-                                widget.logarte.networkFilter.value.statusCode,
+                            value: widget
+                                .logarte.searchFilter.value.network.statusCode,
                             onChanged: (value) {
-                              widget.logarte.networkFilter.value =
-                                  widget.logarte.networkFilter.value.copyWith(
-                                statusCode: value,
+                              widget.logarte.searchFilter.value =
+                                  widget.logarte.searchFilter.value.copyWith(
+                                network: widget
+                                    .logarte.searchFilter.value.network
+                                    .copyWith(
+                                  statusCode: value,
+                                ),
                               );
                             },
                           ),
                           LogarteFilterItem(
                             title: 'Method',
-                            value: widget.logarte.networkFilter.value.method,
+                            value: widget
+                                .logarte.searchFilter.value.network.method,
                             onChanged: (value) {
-                              widget.logarte.networkFilter.value =
-                                  widget.logarte.networkFilter.value.copyWith(
-                                method: value,
+                              widget.logarte.searchFilter.value =
+                                  widget.logarte.searchFilter.value.copyWith(
+                                network: widget
+                                    .logarte.searchFilter.value.network
+                                    .copyWith(
+                                  method: value,
+                                ),
                               );
                             },
                           ),
                           LogarteFilterItem(
-                            title: 'Host',
-                            value: widget.logarte.networkFilter.value.host,
+                            title: 'URL',
+                            value:
+                                widget.logarte.searchFilter.value.network.url,
                             onChanged: (value) {
-                              widget.logarte.networkFilter.value =
-                                  widget.logarte.networkFilter.value.copyWith(
-                                host: value,
+                              widget.logarte.searchFilter.value =
+                                  widget.logarte.searchFilter.value.copyWith(
+                                network: widget
+                                    .logarte.searchFilter.value.network
+                                    .copyWith(
+                                  url: value,
+                                ),
                               );
                             },
                           ),
                           LogarteFilterItem(
-                            title: 'Path/Query',
-                            value: widget.logarte.networkFilter.value.path,
+                            title: 'Header',
+                            value: widget
+                                .logarte.searchFilter.value.network.header,
                             onChanged: (value) {
-                              widget.logarte.networkFilter.value =
-                                  widget.logarte.networkFilter.value.copyWith(
-                                path: value,
+                              widget.logarte.searchFilter.value =
+                                  widget.logarte.searchFilter.value.copyWith(
+                                network: widget
+                                    .logarte.searchFilter.value.network
+                                    .copyWith(
+                                  header: value,
+                                ),
                               );
                             },
                           ),
                           LogarteFilterItem(
                             title: 'Body',
-                            value: widget.logarte.networkFilter.value.body,
+                            value:
+                                widget.logarte.searchFilter.value.network.body,
                             onChanged: (value) {
-                              widget.logarte.networkFilter.value =
-                                  widget.logarte.networkFilter.value.copyWith(
-                                body: value,
+                              widget.logarte.searchFilter.value =
+                                  widget.logarte.searchFilter.value.copyWith(
+                                network: widget
+                                    .logarte.searchFilter.value.network
+                                    .copyWith(
+                                  body: value,
+                                ),
                               );
                             },
                           ),
-                          const SizedBox(height: 16.0),
+                          LogarteFilterItem(
+                            title: 'Time',
+                            value:
+                                widget.logarte.searchFilter.value.network.time,
+                            onChanged: (value) {
+                              widget.logarte.searchFilter.value =
+                                  widget.logarte.searchFilter.value.copyWith(
+                                network: widget
+                                    .logarte.searchFilter.value.network
+                                    .copyWith(
+                                  time: value,
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 8.0),
                           SizedBox(
                             width: double.infinity,
                             child: FilledButton(
@@ -151,7 +190,7 @@ class LogarteFilterItem extends StatelessWidget {
         onChanged(!value);
       },
       child: Padding(
-        padding: const EdgeInsets.only(right: 16.0, top: 8.0, bottom: 8.0),
+        padding: const EdgeInsets.only(right: 16.0, top: 2.0, bottom: 2.0),
         child: Row(
           children: [
             Checkbox(value: value, onChanged: onChanged),

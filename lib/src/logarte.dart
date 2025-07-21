@@ -7,7 +7,7 @@ import 'package:logarte/src/console/logarte_overlay.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:logarte/src/extensions/route_extensions.dart';
 import 'package:logarte/src/models/logarte_entry.dart';
-import 'package:logarte/src/models/logarte_network_filter.dart';
+import 'package:logarte/src/models/logarte_search_filter.dart';
 import 'package:logarte/src/models/navigation_action.dart';
 
 class Logarte {
@@ -19,7 +19,7 @@ class Logarte {
   final Function(BuildContext context)? onRocketDoubleTapped;
   final bool disableDebugConsoleLogs;
   final Widget? customTab;
-  final ValueNotifier<LogarteNetworkFilter> networkFilter;
+  final ValueNotifier<LogarteSearchFilter> searchFilter;
 
   Logarte({
     this.password,
@@ -30,9 +30,9 @@ class Logarte {
     this.logBufferLength = 2500,
     this.disableDebugConsoleLogs = false,
     this.customTab,
-    LogarteNetworkFilter? networkFilter,
-  }) : networkFilter =
-            ValueNotifier(networkFilter ?? const LogarteNetworkFilter());
+    LogarteSearchFilter? searchFilter,
+  }) : searchFilter =
+            ValueNotifier(searchFilter ?? const LogarteSearchFilter());
 
   final logs = ValueNotifier(<LogarteEntry>[]);
   void _add(LogarteEntry entry) {
