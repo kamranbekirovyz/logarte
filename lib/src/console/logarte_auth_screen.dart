@@ -50,6 +50,7 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
             ? LogarteDashboardScreen(
                 widget.instance,
                 showBackButton: !widget.instance.isOverlayAttached,
+                stickyAppBar: widget.instance.isAppBarSticky,
               )
             : Scaffold(
                 appBar: AppBar(
@@ -103,6 +104,7 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
         builder: (_) => LogarteDashboardScreen(
           widget.instance,
           showBackButton: !widget.instance.isOverlayAttached,
+          stickyAppBar: widget.instance.isAppBarSticky,
         ),
         settings: const RouteSettings(name: '/logarte_dashboard'),
       ),
