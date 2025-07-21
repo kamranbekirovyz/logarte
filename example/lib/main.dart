@@ -37,6 +37,7 @@ final Logarte logarte = Logarte(
       },
     );
   },
+  // isAppBarSticky: true, uncomment to enable sticky app bar
 );
 
 enum Environment { dev, prod }
