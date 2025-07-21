@@ -148,6 +148,12 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
               },
             ),
           ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              widget.instance.clear();
+            },
+            child: const Icon(Icons.delete_forever_rounded),
+          ),
         ),
       ),
     );
