@@ -7,11 +7,13 @@ import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 class LogarteDashboardScreen extends StatefulWidget {
   final Logarte instance;
   final bool showBackButton;
+  final bool stickyAppBar;
 
   const LogarteDashboardScreen(
     this.instance, {
     Key? key,
     this.showBackButton = false,
+    this.stickyAppBar = false,
   }) : super(key: key);
 
   @override
@@ -58,8 +60,9 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                   headerSliverBuilder: (context, innerBoxIsScrolled) {
                     return [
                       SliverAppBar(
-                        floating: true,
-                        snap: true,
+                        floating: !widget.stickyAppBar,
+                        snap: !widget.stickyAppBar,
+                        pinned: widget.stickyAppBar,
                         leading: widget.showBackButton
                             ? IconButton(
                                 onPressed: () {
