@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 
+import '../models/logarte_search_filter.dart';
+
 class LogarteFilterSetting extends StatefulWidget {
   final Logarte logarte;
 
@@ -11,6 +13,14 @@ class LogarteFilterSetting extends StatefulWidget {
 }
 
 class _LogarteFilterSettingState extends State<LogarteFilterSetting> {
+  late LogarteSearchFilter _searchFilter;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchFilter = widget.logarte.searchFilter.value;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,128 +50,113 @@ class _LogarteFilterSettingState extends State<LogarteFilterSetting> {
               padding: const EdgeInsets.all(16.0),
               width: double.infinity,
               child: SingleChildScrollView(
-                child: ValueListenableBuilder(
-                    valueListenable: widget.logarte.searchFilter,
-                    builder: (context, value, child) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.0, vertical: 8.0),
-                            child: Text(
-                              'Network Search Filter',
-                              style: TextStyle(
-                                  fontSize: 16.0, fontWeight: FontWeight.bold),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                      child: Text(
+                        'Network Search Filter',
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    LogarteFilterItem(
+                      title: 'HTTP Status Code',
+                      value: _searchFilter.network.statusCode,
+                      onChanged: (value) {
+                        setState(() {
+                          _searchFilter = _searchFilter.copyWith(
+                            network: _searchFilter.network.copyWith(
+                              statusCode: value,
                             ),
-                          ),
-                          const SizedBox(height: 8.0),
-                          LogarteFilterItem(
-                            title: 'Status Code',
-                            value: widget
-                                .logarte.searchFilter.value.network.statusCode,
-                            onChanged: (value) {
-                              widget.logarte.searchFilter.value =
-                                  widget.logarte.searchFilter.value.copyWith(
-                                network: widget
-                                    .logarte.searchFilter.value.network
-                                    .copyWith(
-                                  statusCode: value,
-                                ),
-                              );
-                            },
-                          ),
-                          LogarteFilterItem(
-                            title: 'Method',
-                            value: widget
-                                .logarte.searchFilter.value.network.method,
-                            onChanged: (value) {
-                              widget.logarte.searchFilter.value =
-                                  widget.logarte.searchFilter.value.copyWith(
-                                network: widget
-                                    .logarte.searchFilter.value.network
-                                    .copyWith(
-                                  method: value,
-                                ),
-                              );
-                            },
-                          ),
-                          LogarteFilterItem(
-                            title: 'URL',
-                            value:
-                                widget.logarte.searchFilter.value.network.url,
-                            onChanged: (value) {
-                              widget.logarte.searchFilter.value =
-                                  widget.logarte.searchFilter.value.copyWith(
-                                network: widget
-                                    .logarte.searchFilter.value.network
-                                    .copyWith(
-                                  url: value,
-                                ),
-                              );
-                            },
-                          ),
-                          LogarteFilterItem(
-                            title: 'Header',
-                            value: widget
-                                .logarte.searchFilter.value.network.header,
-                            onChanged: (value) {
-                              widget.logarte.searchFilter.value =
-                                  widget.logarte.searchFilter.value.copyWith(
-                                network: widget
-                                    .logarte.searchFilter.value.network
-                                    .copyWith(
-                                  header: value,
-                                ),
-                              );
-                            },
-                          ),
-                          LogarteFilterItem(
-                            title: 'Body',
-                            value:
-                                widget.logarte.searchFilter.value.network.body,
-                            onChanged: (value) {
-                              widget.logarte.searchFilter.value =
-                                  widget.logarte.searchFilter.value.copyWith(
-                                network: widget
-                                    .logarte.searchFilter.value.network
-                                    .copyWith(
-                                  body: value,
-                                ),
-                              );
-                            },
-                          ),
-                          LogarteFilterItem(
-                            title: 'Time',
-                            value:
-                                widget.logarte.searchFilter.value.network.time,
-                            onChanged: (value) {
-                              widget.logarte.searchFilter.value =
-                                  widget.logarte.searchFilter.value.copyWith(
-                                network: widget
-                                    .logarte.searchFilter.value.network
-                                    .copyWith(
-                                  time: value,
-                                ),
-                              );
-                            },
-                          ),
-                          const SizedBox(height: 8.0),
-                          SizedBox(
-                            width: double.infinity,
-                            child: FilledButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text('Save'),
+                          );
+                        });
+                      },
+                    ),
+                    LogarteFilterItem(
+                      title: 'HTTP Method',
+                      value: _searchFilter.network.method,
+                      onChanged: (value) {
+                        setState(() {
+                          _searchFilter = _searchFilter.copyWith(
+                            network: _searchFilter.network.copyWith(
+                              method: value,
                             ),
-                          ),
-                          // Add bottom padding for safe area
-                          const SizedBox(height: 16.0),
-                        ],
-                      );
-                    }),
+                          );
+                        });
+                      },
+                    ),
+                    LogarteFilterItem(
+                      title: 'URL',
+                      value: _searchFilter.network.url,
+                      onChanged: (value) {
+                        setState(() {
+                          _searchFilter = _searchFilter.copyWith(
+                            network: _searchFilter.network.copyWith(
+                              url: value,
+                            ),
+                          );
+                        });
+                      },
+                    ),
+                    LogarteFilterItem(
+                      title: 'Header',
+                      value: _searchFilter.network.header,
+                      onChanged: (value) {
+                        setState(() {
+                          _searchFilter = _searchFilter.copyWith(
+                            network: _searchFilter.network.copyWith(
+                              header: value,
+                            ),
+                          );
+                        });
+                      },
+                    ),
+                    LogarteFilterItem(
+                      title: 'Body',
+                      value: _searchFilter.network.body,
+                      onChanged: (value) {
+                        setState(() {
+                          _searchFilter = _searchFilter.copyWith(
+                            network: _searchFilter.network.copyWith(
+                              body: value,
+                            ),
+                          );
+                        });
+                      },
+                    ),
+                    LogarteFilterItem(
+                      title: 'Time',
+                      value: _searchFilter.network.time,
+                      onChanged: (value) {
+                        setState(() {
+                          _searchFilter = _searchFilter.copyWith(
+                            network: _searchFilter.network.copyWith(
+                              time: value,
+                            ),
+                          );
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 8.0),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton(
+                        onPressed: () {
+                          widget.logarte.searchFilter.value = _searchFilter;
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Save'),
+                      ),
+                    ),
+                    // Add bottom padding for safe area
+                    const SizedBox(height: 16.0),
+                  ],
+                ),
               ),
             ),
           ),
