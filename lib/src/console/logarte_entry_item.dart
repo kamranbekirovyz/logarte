@@ -151,6 +151,13 @@ class _NetworkItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final url = Uri.parse(entry.request.url);
+    final host = '${url.scheme}://${url.host}';
+    final nonHost = entry.request.url.replaceAll(host, '');
+    final isSuccess = entry.response.statusCode != null &&
+        entry.response.statusCode! >= 200 &&
+        entry.response.statusCode! < 300;
+
     return ListTile(
       onTap: () {
         Navigator.of(context).push(
@@ -166,30 +173,23 @@ class _NetworkItem extends StatelessWidget {
         );
       },
       title: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(
-            entry.response.statusCode == null
-                ? Icons.public_off_rounded
-                : entry.response.statusCode! >= 200 &&
-                        entry.response.statusCode! < 300
-                    ? Icons.public_rounded
-                    : Icons.public_off_rounded,
-            color: entry.response.statusCode == null
-                ? Colors.grey
-                : entry.response.statusCode! >= 200 &&
-                        entry.response.statusCode! < 300
-                    ? Colors.green
-                    : Colors.red,
-            size: 20.0,
-          ),
-          const SizedBox(width: 8.0),
-          Text(
-            entry.request.method,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            style: const TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w600,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 3.0),
+            decoration: BoxDecoration(
+              color: isSuccess ? Colors.green : Colors.red,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Text(
+              '${entry.response.statusCode} - ${entry.request.method}',
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: const TextStyle(
+                fontSize: 10.0,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
             ),
           ),
         ],
@@ -198,22 +198,34 @@ class _NetworkItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            // TODO: can also display the path
-            entry.request.url,
-            // Uri.parse(entry.request.url).path,
-            overflow: TextOverflow.ellipsis,
+          const SizedBox(height: 4.0),
+          RichText(
             maxLines: 2,
-            style: const TextStyle(fontSize: 14.0),
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: host,
+                  style: const TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+                TextSpan(
+                  text: nonHost,
+                  style: const TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 2.0),
-            child: Text(
-              '${entry.timeFormatted} • ${'${entry.asReadableDuration} • ${entry.response.body.toString().asReadableSize}'}',
-              style: const TextStyle(
-                fontSize: 12.0,
-                color: Colors.grey,
-              ),
+          const SizedBox(height: 4.0),
+          Text(
+            '${entry.timeFormatted} • ${entry.asReadableDuration} • ${entry.response.body.toString().asReadableSize}',
+            style: const TextStyle(
+              fontSize: 12.0,
+              color: Colors.grey,
             ),
           ),
         ],
