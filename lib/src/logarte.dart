@@ -7,6 +7,7 @@ import 'package:logarte/src/console/logarte_overlay.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:logarte/src/extensions/route_extensions.dart';
 import 'package:logarte/src/models/logarte_entry.dart';
+import 'package:logarte/src/models/logarte_search_filter.dart';
 import 'package:logarte/src/models/navigation_action.dart';
 
 class Logarte {
@@ -19,6 +20,7 @@ class Logarte {
   final bool disableDebugConsoleLogs;
   final Widget? customTab;
   final bool isAppBarSticky;
+  final ValueNotifier<LogarteSearchFilter> searchFilter;
 
   Logarte({
     this.password,
@@ -30,7 +32,9 @@ class Logarte {
     this.disableDebugConsoleLogs = false,
     this.customTab,
     this.isAppBarSticky = false,
-  });
+    LogarteSearchFilter? searchFilter,
+  }) : searchFilter =
+            ValueNotifier(searchFilter ?? const LogarteSearchFilter());
 
   final logs = ValueNotifier(<LogarteEntry>[]);
   void _add(LogarteEntry entry) {
