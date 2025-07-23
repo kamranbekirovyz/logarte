@@ -1,3 +1,7 @@
+## 1.1.1
+
+* Fix export `logarte_network_filter.dart` and `logarte_search_filter.dart`
+
 ## 1.1.0
 
 * Update Android's Example Configuration to be able to run on latest Android Studio

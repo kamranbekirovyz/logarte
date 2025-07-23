@@ -37,7 +37,17 @@ final Logarte logarte = Logarte(
       },
     );
   },
-  // isAppBarSticky: true, uncomment to enable sticky app bar
+  searchFilter: const LogarteSearchFilter(
+    network: LogarteNetworkSearchFilter(
+      statusCode: true,
+      method: true,
+      url: true,
+      header: true,
+      body: true,
+      time: true,
+    ),
+  ),
+  // isAppBarSticky: true, uncomment to enable sticky app bar,
 );
 
 enum Environment { dev, prod }
