@@ -1,3 +1,11 @@
+## 1.1.0
+
+* Update Android's Example Configuration to be able to run on latest Android Studio
+* Add option for sticky appbar on dashboard screen
+* Add clear log functionality with FAB
+* Network log entry UI improvement
+* Configurable search for Network log entry
+
 ## 1.0.0
 
 * Hitting first stable release! 🎉 Logarte is now "readier" for production use.
