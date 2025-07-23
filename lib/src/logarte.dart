@@ -220,4 +220,8 @@ class Logarte {
       ),
     );
   }
+
+  void clear() {
+    logs.value = [];
+  }
 }
