@@ -19,6 +19,7 @@ class Logarte {
   final Function(BuildContext context)? onRocketDoubleTapped;
   final bool disableDebugConsoleLogs;
   final Widget? customTab;
+  final bool isAppBarSticky;
   final ValueNotifier<LogarteSearchFilter> searchFilter;
 
   Logarte({
@@ -30,6 +31,7 @@ class Logarte {
     this.logBufferLength = 2500,
     this.disableDebugConsoleLogs = false,
     this.customTab,
+    this.isAppBarSticky = false,
     LogarteSearchFilter? searchFilter,
   }) : searchFilter =
             ValueNotifier(searchFilter ?? const LogarteSearchFilter());
@@ -223,5 +225,9 @@ class Logarte {
         settings: const RouteSettings(name: '/logarte_auth'),
       ),
     );
+  }
+
+  void clear() {
+    logs.value = [];
   }
 }
