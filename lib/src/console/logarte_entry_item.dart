@@ -200,16 +200,26 @@ class _NetworkItem extends StatelessWidget {
         children: [
           const SizedBox(height: 4.0),
           RichText(
-              maxLines: 2,
-              text: TextSpan(children: [
+            maxLines: 2,
+            text: TextSpan(
+              children: [
                 TextSpan(
-                    text: host,
-                    style: const TextStyle(fontSize: 14.0, color: Colors.grey)),
+                  text: host,
+                  style: const TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.blueGrey,
+                  ),
+                ),
                 TextSpan(
-                    text: nonHost,
-                    style:
-                        const TextStyle(fontSize: 14.0, color: Colors.black)),
-              ])),
+                  text: nonHost,
+                  style: const TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 4.0),
           Text(
             '${entry.timeFormatted} • ${entry.asReadableDuration} • ${entry.response.body.toString().asReadableSize}',
