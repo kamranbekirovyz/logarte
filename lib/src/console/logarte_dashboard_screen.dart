@@ -43,113 +43,126 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
       child: DefaultTabController(
         length: widget.instance.customTab != null ? 6 : 5,
         child: Scaffold(
-          body: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return [
-                SliverAppBar(
-                  floating: !widget.stickyAppBar,
-                  snap: !widget.stickyAppBar,
-                  pinned: widget.stickyAppBar,
-                  leading: widget.showBackButton
-                      ? IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          icon: const Icon(Icons.arrow_back_ios_new_rounded),
-                        )
-                      : null,
-                  automaticallyImplyLeading: false,
-                  title: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      hintText: 'Search',
-                      filled: true,
-                      prefixIcon: const Icon(Icons.search),
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: _controller.clear,
-                      ),
-                    ),
-                  ),
-                  bottom: TabBar(
-                    isScrollable: true,
-                    tabAlignment: TabAlignment.center,
-                    labelPadding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    tabs: [
-                      Tab(
-                        icon: const Icon(Icons.list_alt_rounded),
-                        text: 'All (${widget.instance.logs.value.length})',
-                      ),
-                      Tab(
-                        icon: const Icon(Icons.bug_report_rounded),
-                        text:
-                            'Logging (${widget.instance.logs.value.whereType<PlainLogarteEntry>().length})',
-                      ),
-                      Tab(
-                        icon: const Icon(Icons.public),
-                        text:
-                            'Network (${widget.instance.logs.value.whereType<NetworkLogarteEntry>().length})',
-                      ),
-                      Tab(
-                        icon: const Icon(Icons.save_as_rounded),
-                        text:
-                            'Database (${widget.instance.logs.value.whereType<DatabaseLogarteEntry>().length})',
-                      ),
-                      Tab(
-                        icon: const Icon(Icons.navigation_rounded),
-                        text:
-                            'Navigation (${widget.instance.logs.value.whereType<NavigatorLogarteEntry>().length})',
-                      ),
-                      if (widget.instance.customTab != null)
-                        const Tab(
-                          icon: Icon(Icons.extension_rounded),
-                          text: 'Custom',
-                        ),
-                    ],
-                  ),
-                ),
-              ];
-            },
-            // To rebuild the list when the logs list gets modified
-            body: ValueListenableBuilder(
+          body: ValueListenableBuilder<List<LogarteEntry>>(
               valueListenable: widget.instance.logs,
               builder: (context, values, child) {
-                return AnimatedBuilder(
-                  animation: _controller,
-                  builder: (_, __) {
-                    final search = _controller.text.toLowerCase();
+                final allCount = values.length;
+                final loggingCount =
+                    values.whereType<PlainLogarteEntry>().length;
+                final networkCount =
+                    values.whereType<NetworkLogarteEntry>().length;
+                final databaseCount =
+                    values.whereType<DatabaseLogarteEntry>().length;
+                final navigationCount =
+                    values.whereType<NavigatorLogarteEntry>().length;
 
-                    return TabBarView(
-                      children: [
-                        _List<LogarteEntry>(
-                          instance: widget.instance,
-                          search: search,
+                return NestedScrollView(
+                  headerSliverBuilder: (context, innerBoxIsScrolled) {
+                    return [
+                      SliverAppBar(
+                        floating: !widget.stickyAppBar,
+                        snap: !widget.stickyAppBar,
+                        pinned: widget.stickyAppBar,
+                        leading: widget.showBackButton
+                            ? IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                icon: const Icon(
+                                    Icons.arrow_back_ios_new_rounded),
+                              )
+                            : null,
+                        automaticallyImplyLeading: false,
+                        title: TextField(
+                          controller: _controller,
+                          decoration: InputDecoration(
+                            hintText: 'Search',
+                            filled: true,
+                            prefixIcon: const Icon(Icons.search),
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.clear),
+                              onPressed: _controller.clear,
+                            ),
+                          ),
                         ),
-                        _List<PlainLogarteEntry>(
-                          instance: widget.instance,
-                          search: search,
+                        bottom: TabBar(
+                          isScrollable: true,
+                          tabAlignment: TabAlignment.center,
+                          labelPadding:
+                              const EdgeInsets.symmetric(horizontal: 12.0),
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          tabs: [
+                            Tab(
+                              icon: const Icon(Icons.list_alt_rounded),
+                              text: 'All ($allCount)',
+                            ),
+                            Tab(
+                              icon: const Icon(Icons.bug_report_rounded),
+                              text: 'Logging ($loggingCount)',
+                            ),
+                            Tab(
+                              icon: const Icon(Icons.public),
+                              text: 'Network ($networkCount)',
+                            ),
+                            Tab(
+                              icon: const Icon(Icons.save_as_rounded),
+                              text: 'Database ($databaseCount)',
+                            ),
+                            Tab(
+                              icon: const Icon(Icons.navigation_rounded),
+                              text: 'Navigation ($navigationCount)',
+                            ),
+                            if (widget.instance.customTab != null)
+                              const Tab(
+                                icon: Icon(Icons.extension_rounded),
+                                text: 'Custom',
+                              ),
+                          ],
                         ),
-                        _List<NetworkLogarteEntry>(
-                          instance: widget.instance,
-                          search: search,
-                        ),
-                        _List<DatabaseLogarteEntry>(
-                          instance: widget.instance,
-                          search: search,
-                        ),
-                        _List<NavigatorLogarteEntry>(
-                          instance: widget.instance,
-                          search: search,
-                        ),
-                        if (widget.instance.customTab != null)
-                          widget.instance.customTab!,
-                      ],
-                    );
+                      ),
+                    ];
                   },
+                  // To rebuild the list when the logs list gets modified
+                  body: AnimatedBuilder(
+                    animation: _controller,
+                    builder: (_, __) {
+                      final search = _controller.text.toLowerCase();
+
+                      return TabBarView(
+                        children: [
+                          _List<LogarteEntry>(
+                            instance: widget.instance,
+                            search: search,
+                          ),
+                          _List<PlainLogarteEntry>(
+                            instance: widget.instance,
+                            search: search,
+                          ),
+                          _List<NetworkLogarteEntry>(
+                            instance: widget.instance,
+                            search: search,
+                          ),
+                          _List<DatabaseLogarteEntry>(
+                            instance: widget.instance,
+                            search: search,
+                          ),
+                          _List<NavigatorLogarteEntry>(
+                            instance: widget.instance,
+                            search: search,
+                          ),
+                          if (widget.instance.customTab != null)
+                            widget.instance.customTab!,
+                        ],
+                      );
+                    },
+                  ),
                 );
-              },
-            ),
+              }),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              widget.instance.clear();
+            },
+            child: const Icon(Icons.delete_forever_rounded),
           ),
         ),
       ),
