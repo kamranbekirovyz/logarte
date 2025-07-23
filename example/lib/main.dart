@@ -37,6 +37,16 @@ final Logarte logarte = Logarte(
       },
     );
   },
+  searchFilter: const LogarteSearchFilter(
+    network: LogarteNetworkSearchFilter(
+      statusCode: true,
+      method: true,
+      url: true,
+      header: true,
+      body: true,
+      time: true,
+    ),
+  ),
 );
 
 enum Environment { dev, prod }

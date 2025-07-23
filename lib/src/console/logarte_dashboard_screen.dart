@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/logarte_entry_item.dart';
 import 'package:logarte/src/console/logarte_fab_state.dart';
+import 'package:logarte/src/console/logarte_filter_setting.dart';
 import 'package:logarte/src/console/logarte_theme_wrapper.dart';
+import 'package:logarte/src/models/logarte_search_filter.dart';
 
 class LogarteDashboardScreen extends StatefulWidget {
   final Logarte instance;
@@ -68,6 +70,19 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                       ),
                     ),
                   ),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => LogarteFilterSetting(
+                            logarte: widget.instance,
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.filter_list_rounded),
+                    ),
+                  ],
                   bottom: TabBar(
                     isScrollable: true,
                     tabAlignment: TabAlignment.center,
@@ -122,6 +137,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                         _List<LogarteEntry>(
                           instance: widget.instance,
                           search: search,
+                          filter: widget.instance.searchFilter.value,
                         ),
                         _List<PlainLogarteEntry>(
                           instance: widget.instance,
@@ -130,6 +146,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                         _List<NetworkLogarteEntry>(
                           instance: widget.instance,
                           search: search,
+                          filter: widget.instance.searchFilter.value,
                         ),
                         _List<DatabaseLogarteEntry>(
                           instance: widget.instance,
@@ -155,11 +172,16 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
 }
 
 class _List<T extends LogarteEntry> extends StatelessWidget {
-  const _List({Key? key, required this.instance, required this.search})
-      : super(key: key);
+  const _List({
+    Key? key,
+    required this.instance,
+    required this.search,
+    this.filter,
+  }) : super(key: key);
 
   final Logarte instance;
   final String search;
+  final LogarteSearchFilter? filter;
 
   @override
   Widget build(BuildContext context) {
@@ -168,9 +190,9 @@ class _List<T extends LogarteEntry> extends StatelessWidget {
         : instance.logs.value.whereType<T>().toList();
 
     final filtered = logs.where((log) {
-      return log.contents.any(
-        (content) => content.toLowerCase().contains(search),
-      );
+      return log.getContents(filter).any(
+            (content) => content.toLowerCase().contains(search),
+          );
     }).toList();
 
     return Scrollbar(
