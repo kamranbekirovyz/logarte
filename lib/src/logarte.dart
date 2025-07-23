@@ -13,6 +13,7 @@ class Logarte {
   final String? password;
   final bool ignorePassword;
   final Function(String data)? onShare;
+  final Function(List<LogarteEntry> logs)? onShareAllLogs;
   final int logBufferLength;
   final Function(BuildContext context)? onRocketLongPressed;
   final Function(BuildContext context)? onRocketDoubleTapped;
@@ -23,6 +24,7 @@ class Logarte {
     this.password,
     this.ignorePassword = !kReleaseMode,
     this.onShare,
+    this.onShareAllLogs,
     this.onRocketLongPressed,
     this.onRocketDoubleTapped,
     this.logBufferLength = 2500,
