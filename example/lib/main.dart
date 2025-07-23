@@ -5,6 +5,14 @@ import 'package:share_plus/share_plus.dart';
 
 final Logarte logarte = Logarte(
   onShare: Share.share,
+  onShareAllLogs: (logs) {
+    Share.share(
+      logs
+          .map((e) =>
+              '${e.type.name} :: ${e.timeFormatted} :: ${e.contents.join(' ')}')
+          .join('\n'),
+    );
+  },
   password: '1234',
   customTab: const MyCustomTab(),
   onRocketDoubleTapped: (context) {
