@@ -55,12 +55,16 @@ class _LogarteFilterSettingState extends State<LogarteFilterSetting> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                        vertical: 8.0,
+                      ),
                       child: Text(
                         'Network Search Filter',
                         style: TextStyle(
-                            fontSize: 16.0, fontWeight: FontWeight.bold),
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -68,78 +72,90 @@ class _LogarteFilterSettingState extends State<LogarteFilterSetting> {
                       title: 'HTTP Status Code',
                       value: _searchFilter.network.statusCode,
                       onChanged: (value) {
-                        setState(() {
-                          _searchFilter = _searchFilter.copyWith(
-                            network: _searchFilter.network.copyWith(
-                              statusCode: value,
-                            ),
-                          );
-                        });
+                        setState(
+                          () {
+                            _searchFilter = _searchFilter.copyWith(
+                              network: _searchFilter.network.copyWith(
+                                statusCode: value,
+                              ),
+                            );
+                          },
+                        );
                       },
                     ),
                     LogarteFilterItem(
                       title: 'HTTP Method',
                       value: _searchFilter.network.method,
                       onChanged: (value) {
-                        setState(() {
-                          _searchFilter = _searchFilter.copyWith(
-                            network: _searchFilter.network.copyWith(
-                              method: value,
-                            ),
-                          );
-                        });
+                        setState(
+                          () {
+                            _searchFilter = _searchFilter.copyWith(
+                              network: _searchFilter.network.copyWith(
+                                method: value,
+                              ),
+                            );
+                          },
+                        );
                       },
                     ),
                     LogarteFilterItem(
                       title: 'URL',
                       value: _searchFilter.network.url,
                       onChanged: (value) {
-                        setState(() {
-                          _searchFilter = _searchFilter.copyWith(
-                            network: _searchFilter.network.copyWith(
-                              url: value,
-                            ),
-                          );
-                        });
+                        setState(
+                          () {
+                            _searchFilter = _searchFilter.copyWith(
+                              network: _searchFilter.network.copyWith(
+                                url: value,
+                              ),
+                            );
+                          },
+                        );
                       },
                     ),
                     LogarteFilterItem(
                       title: 'Header',
                       value: _searchFilter.network.header,
                       onChanged: (value) {
-                        setState(() {
-                          _searchFilter = _searchFilter.copyWith(
-                            network: _searchFilter.network.copyWith(
-                              header: value,
-                            ),
-                          );
-                        });
+                        setState(
+                          () {
+                            _searchFilter = _searchFilter.copyWith(
+                              network: _searchFilter.network.copyWith(
+                                header: value,
+                              ),
+                            );
+                          },
+                        );
                       },
                     ),
                     LogarteFilterItem(
                       title: 'Body',
                       value: _searchFilter.network.body,
                       onChanged: (value) {
-                        setState(() {
-                          _searchFilter = _searchFilter.copyWith(
-                            network: _searchFilter.network.copyWith(
-                              body: value,
-                            ),
-                          );
-                        });
+                        setState(
+                          () {
+                            _searchFilter = _searchFilter.copyWith(
+                              network: _searchFilter.network.copyWith(
+                                body: value,
+                              ),
+                            );
+                          },
+                        );
                       },
                     ),
                     LogarteFilterItem(
                       title: 'Time',
                       value: _searchFilter.network.time,
                       onChanged: (value) {
-                        setState(() {
-                          _searchFilter = _searchFilter.copyWith(
-                            network: _searchFilter.network.copyWith(
-                              time: value,
-                            ),
-                          );
-                        });
+                        setState(
+                          () {
+                            _searchFilter = _searchFilter.copyWith(
+                              network: _searchFilter.network.copyWith(
+                                time: value,
+                              ),
+                            );
+                          },
+                        );
                       },
                     ),
                     const SizedBox(height: 8.0),
