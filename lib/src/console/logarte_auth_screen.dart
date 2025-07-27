@@ -47,7 +47,10 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: _isLoggedIn || _noPassword
-            ? LogarteDashboardScreen(widget.instance)
+            ? LogarteDashboardScreen(
+                widget.instance,
+                showBackButton: !widget.instance.isOverlayAttached,
+              )
             : Scaffold(
                 appBar: AppBar(
                   automaticallyImplyLeading: false,
@@ -97,7 +100,10 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
   void _goToDashboard() {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (_) => LogarteDashboardScreen(widget.instance),
+        builder: (_) => LogarteDashboardScreen(
+          widget.instance,
+          showBackButton: !widget.instance.isOverlayAttached,
+        ),
         settings: const RouteSettings(name: '/logarte_dashboard'),
       ),
     );

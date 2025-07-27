@@ -11,11 +11,28 @@ class LogarteOverlay extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  // Static tracking mechanism
+  static OverlayEntry? _currentEntry;
+  static bool _isAttached = false;
+
+  /// Check if LogarteOverlay is currently attached
+  static bool get isAttached => _isAttached;
+
+  /// Get the current overlay entry (if attached)
+  static OverlayEntry? get currentEntry => _currentEntry;
+
   static void attach({
     required BuildContext context,
     required Logarte instance,
   }) {
-    final entry = OverlayEntry(
+    // Remove existing overlay if already attached
+    if (_isAttached && _currentEntry != null) {
+      _currentEntry!.remove();
+      _isAttached = false;
+      _currentEntry = null;
+    }
+
+    _currentEntry = OverlayEntry(
       builder: (context) {
         return LogarteOverlay._internal(
           instance: instance,
@@ -25,8 +42,18 @@ class LogarteOverlay extends StatelessWidget {
 
     Future.delayed(kThemeAnimationDuration, () {
       final overlay = Overlay.of(context);
-      overlay.insert(entry);
+      overlay.insert(_currentEntry!);
+      _isAttached = true;
     });
+  }
+
+  /// Detach the current overlay
+  static void detach() {
+    if (_isAttached && _currentEntry != null) {
+      _currentEntry!.remove();
+      _isAttached = false;
+      _currentEntry = null;
+    }
   }
 
   @override
@@ -164,7 +191,6 @@ class _LogarteFAB extends StatefulWidget {
 }
 
 class _LogarteFABState extends State<_LogarteFAB> {
-
   @override
   void setState(VoidCallback fn) {
     if (mounted) super.setState(fn);
