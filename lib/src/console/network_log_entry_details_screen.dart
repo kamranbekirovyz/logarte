@@ -66,7 +66,7 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
                   ),
                   const PopupMenuItem<MenuItem>(
                     value: MenuItem.copyCurl,
-                    child: Text('Copy as cURL'),
+                    child: Text('Copy cURL'),
                   ),
                   const PopupMenuItem<MenuItem>(
                     value: MenuItem.share,

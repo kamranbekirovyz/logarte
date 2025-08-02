@@ -8,6 +8,7 @@ In-app debug console and logger for Flutter apps.
 - 📡 **Network inspector**: Track API calls and responses
 - 📁 **Storage monitor**: Track local storage operations
 - 📤 **Copy & export**: Share debug logs with your team
+- 📄 **Curl command**: Copy cURL command for API requests
 
 ## 📱 Screenshots
 

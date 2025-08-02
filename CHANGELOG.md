@@ -1,3 +1,7 @@
+# 1.2.0
+
+* Added "Copy cURL" to the network log entry details screen.
+
 ## 1.1.0
 
 * Added back button to the console when it was launched without the floating button. Thanks community!
