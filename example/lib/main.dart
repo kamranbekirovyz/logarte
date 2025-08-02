@@ -157,8 +157,14 @@ class HomePageState extends State<HomePage> {
                 ),
                 FilledButton.tonal(
                   onPressed: () async {
-                    await _dio
-                        .post('https://jsonplaceholder.typicode.com/posts');
+                    await _dio.post(
+                      'https://jsonplaceholder.typicode.com/posts',
+                      data: {
+                        'title': 'Logarte Test Post',
+                        'body': 'This is a test post body',
+                        'userId': 1,
+                      },
+                    );
                   },
                   child: const Text('POST'),
                 ),
