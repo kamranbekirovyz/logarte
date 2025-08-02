@@ -16,13 +16,13 @@ extension LogarteNetworkEntryXs on NetworkLogarteEntry {
     final components = <String>['curl'];
 
     if (request.method.toUpperCase() != 'GET') {
-      components.add("-X ${request.method.toUpperCase()} \\");
+      components.add("-X ${request.method.toUpperCase()}");
     }
 
     if (request.headers != null) {
       final headers = request.headers ?? {};
       headers.forEach((key, value) {
-        components.add("-H '${_escape(key)}: ${_escape(value.toString())}' \\");
+        components.add("-H '${_escape(key)}: ${_escape(value.toString())}'");
       });
     }
 
@@ -35,12 +35,12 @@ extension LogarteNetworkEntryXs on NetworkLogarteEntry {
       }
 
       final bodyString = body is String ? body : jsonEncode(body);
-      components.add("-d '${_escape(bodyString)}' \\");
+      components.add("-d '${_escape(bodyString)}'");
     }
 
     components.add("'${request.url}'");
 
-    return components.join('\n  ');
+    return components.join(' ');
   }
 
   String _escape(String input) {

@@ -5,7 +5,7 @@ import 'package:logarte/src/extensions/entry_extensions.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:logarte/src/extensions/string_extensions.dart';
 
-enum MenuItem { copy, copyCurl }
+enum MenuItem { copy, copyCurl, share }
 
 class NetworkLogEntryDetailsScreen extends StatelessWidget {
   final NetworkLogarteEntry entry;
@@ -20,12 +20,19 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
   void handleClick(BuildContext context, MenuItem item) {
     switch (item) {
       case MenuItem.copy:
-          final text = entry.toString();
-          text.copyToClipboard(context);
+        final String text = entry.toString();
+
+        text.copyToClipboard(context);
         break;
       case MenuItem.copyCurl:
-        final cmd = entry.toCurlCommand();
+        final String cmd = entry.toCurlCommand();
+
         cmd.copyToClipboard(context);
+        break;
+      case MenuItem.share:
+        final String text = entry.toString();
+
+        instance.onShare?.call(text);
         break;
     }
   }
@@ -44,30 +51,29 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          centerTitle: false,
           actions: [
-            IconButton(
-              tooltip: 'Share',
-              icon: const Icon(Icons.share),
-              onPressed: () {
-                final text = entry.toString();
-                instance.onShare?.call(text);
-              },
-            ),
             PopupMenuButton<MenuItem>(
               tooltip: 'More',
               icon: const Icon(Icons.more_vert),
-              onSelected: (item) => handleClick(context, item),
-              itemBuilder: (_) => <PopupMenuEntry<MenuItem>>[
-                const PopupMenuItem<MenuItem>(
-                  value: MenuItem.copy,
-                  child: Text('Copy'),
-                ),
-                const PopupMenuItem<MenuItem>(
-                  value: MenuItem.copyCurl,
-                  child: Text('Copy as cURL'),
-                ),
-              ],
+              onSelected: (item) {
+                handleClick(context, item);
+              },
+              itemBuilder: (_) {
+                return <PopupMenuEntry<MenuItem>>[
+                  const PopupMenuItem<MenuItem>(
+                    value: MenuItem.copy,
+                    child: Text('Copy'),
+                  ),
+                  const PopupMenuItem<MenuItem>(
+                    value: MenuItem.copyCurl,
+                    child: Text('Copy as cURL'),
+                  ),
+                  const PopupMenuItem<MenuItem>(
+                    value: MenuItem.share,
+                    child: Text('Share'),
+                  ),
+                ];
+              },
             ),
             const SizedBox(width: 12.0),
           ],
