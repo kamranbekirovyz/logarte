@@ -5,7 +5,7 @@ import 'package:logarte/src/extensions/entry_extensions.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:logarte/src/extensions/string_extensions.dart';
 
-class NetworkLogEntryDetailsScreen extends StatelessWidget {
+class NetworkLogEntryDetailsScreen extends StatefulWidget {
   final NetworkLogarteEntry entry;
   final Logarte instance;
 
@@ -14,6 +14,23 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
     Key? key,
     required this.instance,
   }) : super(key: key);
+
+  @override
+  State<NetworkLogEntryDetailsScreen> createState() =>
+      _NetworkLogEntryDetailsScreenState();
+}
+
+class _NetworkLogEntryDetailsScreenState
+    extends State<NetworkLogEntryDetailsScreen> {
+  final ScrollController _scrollController1 = ScrollController();
+  final ScrollController _scrollController2 = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController1.dispose();
+    _scrollController2.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +42,7 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
           ),
           title: Text(
-            '${entry.asReadableDuration}, ${entry.response.body.toString().asReadableSize}',
+            '${widget.entry.asReadableDuration}, ${widget.entry.response.body.toString().asReadableSize}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -34,14 +51,14 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.share),
               onPressed: () {
-                final text = entry.toString();
-                instance.onShare?.call(text);
+                final text = widget.entry.toString();
+                widget.instance.onShare?.call(text);
               },
             ),
             IconButton(
               icon: const Icon(Icons.copy_all),
               onPressed: () {
-                final text = entry.toString();
+                final text = widget.entry.toString();
                 text.copyToClipboard(context);
               },
             ),
@@ -62,48 +79,53 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
                 child: TabBarView(
                   children: [
                     Scrollbar(
+                      controller: _scrollController1,
                       child: ListView(
+                        controller: _scrollController1,
                         children: [
                           SelectableCopiableTile(
                             title: 'METHOD',
-                            subtitle: entry.request.method,
+                            subtitle: widget.entry.request.method,
                           ),
                           const Divider(height: 0.0),
                           SelectableCopiableTile(
                             title: 'URL',
-                            subtitle: entry.request.url,
+                            subtitle: widget.entry.request.url,
                           ),
                           const Divider(height: 0.0),
                           SelectableCopiableTile(
                             title: 'HEADERS',
-                            subtitle: entry.request.headers.prettyJson,
+                            subtitle: widget.entry.request.headers.prettyJson,
                           ),
-                          if (entry.request.method != 'GET') ...[
+                          if (widget.entry.request.method != 'GET') ...[
                             const Divider(height: 0.0),
                             SelectableCopiableTile(
                               title: 'BODY',
-                              subtitle: entry.request.body.prettyJson,
+                              subtitle: widget.entry.request.body.prettyJson,
                             ),
                           ],
                         ],
                       ),
                     ),
                     Scrollbar(
+                      controller: _scrollController2,
                       child: ListView(
+                        controller: _scrollController2,
                         children: [
                           SelectableCopiableTile(
                             title: 'STATUS CODE',
-                            subtitle: entry.response.statusCode.toString(),
+                            subtitle:
+                                widget.entry.response.statusCode.toString(),
                           ),
                           const Divider(height: 0.0),
                           SelectableCopiableTile(
                             title: 'HEADERS',
-                            subtitle: entry.response.headers.prettyJson,
+                            subtitle: widget.entry.response.headers.prettyJson,
                           ),
                           const Divider(height: 0.0),
                           SelectableCopiableTile(
                             title: 'BODY',
-                            subtitle: entry.response.body.prettyJson,
+                            subtitle: widget.entry.response.body.prettyJson,
                           ),
                         ],
                       ),
