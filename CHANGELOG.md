@@ -1,3 +1,7 @@
+# 1.2.1
+
+* Fixed scrolling exceptions on desktop platforms. Thanks to [@karelklic](https://github.com/karelklic) for the contribution!
+
 # 1.2.0
 
 * Added "Copy cURL" to the network log entry details screen.
