@@ -162,13 +162,16 @@ class _DraggableLogarteFABState extends State<_DraggableLogarteFAB>
       top: _offset.dy,
       child: CompositedTransformTarget(
         link: _layerLink,
-        child: GestureDetector(
-          onPanStart: (_) => setState(() => _isDragging = true),
-          onPanUpdate: _updatePosition,
-          onPanEnd: _snapToEdge,
-          child: _LogarteFAB(
-            instance: widget.instance,
-            onTapAllowed: !_isDragging,
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onPanStart: (_) => setState(() => _isDragging = true),
+            onPanUpdate: _updatePosition,
+            onPanEnd: _snapToEdge,
+            child: _LogarteFAB(
+              instance: widget.instance,
+              onTapAllowed: !_isDragging,
+            ),
           ),
         ),
       ),

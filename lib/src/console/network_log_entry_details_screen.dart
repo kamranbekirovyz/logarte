@@ -7,7 +7,7 @@ import 'package:logarte/src/extensions/string_extensions.dart';
 
 enum MenuItem { copy, copyCurl, share }
 
-class NetworkLogEntryDetailsScreen extends StatelessWidget {
+class NetworkLogEntryDetailsScreen extends StatefulWidget {
   final NetworkLogarteEntry entry;
   final Logarte instance;
 
@@ -17,22 +17,39 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
     required this.instance,
   }) : super(key: key);
 
+  @override
+  State<NetworkLogEntryDetailsScreen> createState() =>
+      _NetworkLogEntryDetailsScreenState();
+}
+
+class _NetworkLogEntryDetailsScreenState
+    extends State<NetworkLogEntryDetailsScreen> {
+  final ScrollController _scrollController1 = ScrollController();
+  final ScrollController _scrollController2 = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController1.dispose();
+    _scrollController2.dispose();
+    super.dispose();
+  }
+
   void handleClick(BuildContext context, MenuItem item) {
     switch (item) {
       case MenuItem.copy:
-        final String text = entry.toString();
+        final String text = widget.entry.toString();
 
         text.copyToClipboard(context);
         break;
       case MenuItem.copyCurl:
-        final String cmd = entry.toCurlCommand();
+        final String cmd = widget.entry.toCurlCommand();
 
         cmd.copyToClipboard(context);
         break;
       case MenuItem.share:
-        final String text = entry.toString();
+        final String text = widget.entry.toString();
 
-        instance.onShare?.call(text);
+        widget.instance.onShare?.call(text);
         break;
     }
   }
@@ -47,7 +64,7 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
           ),
           title: Text(
-            '${entry.asReadableDuration}, ${entry.response.body.toString().asReadableSize}',
+            '${widget.entry.asReadableDuration}, ${widget.entry.response.body.toString().asReadableSize}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -92,48 +109,53 @@ class NetworkLogEntryDetailsScreen extends StatelessWidget {
                 child: TabBarView(
                   children: [
                     Scrollbar(
+                      controller: _scrollController1,
                       child: ListView(
+                        controller: _scrollController1,
                         children: [
                           SelectableCopiableTile(
                             title: 'METHOD',
-                            subtitle: entry.request.method,
+                            subtitle: widget.entry.request.method,
                           ),
                           const Divider(height: 0.0),
                           SelectableCopiableTile(
                             title: 'URL',
-                            subtitle: entry.request.url,
+                            subtitle: widget.entry.request.url,
                           ),
                           const Divider(height: 0.0),
                           SelectableCopiableTile(
                             title: 'HEADERS',
-                            subtitle: entry.request.headers.prettyJson,
+                            subtitle: widget.entry.request.headers.prettyJson,
                           ),
-                          if (entry.request.method != 'GET') ...[
+                          if (widget.entry.request.method != 'GET') ...[
                             const Divider(height: 0.0),
                             SelectableCopiableTile(
                               title: 'BODY',
-                              subtitle: entry.request.body.prettyJson,
+                              subtitle: widget.entry.request.body.prettyJson,
                             ),
                           ],
                         ],
                       ),
                     ),
                     Scrollbar(
+                      controller: _scrollController2,
                       child: ListView(
+                        controller: _scrollController2,
                         children: [
                           SelectableCopiableTile(
                             title: 'STATUS CODE',
-                            subtitle: entry.response.statusCode.toString(),
+                            subtitle:
+                                widget.entry.response.statusCode.toString(),
                           ),
                           const Divider(height: 0.0),
                           SelectableCopiableTile(
                             title: 'HEADERS',
-                            subtitle: entry.response.headers.prettyJson,
+                            subtitle: widget.entry.response.headers.prettyJson,
                           ),
                           const Divider(height: 0.0),
                           SelectableCopiableTile(
                             title: 'BODY',
-                            subtitle: entry.response.body.prettyJson,
+                            subtitle: widget.entry.response.body.prettyJson,
                           ),
                         ],
                       ),

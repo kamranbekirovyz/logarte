@@ -154,7 +154,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
   }
 }
 
-class _List<T extends LogarteEntry> extends StatelessWidget {
+class _List<T extends LogarteEntry> extends StatefulWidget {
   const _List({Key? key, required this.instance, required this.search})
       : super(key: key);
 
@@ -162,26 +162,41 @@ class _List<T extends LogarteEntry> extends StatelessWidget {
   final String search;
 
   @override
+  State<_List<T>> createState() => _ListState<T>();
+}
+
+class _ListState<T extends LogarteEntry> extends State<_List<T>> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final logs = T == LogarteEntry
-        ? instance.logs.value
-        : instance.logs.value.whereType<T>().toList();
+        ? widget.instance.logs.value
+        : widget.instance.logs.value.whereType<T>().toList();
 
     final filtered = logs.where((log) {
       return log.contents.any(
-        (content) => content.toLowerCase().contains(search),
+        (content) => content.toLowerCase().contains(widget.search),
       );
     }).toList();
 
     return Scrollbar(
+      controller: _scrollController,
       child: ListView.separated(
+        controller: _scrollController,
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         itemCount: filtered.length,
         padding: const EdgeInsets.only(bottom: 32.0, top: 8.0),
         itemBuilder: (context, index) {
           final log = filtered.reversed.toList()[index];
 
-          return LogarteEntryItem(log, instance: instance);
+          return LogarteEntryItem(log, instance: widget.instance);
         },
         separatorBuilder: (context, index) => const Divider(height: 0.0),
       ),
