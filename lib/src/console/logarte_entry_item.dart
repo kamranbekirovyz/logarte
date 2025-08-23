@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
+import 'package:logarte/src/console/expandable_text.dart';
 import 'package:logarte/src/console/network_log_entry_details_screen.dart';
 import 'package:logarte/src/extensions/entry_extensions.dart';
 import 'package:logarte/src/extensions/route_extensions.dart';
@@ -64,10 +65,10 @@ class _PlainItem extends StatelessWidget {
           ),
           const SizedBox(width: 8.0),
           Expanded(
-            child: Text(
-              entry.message,
+            child: ExpandableText(
+              text: entry.message,
               style: const TextStyle(
-                fontSize: 14.0,
+                fontSize: 14,
               ),
             ),
           ),
@@ -254,12 +255,14 @@ class _DatabaseItem extends StatelessWidget {
           ),
           const SizedBox(width: 8.0),
           Expanded(
-            child: _LuxuryText(
+            child: ExpandableText(
               text: '*${entry.target}*: ${entry.value}',
-              // style: const TextStyle(
-              //   fontSize: 14.0,
-              //   fontWeight: FontWeight.w600,
-              // ),
+              isRichText: true,
+              style: const TextStyle(
+                fontSize: 14.0,
+                height: 22 / 14,
+                color: Colors.black,
+              ),
             ),
           ),
         ],
