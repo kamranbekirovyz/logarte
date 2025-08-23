@@ -1,3 +1,7 @@
+# 1.2.2
+
+* Added "Show more" & "Show less" button for logs with more than 5 lines. Thanks to [@Captured-Heart](https://github.com/Captured-Heart) for the feature request!
+
 # 1.2.1
 
 * Fixed scrolling exceptions on desktop platforms. Thanks to [@karelklic](https://github.com/karelklic) for the contribution!
