@@ -18,6 +18,7 @@ class Logarte {
   final Function(BuildContext context)? onRocketDoubleTapped;
   final bool disableDebugConsoleLogs;
   final Widget? customTab;
+  final bool isAppBarSticky;
 
   Logarte({
     this.password,
@@ -28,6 +29,7 @@ class Logarte {
     this.logBufferLength = 2500,
     this.disableDebugConsoleLogs = false,
     this.customTab,
+    this.isAppBarSticky = false,
   });
 
   final logs = ValueNotifier(<LogarteEntry>[]);
