@@ -6,12 +6,10 @@ import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 
 class LogarteDashboardScreen extends StatefulWidget {
   final Logarte instance;
-  final bool showBackButton;
 
   const LogarteDashboardScreen(
     this.instance, {
     Key? key,
-    this.showBackButton = false,
   }) : super(key: key);
 
   @override
@@ -47,27 +45,20 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                 SliverAppBar(
                   floating: true,
                   snap: true,
-                  leading: widget.showBackButton
-                      ? IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          icon: const Icon(Icons.arrow_back_ios_new_rounded),
-                        )
-                      : null,
-                  automaticallyImplyLeading: false,
-                  title: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      hintText: 'Search',
-                      filled: true,
-                      prefixIcon: const Icon(Icons.search),
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: _controller.clear,
-                      ),
-                    ),
+                  leading: BackButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        widget.instance.logs.value = [];
+                      },
+                      icon: const Icon(Icons.delete_forever_rounded),
+                    ),
+                    const SizedBox(width: 12),
+                  ],
                   bottom: TabBar(
                     isScrollable: true,
                     tabAlignment: TabAlignment.center,
@@ -112,38 +103,31 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
             body: ValueListenableBuilder(
               valueListenable: widget.instance.logs,
               builder: (context, values, child) {
-                return AnimatedBuilder(
-                  animation: _controller,
-                  builder: (_, __) {
-                    final search = _controller.text.toLowerCase();
-
-                    return TabBarView(
-                      children: [
-                        _List<LogarteEntry>(
-                          instance: widget.instance,
-                          search: search,
-                        ),
-                        _List<PlainLogarteEntry>(
-                          instance: widget.instance,
-                          search: search,
-                        ),
-                        _List<NetworkLogarteEntry>(
-                          instance: widget.instance,
-                          search: search,
-                        ),
-                        _List<DatabaseLogarteEntry>(
-                          instance: widget.instance,
-                          search: search,
-                        ),
-                        _List<NavigatorLogarteEntry>(
-                          instance: widget.instance,
-                          search: search,
-                        ),
-                        if (widget.instance.customTab != null)
-                          widget.instance.customTab!,
-                      ],
-                    );
-                  },
+                return TabBarView(
+                  children: [
+                    _List<LogarteEntry>(
+                      instance: widget.instance,
+                      controller: _controller,
+                    ),
+                    _List<PlainLogarteEntry>(
+                      instance: widget.instance,
+                      controller: _controller,
+                    ),
+                    _List<NetworkLogarteEntry>(
+                      instance: widget.instance,
+                      controller: _controller,
+                    ),
+                    _List<DatabaseLogarteEntry>(
+                      instance: widget.instance,
+                      controller: _controller,
+                    ),
+                    _List<NavigatorLogarteEntry>(
+                      instance: widget.instance,
+                      controller: _controller,
+                    ),
+                    if (widget.instance.customTab != null)
+                      widget.instance.customTab!,
+                  ],
                 );
               },
             ),
@@ -155,11 +139,14 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
 }
 
 class _List<T extends LogarteEntry> extends StatefulWidget {
-  const _List({Key? key, required this.instance, required this.search})
-      : super(key: key);
+  const _List({
+    Key? key,
+    required this.instance,
+    required this.controller,
+  }) : super(key: key);
 
   final Logarte instance;
-  final String search;
+  final TextEditingController controller;
 
   @override
   State<_List<T>> createState() => _ListState<T>();
@@ -180,26 +167,57 @@ class _ListState<T extends LogarteEntry> extends State<_List<T>> {
         ? widget.instance.logs.value
         : widget.instance.logs.value.whereType<T>().toList();
 
-    final filtered = logs.where((log) {
-      return log.contents.any(
-        (content) => content.toLowerCase().contains(widget.search),
-      );
-    }).toList();
+    return AnimatedBuilder(
+      animation: widget.controller,
+      builder: (_, __) {
+        final String search = widget.controller.text.toLowerCase();
+        final filtered = logs.where((log) {
+          return log.contents.any(
+            (content) => content.toLowerCase().contains(search),
+          );
+        }).toList();
 
-    return Scrollbar(
-      controller: _scrollController,
-      child: ListView.separated(
-        controller: _scrollController,
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        itemCount: filtered.length,
-        padding: const EdgeInsets.only(bottom: 32.0, top: 8.0),
-        itemBuilder: (context, index) {
-          final log = filtered.reversed.toList()[index];
-
-          return LogarteEntryItem(log, instance: widget.instance);
-        },
-        separatorBuilder: (context, index) => const Divider(height: 0.0),
-      ),
+        return CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 16,
+                  left: 16,
+                  right: 16,
+                  bottom: 8,
+                ),
+                child: TextField(
+                  controller: widget.controller,
+                  decoration: InputDecoration(
+                    hintText: 'Search',
+                    filled: true,
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: widget.controller.clear,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.only(bottom: 32.0, top: 8.0),
+              sliver: SliverList.separated(
+                itemCount: filtered.length,
+                itemBuilder: (context, index) {
+                  return LogarteEntryItem(
+                    filtered[index],
+                    instance: widget.instance,
+                  );
+                },
+                separatorBuilder: (context, index) =>
+                    const Divider(height: 0.0),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -30,6 +30,13 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
     super.initState();
     _controller = TextEditingController();
     LogarteFabState.instance.open();
+
+    // If no password is required, attach overlay immediately
+    if (_noPassword) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        widget.instance.attach(context: context, visible: true);
+      });
+    }
   }
 
   @override
@@ -47,10 +54,7 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: _isLoggedIn || _noPassword
-            ? LogarteDashboardScreen(
-                widget.instance,
-                showBackButton: !widget.instance.isOverlayAttached,
-              )
+            ? LogarteDashboardScreen(widget.instance)
             : Scaffold(
                 appBar: AppBar(
                   automaticallyImplyLeading: false,
@@ -87,6 +91,8 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
   void _onSubmit() {
     if (widget.instance.password == _controller.text) {
       _isLoggedIn = true;
+      // Attach overlay after successful authentication
+      widget.instance.attach(context: context, visible: true);
       _goToDashboard();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -100,10 +106,7 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
   void _goToDashboard() {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (_) => LogarteDashboardScreen(
-          widget.instance,
-          showBackButton: !widget.instance.isOverlayAttached,
-        ),
+        builder: (_) => LogarteDashboardScreen(widget.instance),
         settings: const RouteSettings(name: '/logarte_dashboard'),
       ),
     );

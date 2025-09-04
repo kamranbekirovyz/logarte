@@ -19,7 +19,7 @@ class LogarteThemeWrapper extends StatelessWidget {
         ),
         appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
-            fontSize: 16.0,
+            fontSize: 18,
             color: Colors.black,
           ),
         ),

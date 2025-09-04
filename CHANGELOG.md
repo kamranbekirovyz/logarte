@@ -1,3 +1,8 @@
+# 1.3.0
+
+* Redesigned the `AppBar` of the console dashboard for more breathing space.
+* Added clear all logs button as an action in the `AppBar`.
+
 # 1.2.2
 
 * Added "Show more" & "Show less" button for logs with more than 5 lines. Thanks to [@Captured-Heart](https://github.com/Captured-Heart) for the feature request!
