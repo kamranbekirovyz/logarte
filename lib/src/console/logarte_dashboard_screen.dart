@@ -33,6 +33,58 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
     super.dispose();
   }
 
+  void _exportAllLogs() {
+    final logs = widget.instance.logs.value;
+    if (logs.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No logs to export')),
+      );
+      return;
+    }
+
+    final export = _generateExportData(logs);
+    widget.instance.onExport?.call(export);
+  }
+
+  String _generateExportData(List<LogarteEntry> logs) {
+    final buffer = StringBuffer();
+
+    // Compact header
+    final now = DateTime.now();
+    final sessionStart = logs.isNotEmpty ? logs.last.date : now;
+    final sessionEnd = logs.isNotEmpty ? logs.first.date : now;
+
+    buffer.writeln('📋 LOGARTE EXPORT');
+    buffer.writeln(
+        '🕐 ${now.day}/${now.month} session: ${sessionStart.hour}:${sessionStart.minute.toString().padLeft(2, '0')}-${sessionEnd.hour}:${sessionEnd.minute.toString().padLeft(2, '0')}');
+    buffer.writeln(
+        '📊 ${logs.length} entries (${logs.whereType<PlainLogarteEntry>().length}📝 ${logs.whereType<NetworkLogarteEntry>().length}🌐 ${logs.whereType<DatabaseLogarteEntry>().length}💾 ${logs.whereType<NavigatorLogarteEntry>().length}🧭)');
+    buffer.writeln('\n');
+
+    // Export logs in chronological order (reverse order since logs are stored newest first)
+    final chronologicalLogs = logs.reversed.toList();
+
+    for (int i = 0; i < chronologicalLogs.length; i++) {
+      final entry = chronologicalLogs[i];
+      final timestamp =
+          '[${entry.date.hour}:${entry.date.minute.toString().padLeft(2, '0')}:${entry.date.second.toString().padLeft(2, '0')}]';
+
+      // Add time separator for gaps > 5 minutes
+      if (i > 0) {
+        final prevEntry = chronologicalLogs[i - 1];
+        final timeDiff = entry.date.difference(prevEntry.date);
+        if (timeDiff.inMinutes >= 5) {
+          buffer.writeln('⏰ --- ${timeDiff.inMinutes}min gap ---');
+        }
+      }
+
+      buffer.writeln('$timestamp ${entry.toString()}');
+      if (i < chronologicalLogs.length - 1) buffer.writeln();
+    }
+
+    return buffer.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LogarteThemeWrapper(
@@ -51,11 +103,18 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                     },
                   ),
                   actions: [
+                    if (widget.instance.onExport != null)
+                      IconButton(
+                        onPressed: () => _exportAllLogs(),
+                        icon: const Icon(Icons.share_rounded),
+                        tooltip: 'Export All Logs',
+                      ),
                     IconButton(
                       onPressed: () {
                         widget.instance.logs.value = [];
                       },
                       icon: const Icon(Icons.delete_forever_rounded),
+                      tooltip: 'Clear All Logs',
                     ),
                     const SizedBox(width: 12),
                   ],
