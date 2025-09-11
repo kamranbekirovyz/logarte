@@ -1,3 +1,8 @@
+# 1.4.0
+
+* Added `onExport` parameter to the `Logarte` instance to export all logs as a shareable text. Your QA will think you are a wizard!
+* Improved the network entry shareable text too.
+
 # 1.3.0
 
 * Redesigned the `AppBar` of the console dashboard for more breathing space.
