@@ -163,7 +163,7 @@ class _ListState<T extends LogarteEntry> extends State<_List<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final logs = T == LogarteEntry
+    final List<LogarteEntry> logs = T == LogarteEntry
         ? widget.instance.logs.value
         : widget.instance.logs.value.whereType<T>().toList();
 
@@ -171,7 +171,7 @@ class _ListState<T extends LogarteEntry> extends State<_List<T>> {
       animation: widget.controller,
       builder: (_, __) {
         final String search = widget.controller.text.toLowerCase();
-        final filtered = logs.where((log) {
+        final List<LogarteEntry> filtered = logs.where((log) {
           return log.contents.any(
             (content) => content.toLowerCase().contains(search),
           );
@@ -202,17 +202,20 @@ class _ListState<T extends LogarteEntry> extends State<_List<T>> {
               ),
             ),
             SliverPadding(
-              padding: const EdgeInsets.only(bottom: 32.0, top: 8.0),
+              padding: const EdgeInsets.only(bottom: 32, top: 8),
               sliver: SliverList.separated(
                 itemCount: filtered.length,
                 itemBuilder: (context, index) {
+                  final LogarteEntry entry = filtered[index];
+
                   return LogarteEntryItem(
-                    filtered[index],
+                    entry,
                     instance: widget.instance,
                   );
                 },
-                separatorBuilder: (context, index) =>
-                    const Divider(height: 0.0),
+                separatorBuilder: (context, index) {
+                  return const Divider(height: 0.0);
+                },
               ),
             ),
           ],

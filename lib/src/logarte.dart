@@ -35,7 +35,7 @@ class Logarte {
     if (logs.value.length > logBufferLength) {
       logs.value.removeAt(0);
     }
-    logs.value = [...logs.value, entry];
+    logs.value = [entry, ...logs.value];
   }
 
   @Deprecated('Use logarte.log() instead')
