@@ -1,5 +1,8 @@
 import 'package:flutter/widgets.dart';
+import 'package:logarte/src/extensions/entry_extensions.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
+import 'package:logarte/src/extensions/route_extensions.dart';
+import 'package:logarte/src/extensions/string_extensions.dart';
 import 'package:logarte/src/models/logarte_type.dart';
 import 'package:logarte/src/models/navigation_action.dart';
 
@@ -30,6 +33,11 @@ class PlainLogarteEntry extends LogarteEntry {
         message,
         if (source != null) source!,
       ];
+
+  @override
+  String toString() {
+    return '[LOG]${source != null ? ' $source' : ''}\n$message';
+  }
 }
 
 class NavigatorLogarteEntry extends LogarteEntry {
@@ -54,6 +62,27 @@ class NavigatorLogarteEntry extends LogarteEntry {
         if (previousRoute != null && previousRoute!.settings.arguments != null)
           previousRoute!.settings.arguments.toString(),
       ];
+
+  @override
+  String toString() {
+    final routeName = route?.routeName ?? 'unknown';
+    final previousRouteName = previousRoute?.routeName;
+
+    String actionText;
+    if (previousRoute != null && action == NavigationAction.pop) {
+      actionText = '$action from "$routeName" to "$previousRouteName"';
+    } else {
+      actionText = '$action to "$routeName"';
+    }
+
+    final buffer = StringBuffer('[NAVIGATION]\n$actionText');
+
+    if (route?.settings.arguments != null) {
+      buffer.write('\nARGS: ${route!.settings.arguments}');
+    }
+
+    return buffer.toString();
+  }
 }
 
 class DatabaseLogarteEntry extends LogarteEntry {
@@ -73,6 +102,11 @@ class DatabaseLogarteEntry extends LogarteEntry {
         if (value != null) value.toString(),
         source,
       ];
+
+  @override
+  String toString() {
+    return '[DATABASE] $source\nTARGET: $target\nVALUE: ${value?.toString() ?? 'null'}';
+  }
 }
 
 class NetworkLogarteEntry extends LogarteEntry {
@@ -99,20 +133,24 @@ class NetworkLogarteEntry extends LogarteEntry {
 
   @override
   String toString() {
-    return '''[${request.method}] ${request.url}
+    final duration = asReadableDuration;
+    final size = response.body?.toString().asReadableSize ?? '0B';
+    final statusText = response.statusCode != null
+        ? '${response.statusCode} ${_getStatusText(response.statusCode!)}'
+        : 'No Response';
 
--- REQUEST --
+    return '''[NETWORK] ${request.method} ${request.url}
+STATUS: $statusText • $duration • $size
 HEADERS: ${request.headers.prettyJson}
-
 BODY: ${request.body.prettyJson}
+RESPONSE: ${response.body.prettyJson}''';
+  }
 
--- RESPONSE --
-STATUS CODE: ${response.statusCode}
-
-HEADERS: ${response.headers.prettyJson}
-
-BODY: ${response.body.prettyJson}
-''';
+  String _getStatusText(int code) {
+    if (code >= 200 && code < 300) return 'OK';
+    if (code >= 400 && code < 500) return 'Client Error';
+    if (code >= 500) return 'Server Error';
+    return 'Unknown';
   }
 }
 
