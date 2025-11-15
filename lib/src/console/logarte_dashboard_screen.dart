@@ -94,67 +94,73 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
           body: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
-                SliverAppBar(
-                  floating: true,
-                  snap: true,
-                  leading: BackButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  actions: [
-                    if (widget.instance.onExport != null)
-                      IconButton(
-                        onPressed: () => _exportAllLogs(),
-                        icon: const Icon(Icons.share_rounded),
-                        tooltip: 'Export All Logs',
+                ValueListenableBuilder<List<LogarteEntry>>(
+                  valueListenable: widget.instance.logs,
+                  builder: (context, logsValue, _) {
+                    return SliverAppBar(
+                      floating: true,
+                      snap: true,
+                      leading: BackButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
                       ),
-                    IconButton(
-                      onPressed: () {
-                        widget.instance.logs.value = [];
-                      },
-                      icon: const Icon(Icons.delete_forever_rounded),
-                      tooltip: 'Clear All Logs',
-                    ),
-                    const SizedBox(width: 12),
-                  ],
-                  bottom: TabBar(
-                    isScrollable: true,
-                    tabAlignment: TabAlignment.center,
-                    labelPadding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    tabs: [
-                      Tab(
-                        icon: const Icon(Icons.list_alt_rounded),
-                        text: 'All (${widget.instance.logs.value.length})',
-                      ),
-                      Tab(
-                        icon: const Icon(Icons.bug_report_rounded),
-                        text:
-                            'Logging (${widget.instance.logs.value.whereType<PlainLogarteEntry>().length})',
-                      ),
-                      Tab(
-                        icon: const Icon(Icons.public),
-                        text:
-                            'Network (${widget.instance.logs.value.whereType<NetworkLogarteEntry>().length})',
-                      ),
-                      Tab(
-                        icon: const Icon(Icons.save_as_rounded),
-                        text:
-                            'Database (${widget.instance.logs.value.whereType<DatabaseLogarteEntry>().length})',
-                      ),
-                      Tab(
-                        icon: const Icon(Icons.navigation_rounded),
-                        text:
-                            'Navigation (${widget.instance.logs.value.whereType<NavigatorLogarteEntry>().length})',
-                      ),
-                      if (widget.instance.customTab != null)
-                        const Tab(
-                          icon: Icon(Icons.extension_rounded),
-                          text: 'Custom',
+                      actions: [
+                        if (widget.instance.onExport != null)
+                          IconButton(
+                            onPressed: () => _exportAllLogs(),
+                            icon: const Icon(Icons.share_rounded),
+                            tooltip: 'Export All Logs',
+                          ),
+                        IconButton(
+                          onPressed: () {
+                            widget.instance.logs.value = [];
+                          },
+                          icon: const Icon(Icons.delete_forever_rounded),
+                          tooltip: 'Clear All Logs',
                         ),
-                    ],
-                  ),
+                        const SizedBox(width: 12),
+                      ],
+                      bottom: TabBar(
+                        isScrollable: true,
+                        tabAlignment: TabAlignment.center,
+                        labelPadding:
+                            const EdgeInsets.symmetric(horizontal: 12.0),
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        tabs: [
+                          Tab(
+                            icon: const Icon(Icons.list_alt_rounded),
+                            text: 'All (${logsValue.length})',
+                          ),
+                          Tab(
+                            icon: const Icon(Icons.bug_report_rounded),
+                            text:
+                                'Logging (${logsValue.whereType<PlainLogarteEntry>().length})',
+                          ),
+                          Tab(
+                            icon: const Icon(Icons.public),
+                            text:
+                                'Network (${logsValue.whereType<NetworkLogarteEntry>().length})',
+                          ),
+                          Tab(
+                            icon: const Icon(Icons.save_as_rounded),
+                            text:
+                                'Database (${logsValue.whereType<DatabaseLogarteEntry>().length})',
+                          ),
+                          Tab(
+                            icon: const Icon(Icons.navigation_rounded),
+                            text:
+                                'Navigation (${logsValue.whereType<NavigatorLogarteEntry>().length})',
+                          ),
+                          if (widget.instance.customTab != null)
+                            const Tab(
+                              icon: Icon(Icons.extension_rounded),
+                              text: 'Custom',
+                            ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ];
             },
