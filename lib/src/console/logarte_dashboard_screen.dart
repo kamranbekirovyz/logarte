@@ -36,7 +36,7 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
   void _exportAllLogs() {
     final logs = widget.instance.logs.value;
     if (logs.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.maybeOf(context)?.showSnackBar(
         const SnackBar(content: Text('No logs to export')),
       );
       return;

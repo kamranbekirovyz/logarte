@@ -95,7 +95,7 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
       widget.instance.attach(context: context, visible: true);
       _goToDashboard();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.maybeOf(context)?.showSnackBar(
         const SnackBar(
           content: Text('Wrong password'),
         ),

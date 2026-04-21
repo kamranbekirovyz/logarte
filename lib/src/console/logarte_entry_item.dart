@@ -5,7 +5,6 @@ import 'package:logarte/src/console/network_log_entry_details_screen.dart';
 import 'package:logarte/src/extensions/entry_extensions.dart';
 import 'package:logarte/src/extensions/route_extensions.dart';
 import 'package:logarte/src/extensions/string_extensions.dart';
-import 'package:logarte/src/models/navigation_action.dart';
 
 class LogarteEntryItem extends StatelessWidget {
   final LogarteEntry entry;

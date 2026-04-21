@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 
 extension LogarteStringXs on String {
   Future<void> copyToClipboard(BuildContext context) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
+    ScaffoldMessenger.maybeOf(context)
+      ?..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
           elevation: 0.0,

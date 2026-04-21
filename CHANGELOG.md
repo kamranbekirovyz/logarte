@@ -1,3 +1,7 @@
+# 1.4.1
+
+* Fixed `No ScaffoldMessenger widget found` crash when using `CupertinoApp`.
+
 # 1.4.0
 
 * Added `onExport` parameter to the `Logarte` instance to export all logs as a shareable text. Your QA will think you are a wizard!
