@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_highlighter/flutter_highlighter.dart';
+import 'package:flutter_highlighter/themes/github.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 import 'package:logarte/src/extensions/entry_extensions.dart';
@@ -18,12 +20,10 @@ class NetworkLogEntryDetailsScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<NetworkLogEntryDetailsScreen> createState() =>
-      _NetworkLogEntryDetailsScreenState();
+  State<NetworkLogEntryDetailsScreen> createState() => _NetworkLogEntryDetailsScreenState();
 }
 
-class _NetworkLogEntryDetailsScreenState
-    extends State<NetworkLogEntryDetailsScreen> {
+class _NetworkLogEntryDetailsScreenState extends State<NetworkLogEntryDetailsScreen> {
   final ScrollController _scrollController1 = ScrollController();
   final ScrollController _scrollController2 = ScrollController();
 
@@ -123,13 +123,13 @@ class _NetworkLogEntryDetailsScreenState
                             subtitle: widget.entry.request.url,
                           ),
                           const Divider(height: 0.0),
-                          SelectableCopiableTile(
+                          HighlightedCopyableTile(
                             title: 'HEADERS',
                             subtitle: widget.entry.request.headers.prettyJson,
                           ),
                           if (widget.entry.request.method != 'GET') ...[
                             const Divider(height: 0.0),
-                            SelectableCopiableTile(
+                            HighlightedCopyableTile(
                               title: 'BODY',
                               subtitle: widget.entry.request.body.prettyJson,
                             ),
@@ -144,16 +144,15 @@ class _NetworkLogEntryDetailsScreenState
                         children: [
                           SelectableCopiableTile(
                             title: 'STATUS CODE',
-                            subtitle:
-                                widget.entry.response.statusCode.toString(),
+                            subtitle: widget.entry.response.statusCode.toString(),
                           ),
                           const Divider(height: 0.0),
-                          SelectableCopiableTile(
+                          HighlightedCopyableTile(
                             title: 'HEADERS',
                             subtitle: widget.entry.response.headers.prettyJson,
                           ),
                           const Divider(height: 0.0),
-                          SelectableCopiableTile(
+                          HighlightedCopyableTile(
                             title: 'BODY',
                             subtitle: widget.entry.response.body.prettyJson,
                           ),
@@ -200,6 +199,63 @@ class SelectableCopiableTile extends StatelessWidget {
         ),
       ),
       // trailing: const Icon(Icons.copy),
+    );
+  }
+
+  Future<void> _copyToClipboard(BuildContext context) {
+    return subtitle.copyToClipboard(context);
+  }
+}
+
+class HighlightedCopyableTile extends StatelessWidget {
+  final String title;
+  final String subtitle;
+
+  const HighlightedCopyableTile({
+    required this.title,
+    required this.subtitle,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+
+    return ListTile(
+      onTap: () => _copyToClipboard(context),
+      title: SelectableText(
+        title,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+        onTap: () => _copyToClipboard(context),
+      ),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              border: Border.all(
+                color: colorScheme.outlineVariant,
+              ),
+            ),
+            child: HighlightView(
+              subtitle,
+              language: 'json',
+              theme: githubTheme,
+              padding: const EdgeInsets.all(12.0),
+              tabSize: 2,
+              textStyle: const TextStyle(
+                fontFamily: 'monospace',
+                fontSize: 14.0,
+                height: 1.35,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
