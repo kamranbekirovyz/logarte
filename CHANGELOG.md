@@ -1,3 +1,7 @@
+# 1.5.0
+
+* Added pretty-printing support for Dio `FormData` (multipart) request bodies in the network inspector. Thanks to [@izzuddin012](https://github.com/izzuddin012) for the contribution!
+
 # 1.4.1
 
 * Fixed `No ScaffoldMessenger widget found` crash when using `CupertinoApp`.
