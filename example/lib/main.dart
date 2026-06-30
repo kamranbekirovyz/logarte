@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
@@ -168,6 +170,31 @@ class HomePageState extends State<HomePage> {
                     );
                   },
                   child: const Text('POST'),
+                ),
+                FilledButton.tonal(
+                  onPressed: () async {
+                    // Create dummy file
+                    final tempDir = Directory.systemTemp;
+                    final dummyFile = File('${tempDir.path}/dummy_upload.jpg');
+
+                    // Write random bytes
+                    await dummyFile
+                        .writeAsBytes(List.generate(100, (i) => i % 255));
+
+                    final formData = FormData.fromMap({
+                      "title": "Dummy Post",
+                      "description": "Testing multipart upload",
+                      "user_id": 123,
+                      "image": await MultipartFile.fromFile(dummyFile.path,
+                          filename: "dummy_upload.jpg"),
+                    });
+
+                    await _dio.post(
+                      'https://jsonplaceholder.typicode.com/posts',
+                      data: formData,
+                    );
+                  },
+                  child: const Text('POST With Multipart Body'),
                 ),
                 FilledButton.tonal(
                   onPressed: () async {
