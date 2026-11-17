@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 import 'package:logarte/src/extensions/entry_extensions.dart';
