@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/logarte_auth_screen.dart';
 import 'package:logarte/src/console/logarte_fab_state.dart';
@@ -41,6 +41,7 @@ class LogarteOverlay extends StatelessWidget {
     );
 
     Future.delayed(kThemeAnimationDuration, () {
+      if (!context.mounted) return;
       final overlay = Overlay.of(context);
       overlay.insert(_currentEntry!);
       _isAttached = true;

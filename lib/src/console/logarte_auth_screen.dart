@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/logarte_fab_state.dart';
 import 'package:logarte/src/console/logarte_theme_wrapper.dart';
@@ -51,8 +51,8 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
   @override
   Widget build(BuildContext context) {
     return LogarteThemeWrapper(
-      child: WillPopScope(
-        onWillPop: () => Future.value(false),
+      child: PopScope(
+        canPop: false,
         child: _isLoggedIn || _noPassword
             ? LogarteDashboardScreen(widget.instance)
             : Scaffold(

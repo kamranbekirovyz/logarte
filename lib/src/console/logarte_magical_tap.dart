@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:logarte/logarte.dart';
 
 /// A widget that detects taps and shows the [Logarte] widget when the user

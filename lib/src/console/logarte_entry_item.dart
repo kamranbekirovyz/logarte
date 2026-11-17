@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/expandable_text.dart';
 import 'package:logarte/src/console/network_log_entry_details_screen.dart';
