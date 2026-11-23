@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
 import 'package:logarte/src/console/logarte_entry_item.dart';
-import 'package:logarte/src/console/logarte_fab_state.dart';
 import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 
 class LogarteDashboardScreen extends StatefulWidget {
@@ -23,13 +22,13 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
   void initState() {
     super.initState();
     _controller = TextEditingController();
-    LogarteFabState.instance.open();
+    widget.instance.button.setConsoleOpen(true);
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    LogarteFabState.instance.close();
+    widget.instance.button.setConsoleOpen(false);
     super.dispose();
   }
 
@@ -106,6 +105,28 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                         },
                       ),
                       actions: [
+                        ValueListenableBuilder<bool>(
+                          valueListenable: widget.instance.button.isVisible,
+                          builder: (context, isVisible, _) {
+                            return IconButton(
+                              onPressed: () {
+                                if (isVisible) {
+                                  widget.instance.button.hide();
+                                } else {
+                                  widget.instance.button.show(context);
+                                }
+                              },
+                              icon: Icon(
+                                isVisible
+                                    ? Icons.visibility_off_rounded
+                                    : Icons.visibility_rounded,
+                              ),
+                              tooltip: isVisible
+                                  ? 'Remove Floating Button'
+                                  : 'Show Floating Button',
+                            );
+                          },
+                        ),
                         if (widget.instance.onExport != null)
                           IconButton(
                             onPressed: () => _exportAllLogs(),

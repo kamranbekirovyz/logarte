@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:logarte/logarte.dart';
-import 'package:logarte/src/console/logarte_fab_state.dart';
 import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 
 T? ambiguate<T>(T? value) => value;
@@ -29,21 +28,14 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
   void initState() {
     super.initState();
     _controller = TextEditingController();
-    LogarteFabState.instance.open();
-
-    // If no password is required, attach overlay immediately
-    if (_noPassword) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        widget.instance.attach(context: context, visible: true);
-      });
-    }
+    widget.instance.button.setConsoleOpen(true);
   }
 
   @override
   void dispose() {
     _controller.dispose();
     if (!_isLoggedIn) {
-      LogarteFabState.instance.close();
+      widget.instance.button.setConsoleOpen(false);
     }
     super.dispose();
   }
@@ -91,8 +83,6 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
   void _onSubmit() {
     if (widget.instance.password == _controller.text) {
       _isLoggedIn = true;
-      // Attach overlay after successful authentication
-      widget.instance.attach(context: context, visible: true);
       _goToDashboard();
     } else {
       ScaffoldMessenger.maybeOf(context)?.showSnackBar(

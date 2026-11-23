@@ -3,7 +3,7 @@ import 'dart:developer' as developer;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logarte/src/console/logarte_auth_screen.dart';
-import 'package:logarte/src/console/logarte_overlay.dart';
+import 'package:logarte/src/console/logarte_button_controller.dart';
 import 'package:logarte/src/extensions/object_extensions.dart';
 import 'package:logarte/src/extensions/route_extensions.dart';
 import 'package:logarte/src/models/logarte_entry.dart';
@@ -31,6 +31,9 @@ class Logarte {
     this.disableDebugConsoleLogs = false,
     this.customTab,
   });
+
+  /// Controls the floating button that opens the console.
+  late final LogarteButtonController button = LogarteButtonController(this);
 
   final logs = ValueNotifier(<LogarteEntry>[]);
   void _add(LogarteEntry entry) {
@@ -197,22 +200,15 @@ class Logarte {
   void attach({
     required BuildContext context,
     required bool visible,
-  }) async {
-    if (visible) {
-      return LogarteOverlay.attach(
-        context: context,
-        instance: this,
-      );
-    }
+  }) {
+    if (visible) button.show(context);
   }
 
-  /// Check if LogarteOverlay is currently attached
-  bool get isOverlayAttached => LogarteOverlay.isAttached;
+  /// Whether the floating button is currently shown
+  bool get isOverlayAttached => button.isVisible.value;
 
-  /// Detach the LogarteOverlay if it's currently attached
-  void detachOverlay() {
-    LogarteOverlay.detach();
-  }
+  /// Removes the floating button if it's currently shown
+  void detachOverlay() => button.hide();
 
   Future<void> openConsole(BuildContext context) async {
     return Navigator.of(context).push<void>(

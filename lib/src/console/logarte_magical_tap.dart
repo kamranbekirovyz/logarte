@@ -46,7 +46,7 @@ class _LogarteMagicalTapState extends State<LogarteMagicalTap> {
         _count++;
 
         if (_count == 10) {
-          widget.logarte.attach(context: context, visible: true);
+          widget.logarte.button.show(context);
         }
       },
       child: widget.child,
