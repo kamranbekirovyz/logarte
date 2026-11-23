@@ -1,3 +1,7 @@
+# 1.6.0
+
+* Added a button in the console to hide or show the floating button.
+
 # 1.5.0
 
 * Added pretty-printing support for Dio `FormData` (multipart) request bodies in the network inspector. Thanks to [@izzuddin012](https://github.com/izzuddin012) for the contribution!
